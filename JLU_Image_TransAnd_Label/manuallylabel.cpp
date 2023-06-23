@@ -11,19 +11,27 @@ manuallyLabel::manuallyLabel(QString curViewPath,QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::manuallyLabel)
 {
-    setMouseTracking(true);
+setMouseTracking(true);
     QImage tmp;
     tmp.load(curViewPath);
     showWindow = new setPenWidthWindows;
+    curViewPicPath = curViewPath;
     ui->setupUi(this);
     isSave = UNSAVE;
     ui->editPicLable->initPixelMap(curViewPath);
     ui->editPicLable->setPixmap(QPixmap::fromImage(tmp.scaled(ui->editPicLable->size(),Qt::IgnoreAspectRatio)));
     ui->editPicLable->initUsrPen();
     initTabTextBox();
-    connect(showWindow,&setPenWidthWindows::finishedEdit,this,&manuallyLabel::getEditedChangedWidth);
+    connect(showWindow,&setPenWidthWindows::finishedEdit,this,&manuallyLabel::updateCursingelPictureLabelsRecord);
 }
 
+void manuallyLabel::getPixmapPath(QString path)
+{
+    curViewPicPath = path;
+    QImage tmp;
+    tmp.load(path);
+    ui->editPicLable->setPixmap(QPixmap::fromImage(tmp.scaled(ui->editPicLable->size(),Qt::IgnoreAspectRatio)));
+}
 
 void manuallyLabel::initTabTextBox()
 {
@@ -44,6 +52,14 @@ void manuallyLabel::initTabTextBox()
     colorTextSet += ")";
     qDebug() << colorTextSet;
     ui->showCurColorTextBrowser->setText(colorTextSet);
+
+    QString shapeAndPointText = QString("\n当前，你选择了") + QString::number(ui->editPicLable->getCurAllowMaxPointsCount())
+                                + QString("点的标注,也就是说你标注的图形状是:") + QString::number(ui->editPicLable->getCurAllowMaxPointsCount())
+                                + QString("边形");
+
+    ui->showCurShapeTypeTextBrowser->setText(shapeAndPointText);
+
+    ui->showCurTextLabelCountTextBrowser->setText(USR_DEF_LABLE_COUNT_TEXT);
 }
 
 
@@ -56,15 +72,125 @@ manuallyLabel::~manuallyLabel()
 void manuallyLabel::on_changeColorBtn_clicked()
 {
     ui->editPicLable->getInterFaceQPen().setColor(QColorDialog::getColor());
+    updateTextBrowsers();
 }
 
 void manuallyLabel::on_changeWidthBtn_clicked()
 {
     showWindow->show();
-
+    updateTextBrowsers();
 }
+
+
 void manuallyLabel::getEditedChangedWidth()
 {
     unsigned int newWidth = showWindow->getFinalSetPenWidth();
     ui->editPicLable->getInterFaceQPen().setWidth(newWidth);
 }
+
+void manuallyLabel::updateCursingelPictureLabelsRecord()
+{
+    singelPictureLabelsRecord = showPicWindows->returnLabelResToManuallyLabel();
+     updateTextBrowsers();
+}
+
+void manuallyLabel::updateTextBrowsers()
+{
+    QString colorTextSet = "当前的颜色是: RGB(";
+    colorTextSet += QString::number(
+        *helper_getColorRGBs((ui->editPicLable->getUsrPenInfo().color()))
+        );
+
+    colorTextSet += ",";
+    colorTextSet += QString::number(
+        *(helper_getColorRGBs((ui->editPicLable->getUsrPenInfo().color())) + 1)
+        );
+    colorTextSet += ",";
+    colorTextSet += QString::number(
+        *(helper_getColorRGBs((ui->editPicLable->getUsrPenInfo().color())) + 2)
+        );
+
+    colorTextSet += ")";
+    qDebug() << colorTextSet;
+    ui->showCurColorTextBrowser->setText(colorTextSet);
+
+    QString shapeAndPointText = QString("\n当前，你选择了") + QString::number(ui->editPicLable->getCurAllowMaxPointsCount())
+                                + QString("点的标注,也就是说你标注的图形状是:") + QString::number(ui->editPicLable->getCurAllowMaxPointsCount())
+                                + QString("边形");
+
+    ui->showCurShapeTypeTextBrowser->setText(shapeAndPointText);
+    QString showLabel = QString("当前已有标签：") + QString::number(singelPictureLabelsRecord.second.size()) + QString("\n") ;
+    for(int i = 0; i < singelPictureLabelsRecord.second.size(); i++)
+    {
+        showLabel += QString("第") + QString::number(i + 1) + QString("张轮廓: 标签种类代号为");
+        showLabel += ( QString::number(singelPictureLabelsRecord.second[i].first)+ QString(": ") + singelPictureLabelsRecord.second[i].second + QString("\n"));
+    }
+
+    ui->showCurTextLabelCountTextBrowser->setText(showLabel);
+}
+
+void manuallyLabel::on_cancelAllAndBackToMainWindow_clicked()
+{
+    if(isSave == UNSAVE)
+    {
+        if(QMessageBox::Yes == QMessageBox::question(NULL,"喂！！等等！","拜托兄弟，真的不保存一下嘛(点击确定保存哦)，你做出的更改会消失很久很久的!"))
+        {
+            saveProcess();
+            isSave = SAVE;
+        }
+
+    }
+}
+
+void manuallyLabel::saveProcess()
+{
+    if(curPixPicMap.isNull())
+    {
+        QMessageBox::critical(NULL,"阿哲","嗯，我很是怀疑你怎么到达这里的...快点反馈给我bug!");
+        return;
+    }
+Cancel:
+    QString savePath = QFileDialog::getExistingDirectory(this,"选择目录");
+    if(savePath.isNull()){
+        if(QMessageBox::Yes == QMessageBox::question(NULL,"确认一下","不保存了？"))
+        {
+            return;
+        }
+        else
+        {
+            goto Cancel;
+        }
+    }
+
+    savePath += QString("/") + (curViewPicPath.split("/").last().split(".").first());
+    savePath += QString("afterLabeled.png");
+    qDebug()<< savePath;
+
+    qDebug()<<ui->editPicLable->getAfterEditedPixMap().save(savePath);
+
+    return;
+}
+
+Pair_Label_Shape manuallyLabel::returnSingelPictureLabelsRecord()
+{
+    return Pair_Label_Shape(singelPictureLabelsRecord);
+}
+
+void manuallyLabel::on_saveAllAndExportTheImage_clicked()
+{
+    saveProcess();
+}
+
+void manuallyLabel::initshowPicWindows()
+{
+    showPicWindows = new curPicForLabeling_MainWindow;
+    showPicWindows->getPictures(curViewPicPath);
+    showPicWindows->setWindowFlags(Qt::WindowStaysOnTopHint);
+    showPicWindows->show();
+}
+
+void manuallyLabel::on_activeToLabel_clicked()
+{
+    initshowPicWindows();
+}
+

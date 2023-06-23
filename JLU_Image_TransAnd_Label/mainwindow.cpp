@@ -35,7 +35,7 @@ MainWindow::~MainWindow()
 void MainWindow::initMainWindow(){
 
     curViewPicIndex = 0;
-
+    getNewLabelDialog = new labelQuerydialog;
     /*完成主要链接*/
     /*链接新添加单张图片*/
     connect(ui->action_newPicture,&QAction::triggered,this,&MainWindow::getPictureFromUsr);
@@ -49,6 +49,10 @@ void MainWindow::initMainWindow(){
     connect(ui->actionswitchCurPicture,&QAction::triggered,this,&MainWindow::on_changeCurPicBtn_clicked);
     /*链接替换文件夹*/
     connect(ui->actionswitchCurDir,&QAction::triggered,this,&MainWindow::switchPicDir);
+    /*刷新单张手工编辑完成的数据，这是通过接受返回单张图片的信息得到的*/
+    connect(NULL,&manuallyLabel::finishWholeEditing_ReturnCurSinglePagePointsAndLabelInfo,this,&MainWindow::fetchFromManuallyLabel);
+    /*通过添加标签获得新的标签*/
+    connect(getNewLabelDialog,&labelQuerydialog::finishSelectingLabel,this,&MainWindow::updateLabelListForMainWindow);
 }
 /**************************************************************************************************
 *   funtions type :     basic_init
@@ -431,7 +435,7 @@ void MainWindow::on_changeToManuallyLable_clicked()
 
 
 
-    manuallyLabel* editPicWindow = new manuallyLabel(pathPics[curViewPicIndex-1]);
+    editPicWindow = new manuallyLabel(pathPics[curViewPicIndex-1]);
     editPicWindow->setWindowTitle("标注模式");
     editPicWindow->show();
 }
@@ -439,8 +443,26 @@ void MainWindow::on_changeToManuallyLable_clicked()
 
 void MainWindow::on_addNewLebelButton_clicked()
 {
-    labelQuerydialog* getNewLabelDialog = new labelQuerydialog();
+    getNewLabelDialog = new labelQuerydialog();
     getNewLabelDialog->getTheCurrentLabelList(labelList);
     getNewLabelDialog->show();
 }
 
+void MainWindow::fetchFromManuallyLabel()
+{
+    wholeCoreData.push_back(editPicWindow->returnSingelPictureLabelsRecord());
+}
+
+void MainWindow::updateLabelListForMainWindow()
+{
+    labelList = getNewLabelDialog->reFreshMainWindowsLabelList();
+    QString curLableInfoStr;
+    curLableInfoStr += QString("当前已经有:") + QString::number(labelList.size()) + QString("种标签了\n");
+    for(int i = 0; i < labelList.size();i++)
+    {
+        curLableInfoStr += QString::number(labelList[i].first) + labelList[i].second + QString("\n");
+    }
+
+    ui->currentLabelCheck->setText(curLableInfoStr);
+    return;
+}
