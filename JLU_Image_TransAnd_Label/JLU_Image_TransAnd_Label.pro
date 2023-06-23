@@ -33,8 +33,8 @@ FORMS += \
     manuallylabel.ui \
     setpenwidthwindows.ui
 
-INCLUDEPATH += D:\QT_Opencv_Compile\opencv_build\install\include
-LIBS += D:\QT_Opencv_Compile\opencv_build\install\x64\mingw\bin\\libopencv_*.dll
+INCLUDEPATH += D:\opencv\build\include
+LIBS += D:\opencv\build\x64\vc14\bin\opencv_world460d.dll
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
