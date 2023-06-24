@@ -37,8 +37,26 @@
     <addaction name="actionsaveLabelsOnly"/>
     <addaction name="actionsaveAll"/>
    </widget>
+   <widget class="QMenu" name="menu_2">
+    <property name="title">
+     <string>更改形状</string>
+    </property>
+    <addaction name="actionchangeToAnyFourPoly"/>
+    <addaction name="actionchangeToRectMode"/>
+    <addaction name="actionchangeToFivePoly"/>
+    <addaction name="actionchangeAndActivateSelectMode"/>
+   </widget>
+   <widget class="QMenu" name="menu_3">
+    <property name="title">
+     <string>更改画笔</string>
+    </property>
+    <addaction name="actionchangeColor"/>
+    <addaction name="actionchangeWidth"/>
+   </widget>
    <addaction name="menu"/>
    <addaction name="saveImediately"/>
+   <addaction name="menu_2"/>
+   <addaction name="menu_3"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionendLabeling">
@@ -62,6 +80,36 @@
   <action name="actionsaveAll">
    <property name="text">
     <string>保存所有</string>
+   </property>
+  </action>
+  <action name="actionchangeToAnyFourPoly">
+   <property name="text">
+    <string>切换到任意四边形标注</string>
+   </property>
+  </action>
+  <action name="actionchangeToRectMode">
+   <property name="text">
+    <string>切换到标准矩形标注</string>
+   </property>
+  </action>
+  <action name="actionchangeToFivePoly">
+   <property name="text">
+    <string>切换到任意五边形</string>
+   </property>
+  </action>
+  <action name="actionchangeAndActivateSelectMode">
+   <property name="text">
+    <string>切换到自定义</string>
+   </property>
+  </action>
+  <action name="actionchangeColor">
+   <property name="text">
+    <string>更换颜色</string>
+   </property>
+  </action>
+  <action name="actionchangeWidth">
+   <property name="text">
+    <string>更换粗度</string>
    </property>
   </action>
  </widget>

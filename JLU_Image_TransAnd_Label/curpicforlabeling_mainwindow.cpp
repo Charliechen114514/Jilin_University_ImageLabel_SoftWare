@@ -1,5 +1,26 @@
 #include "curpicforlabeling_mainwindow.h"
 #include "ui_curpicforlabeling_mainwindow.h"
+/**************************************************************************************************
+*
+*   funtions type :     basic_init
+*
+*   work in where :     curPicForLabeling_MainWindow
+*
+*   Function Name:      icurPicForLabeling_MainWindow
+*
+*   Discriptions:       This function are used in
+*
+*                       1. basic class member params inits
+*
+*                       2. connecting and trigger others initialization
+*
+*                       3. ...
+*
+*   parameters :        QWidget *parent
+*
+*   return :            void
+*
+**************************************************************************************************/
 
 curPicForLabeling_MainWindow::curPicForLabeling_MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -7,7 +28,8 @@ curPicForLabeling_MainWindow::curPicForLabeling_MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     dialog = new labelQuerydialog;
-    curAllowMaxPointsCount = 5;
+    curAllowMaxPointsCount = USR_DEF_LABEL_METHOD;
+    isSave = 0;
     this->centralWidget()->setMouseTracking(true);//开启鼠标实时追踪，监听鼠标移动事件，默认只有按下时才监听
     this->setMouseTracking(true);
     ticks = 0;
@@ -18,6 +40,18 @@ curPicForLabeling_MainWindow::curPicForLabeling_MainWindow(QWidget *parent) :
     /*每标记完一个轮廓刷新我们的最后的结果，等到用户表达结束或者返回的时候，直接返回拿到的数据*/
     connect(dialog,&labelQuerydialog::finishSelectingLabel,
             this,&curPicForLabeling_MainWindow::pushBackToFinalSigCurPicInfo);
+
+    /*下面的三个信号则是链接标注点的个数问题的*/
+
+    /*链接：切换到标准矩形*/
+    connect(ui->actionchangeToRectMode,&QAction::triggered,this,&curPicForLabeling_MainWindow::setcurAllowMaxPointsCountToStandardRect);
+
+    /*链接：切换到任意四边形*/
+    connect(ui->actionchangeToAnyFourPoly,&QAction::triggered,this,&curPicForLabeling_MainWindow::setcurAllowMaxPointsCountToAnyFourPolys);
+
+    /*链接：切换到任意五边形*/
+    connect(ui->actionchangeToFivePoly,&QAction::triggered,this,&curPicForLabeling_MainWindow::setcurAllowMaxPointsCountToAnyFivePolys);
+
     /*下面的三个信号与槽完成保存工作*/
 
     /*链接：只保存图片*/
@@ -28,43 +62,96 @@ curPicForLabeling_MainWindow::curPicForLabeling_MainWindow(QWidget *parent) :
 
     /*链接：都保存*/
     connect(ui->actionsaveAll,&QAction::triggered,this,&curPicForLabeling_MainWindow::saveForResultCurPicAll);
+
+    /*TODO 书写切换画笔颜色和粗度的selections*/
+
+    /*TODO 书写撤销与清空的selctions和快键*/
 }
 
+// delete and release
 curPicForLabeling_MainWindow::~curPicForLabeling_MainWindow()
 {
     delete ui;
 }
+/**************************************************************************************************
+*
+*   funtions type :     [Group comments] basic_init
+*
+*   work in where :     curPicForLabeling_MainWindow
+*
+*   Function Name:      setcurAllowMaxPointsCount
+*
+*                       [1]setcurAllowMaxPointsCountToStandardRect : helps set to standard rects
+*                       [2]setcurAllowMaxPointsCountToAnyFourPolys : helps set to any four Polygens
+*                       [3]setcurAllowMaxPointsCountToAnyFivePolys : helps set to any five Polygens
+*
+*   Discriptions:       This function are used in set the shape of the polygens
+*   parameters :        QWidget *parent
+*   return :            void
+*
+**************************************************************************************************/
+
+void curPicForLabeling_MainWindow::setcurAllowMaxPointsCountToStandardRect()
+{
+    curAllowMaxPointsCount = 2;
+    QMessageBox::information(this,"注意!","成功切换到了标准矩形模式");
+}
+
+
+void curPicForLabeling_MainWindow::setcurAllowMaxPointsCountToAnyFourPolys()
+{
+    curAllowMaxPointsCount = 4;
+    QMessageBox::information(this,"注意!","成功切换到了任意四边形模式");
+}
+
+void curPicForLabeling_MainWindow::setcurAllowMaxPointsCountToAnyFivePolys()
+{
+    curAllowMaxPointsCount = 5;
+    QMessageBox::information(this,"注意!","成功切换到了任意五边形模式");
+}
+
 
 void curPicForLabeling_MainWindow::paintEvent(QPaintEvent*)
 {
 
     QPainter painter(&pixmap);
+    painter.setPen(usrCurPen);
+    switch(curAllowMaxPointsCount)
+    {
+        // special for standard Rects
+    case CCSTDC_JLU_IMAGE_LABLE_STANDARD_RECT:
+    {
+        for(int i = 0; i < curPicPoly.size();i++)
+        {
+            QRect thisRect;
+            thisRect.setTopLeft(curPicPoly[i][0]);
+            thisRect.setBottomRight(curPicPoly[i][1]);
+            painter.drawRect(thisRect);
+            update();
+        }
 
-    QPen pen;
-    pen.setColor(QColor(0,0,255));
-    pen.setWidth(2);
-    painter.setPen(pen);
-    switch(curAllowMaxPointsCount){
-    case 5:
+        painter.end();
+        emit finishEditingPoints();
+    }break;
+    case CCSTDC_JLU_IMAGE_LABLE_ANYFOURPOLY:
+    case CCSTDC_JLU_IMAGE_LABLE_ANYFIVEPOLY:
+    default:
     {
         // qDebug() << curPicPoly.size();
+
         for(int i = 0; i < curPicPoly.size();i++)
         {
             for(int j = 0; j < curPicPoly[i].size()-1;j++)
             {
-                painter.drawLine(curPicPoly[i][j],curPicPoly[i][j + 1]);
-                update();
+               painter.drawLine(curPicPoly[i][j],curPicPoly[i][j + 1]);
+               update();
             }
             painter.drawLine(curPicPoly[i][curPicPoly[i].size()-1],curPicPoly[i][0]);
-
-
             update();
         }
         painter.end();
         emit finishEditingPoints();
-    }
-    default:
-        break;
+    }break;
     }
     painter.begin(this);//将当前窗体作为画布
     painter.drawPixmap(0, 0, pixmap);//将pixmap画到窗体
@@ -76,10 +163,11 @@ void curPicForLabeling_MainWindow::mousePressEvent(QMouseEvent *e)
 
         switch(curAllowMaxPointsCount)
         {
-
+        case 2:
+        case 4:
         case 5:
         {
-            if(ticks < 4)
+            if(ticks < curAllowMaxPointsCount - 1)
             {
                 qDebug() << "第"<< ticks <<"位置点已找好";
                 qDebug() << e->pos();
@@ -96,12 +184,32 @@ void curPicForLabeling_MainWindow::mousePressEvent(QMouseEvent *e)
                 tempPointsList.clear();
                 dialog->setWindowFlags(Qt::WindowStaysOnTopHint);
                 dialog->show();
-
+                isSave = CCSTDC_JLU_IMAGE_LABLE_UNSAVE;
             }
         }break;
         }
     }
 }
+
+void curPicForLabeling_MainWindow::closeEvent(QCloseEvent* events)
+{
+    if(isSave == CCSTDC_JLU_IMAGE_LABLE_UNSAVE){
+        if(QMessageBox::Yes == QMessageBox::question(this,"嗯？哪里跑？","小子跑路这快，不保存一下?不然会全部消失啊！点击确认以切到保存全部"))
+        {
+            saveForResultCurPicAll();
+            events->accept();
+        }
+        else
+        {
+            finalSigCurPicInfo.first.clear();
+            finalSigCurPicInfo.second.clear();
+            events->ignore();
+        }
+    }
+    events->accept();
+}
+
+
 
 void curPicForLabeling_MainWindow::getPictures(QString curPath)
 {
@@ -110,7 +218,7 @@ void curPicForLabeling_MainWindow::getPictures(QString curPath)
     height_ratio = (float)pixmap.height()/this->height();
     pixmap = pixmap.scaled(this->width(),this->height(),Qt::KeepAspectRatio);
     QPainter painter(&pixmap);
-    painter.drawPixmap(0, 0, pixmap);//添加工具栏的空间
+    painter.drawPixmap(0, 0, pixmap);
     update();
 }
 
@@ -137,6 +245,13 @@ void curPicForLabeling_MainWindow::pushBackToFinalSigCurPicInfo()
     }
 }
 
+void curPicForLabeling_MainWindow::initCurUsrPenFromManuallyLabel(QPen pen)
+{
+    usrCurPen = pen;
+}
+
+
+
 void curPicForLabeling_MainWindow::saveForResultCurPicButPicOnly()
 {
 SAVEAGAIN:
@@ -145,7 +260,7 @@ SAVEAGAIN:
     {
         if(QMessageBox::Yes == QMessageBox::question(this,"Ops！","你真的真的不保存嘛？"))
         {
-            QMessageBox::information(NULL,"确认","放弃保存！");
+            QMessageBox::information(this,"确认","放弃保存！");
             return;
         }
         else{
@@ -165,7 +280,8 @@ SAVEAGAIN:
         }
 
     }
-    QMessageBox::information(NULL,"成功",QString("成功保存到！\n") + usrDefinedSavedPath);
+    QMessageBox::information(this,"成功",QString("成功保存到！\n") + usrDefinedSavedPath);
+    isSave = CCSTDC_JLU_IMAGE_LABLE_SAVE;
 }
 
 void curPicForLabeling_MainWindow::saveForResultCurPicButLabelOnly()
@@ -225,5 +341,6 @@ SAVEAGAIN_LABLES:
 
 void curPicForLabeling_MainWindow::saveForResultCurPicAll()
 {
-
+    saveForResultCurPicButLabelOnly();
+    saveForResultCurPicButPicOnly();
 }

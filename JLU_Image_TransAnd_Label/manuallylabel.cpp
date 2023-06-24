@@ -185,6 +185,7 @@ void manuallyLabel::initshowPicWindows()
 {
     showPicWindows = new curPicForLabeling_MainWindow;
     showPicWindows->getPictures(curViewPicPath);
+    showPicWindows->initCurUsrPenFromManuallyLabel(ui->editPicLable->getInterFaceQPen());
     showPicWindows->setWindowFlags(Qt::WindowStaysOnTopHint);
     showPicWindows->show();
 }
