@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>curPicForLabeling_MainWindow</class>
+ <widget class="QMainWindow" name="curPicForLabeling_MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget"/>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>800</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menu">
+    <property name="title">
+     <string>保存</string>
+    </property>
+    <addaction name="actionendLabeling"/>
+   </widget>
+   <widget class="QMenu" name="saveImediately">
+    <property name="title">
+     <string>马上保存</string>
+    </property>
+    <addaction name="actionsavePicOnly"/>
+    <addaction name="actionsaveLabelsOnly"/>
+    <addaction name="actionsaveAll"/>
+   </widget>
+   <addaction name="menu"/>
+   <addaction name="saveImediately"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionendLabeling">
+   <property name="text">
+    <string>结束标记</string>
+   </property>
+  </action>
+  <action name="actionsavePicOnly">
+   <property name="text">
+    <string>只保存图片</string>
+   </property>
+  </action>
+  <action name="actionsaveLabelsOnly">
+   <property name="text">
+    <string>只保存标签</string>
+   </property>
+   <property name="iconText">
+    <string>只保存标签</string>
+   </property>
+  </action>
+  <action name="actionsaveAll">
+   <property name="text">
+    <string>保存所有</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

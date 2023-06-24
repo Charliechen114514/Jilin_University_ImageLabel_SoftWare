@@ -22,6 +22,8 @@ QT_END_NAMESPACE
 typedef unsigned int LabelIndex;
 typedef QString      LabelName;
 typedef QPair<LabelIndex,LabelName> LabelPair;
+typedef QList<QPoint> ShapePointsList;
+typedef QPair<QList<ShapePointsList>,QList<LabelPair>> Pair_Label_Shape;
 
 class MainWindow : public QMainWindow
 {
@@ -54,7 +56,10 @@ public:
     void removeAllPictures();
     /*替换文件夹*/
     void switchPicDir();
-
+    /*从手动编辑界面种获取当前编辑图像的信息*/
+    void fetchFromManuallyLabel();
+    /*更新标签链表*/
+    void updateLabelListForMainWindow();
 private slots:
 
 
@@ -75,10 +80,7 @@ private slots:
     /*RNM，退图片！-按钮*/
     void on_changeCurPicBtn_clicked();
 
-
-
-
-
+    /*添加新标签的窗口*/
     void on_addNewLebelButton_clicked();
 
 private:
@@ -88,6 +90,8 @@ private:
     unsigned int curViewPicIndex;
     QImage def_png;
     QList<LabelPair> labelList;
-
+    QList<Pair_Label_Shape> wholeCoreData;/*have Existed Data*/
+    labelQuerydialog* getNewLabelDialog;
+    manuallyLabel* editPicWindow;
 };
 #endif // MAINWINDOW_H

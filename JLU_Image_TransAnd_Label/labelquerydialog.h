@@ -13,6 +13,9 @@
 #define CHECKBOXSHOW_INTERNAL_X 10
 #define CHECKBOXSHOW_INTERNAL_Y 10
 
+
+#define LABELEDIT_DEFSHOW "现在尚无标签，添加一个吧！awa"
+#define LABELEDIT_DEF_LABLE "在这里输入你的标签，对了，记得是英文:("
 typedef unsigned int LabelIndex;
 typedef QString      LabelName;
 typedef QPair<LabelIndex,LabelName> LabelPair;
@@ -30,18 +33,28 @@ public:
     void getTheCurrentLabelList(QList<LabelPair> labelListFrowOutward);
     void initTextLableShow();
     void showcheckedBoxListsSelections();
+    LabelPair returnFinalLabelToOutward(){return finalLabel;}
+    QList<LabelPair> reFreshMainWindowsLabelList(){return labelList;}
     ~labelQuerydialog();
+
+signals:
+    void finishSelectingLabel();
 
 private slots:
 
 
     void on_acceptAndAddBtn_clicked();
 
+    void on_rejectAndTryAgainBtn_clicked();
+
+    void on_ensureTheLabelRes_clicked();
+
 private:
     Ui::labelQuerydialog *ui;
     QList<LabelPair> labelList;
     QList<QCheckBox*> checkedBoxLists;
     QButtonGroup* checkBoxLists;
+    LabelPair finalLabel;
 };
 
 #endif // LABELQUERYDIALOG_H
