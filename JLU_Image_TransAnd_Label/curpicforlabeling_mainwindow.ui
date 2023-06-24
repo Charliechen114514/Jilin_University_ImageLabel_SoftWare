@@ -28,6 +28,7 @@
      <string>保存</string>
     </property>
     <addaction name="actionendLabeling"/>
+    <addaction name="actionremoveTheLast"/>
    </widget>
    <widget class="QMenu" name="saveImediately">
     <property name="title">
@@ -110,6 +111,11 @@
   <action name="actionchangeWidth">
    <property name="text">
     <string>更换粗度</string>
+   </property>
+  </action>
+  <action name="actionremoveTheLast">
+   <property name="text">
+    <string>撤销</string>
    </property>
   </action>
  </widget>

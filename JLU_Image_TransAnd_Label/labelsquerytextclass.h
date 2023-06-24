@@ -9,12 +9,10 @@ class labelsQueryTextClass : public smartLineEditClass
     Q_OBJECT
 public:
     explicit labelsQueryTextClass(QWidget *parent = nullptr);
-    unsigned int getTextAndCheckIsValid();
     QString getResultedLabelName();
 signals:
-
+    void finishEditingLabels();
 private:
-    QString resultFromEditing;
 };
 
 #endif // LABELSQUERYTEXTCLASS_H

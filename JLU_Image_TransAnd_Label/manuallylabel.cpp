@@ -3,7 +3,7 @@
 #define UNSAVE  0
 #define SAVE    1
 
-#define DEF_PEN_COLOR QColor(0,0,255)
+#define DEF_PEN_COLOR QColor(255,0,0)
 #define DEF_PEN_CURDRAW_COLOR QColor(255,0,0)
 #define DEF_PRN_WIDTH 3
 
@@ -23,6 +23,20 @@ setMouseTracking(true);
     ui->editPicLable->initUsrPen();
     initTabTextBox();
     connect(showWindow,&setPenWidthWindows::finishedEdit,this,&manuallyLabel::updateCursingelPictureLabelsRecord);
+
+    connect(showPicWindows,&curPicForLabeling_MainWindow::finishEveryThingAndReturnsTheNewLyLabelPair,
+            this,&manuallyLabel::updateExistedLabelList);
+}
+
+
+void manuallyLabel::updateExistedLabelList()
+{
+    usableLabels = showPicWindows->returnThelabelsToManuallyLabel();
+    for(int i = 0; i < usableLabels.size();i++)
+    {
+        qDebug() << usableLabels[i];
+    }
+    updateTextBrowsers();
 }
 
 void manuallyLabel::getPixmapPath(QString path)
@@ -33,6 +47,11 @@ void manuallyLabel::getPixmapPath(QString path)
     ui->editPicLable->setPixmap(QPixmap::fromImage(tmp.scaled(ui->editPicLable->size(),Qt::IgnoreAspectRatio)));
 }
 
+void manuallyLabel::setManuallyWindowLabelList(QList<LabelPair> Labellist)
+{
+    usableLabels = Labellist;
+    updateTextBrowsers();
+}
 void manuallyLabel::initTabTextBox()
 {
     QString colorTextSet = "当前的颜色是: RGB(";
@@ -68,6 +87,17 @@ manuallyLabel::~manuallyLabel()
     delete ui;
 }
 
+void manuallyLabel::closeEvent(QCloseEvent* e){
+    emit refreshMainWindowLabelList();
+    if(QMessageBox::Yes == QMessageBox::question(this,"小小的疑问","你确定离开吗?"))
+    {
+        e->accept();
+    }
+    else{
+        e->ignore();
+    }
+}
+
 
 void manuallyLabel::on_changeColorBtn_clicked()
 {
@@ -84,14 +114,13 @@ void manuallyLabel::on_changeWidthBtn_clicked()
 
 void manuallyLabel::getEditedChangedWidth()
 {
-    unsigned int newWidth = showWindow->getFinalSetPenWidth();
-    ui->editPicLable->getInterFaceQPen().setWidth(newWidth);
+    ui->editPicLable->getInterFaceQPen().setWidth(showWindow->getFinalSetPenWidth());
 }
 
 void manuallyLabel::updateCursingelPictureLabelsRecord()
 {
     singelPictureLabelsRecord = showPicWindows->returnLabelResToManuallyLabel();
-     updateTextBrowsers();
+    updateTextBrowsers();
 }
 
 void manuallyLabel::updateTextBrowsers()
@@ -120,10 +149,10 @@ void manuallyLabel::updateTextBrowsers()
 
     ui->showCurShapeTypeTextBrowser->setText(shapeAndPointText);
     QString showLabel = QString("当前已有标签：") + QString::number(singelPictureLabelsRecord.second.size()) + QString("\n") ;
-    for(int i = 0; i < singelPictureLabelsRecord.second.size(); i++)
+    for(int i = 0; i < usableLabels.size(); i++)
     {
         showLabel += QString("第") + QString::number(i + 1) + QString("张轮廓: 标签种类代号为");
-        showLabel += ( QString::number(singelPictureLabelsRecord.second[i].first)+ QString(": ") + singelPictureLabelsRecord.second[i].second + QString("\n"));
+        showLabel += ( QString::number(usableLabels[i].first)+ QString(": ") + usableLabels[i].second + QString("\n"));
     }
 
     ui->showCurTextLabelCountTextBrowser->setText(showLabel);
@@ -186,12 +215,17 @@ void manuallyLabel::initshowPicWindows()
     showPicWindows = new curPicForLabeling_MainWindow;
     showPicWindows->getPictures(curViewPicPath);
     showPicWindows->initCurUsrPenFromManuallyLabel(ui->editPicLable->getInterFaceQPen());
-    showPicWindows->setWindowFlags(Qt::WindowStaysOnTopHint);
+    showPicWindows->initLabelListFromManuallyLabelWindow(usableLabels);
     showPicWindows->show();
 }
 
 void manuallyLabel::on_activeToLabel_clicked()
 {
     initshowPicWindows();
+
 }
 
+ QList<LabelPair> manuallyLabel::returnUsableLabelPairListToMainWindow()
+{
+    return usableLabels;
+ }

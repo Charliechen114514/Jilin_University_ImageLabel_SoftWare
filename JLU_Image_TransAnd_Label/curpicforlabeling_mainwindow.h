@@ -8,11 +8,12 @@
 #include <QPoint>
 #include <QColor>
 #include <QFileDialog>
+#include <QColorDialog>
 #include <QTextStream>
 
 /*Import the self labelQueryClass for detailed labels*/
 #include <labelquerydialog.h>
-
+#include <setpenwidthwindows.h>
 /* Enumerate the usrChoice, here provides the basic*/
 enum curPicChoosePolyPointsCount{
     CCSTDC_JLU_IMAGE_LABLE_STANDARD_RECT    =  2,
@@ -49,6 +50,12 @@ enum isSaveFlag{
 #define LABLE_TEXT_POS_Y_PREFIX             QString("y: ")
 // 打印点集的后缀
 #define LABLE_TEXT_POINTSET_END_SHOW        QString("}")
+// 默认的保存方法
+#define LABEL_SAVE_DEF_METHOD               saveForResultCurPicButLabelOnly()
+
+// 数字标签的偏移大小
+#define LABEL_INDEX_TEXT_SHOW_OFFSET_X -10
+#define LABEL_INDEX_TEXT_SHOW_OFFSET_Y -10
 
 typedef QList<QPoint> CurPolyPoints;
 typedef unsigned int LabelIndex;
@@ -65,19 +72,36 @@ class curPicForLabeling_MainWindow : public QMainWindow
 
 public:
     explicit curPicForLabeling_MainWindow(QWidget *parent = nullptr);
+
     void getPictures(QString picPath);
+
     ~curPicForLabeling_MainWindow();
+
     QPair<QList<CurPolyPoints>,QList<LabelPair>> returnLabelResToManuallyLabel(){return finalSigCurPicInfo;}
+
+    QList<LabelPair> returnThelabelsToManuallyLabel(){return finalSigCurPicInfo.second;};
+
     QList<CurPolyPoints> curPicPoly;
+
     QList<LabelPair> labels;
+
     QPoint curPos;
     unsigned int curAllowMaxPointsCount;
+
     /*for get the one label pointList*/
     QList<QPoint> tempPointsList;
+
     QPair<QList<QList<QPoint>>,QList<LabelPair>> finalSigCurPicInfo;
 
+    /*初始化画笔*/
     void initCurUsrPenFromManuallyLabel(QPen pen);
 
+    void initLabelListFromManuallyLabelWindow(QList<LabelPair> labelsget);
+
+    /*更改画笔颜色*/
+    void changeUsrCurPenColor();
+    /*更改画笔宽度*/
+    void changeUsrCurPenWidth();
     /*更改标注点数量*/
 
     /*更改到标准矩形*/ /*实际上是只需要标注两个点即可*/
@@ -95,6 +119,10 @@ public:
     void saveForResultCurPicButLabelOnly();
     /*他妈的我全都要*/
     void saveForResultCurPicAll();
+    /*书写标签文件方法*/
+    QString writingMethod();
+    /*ONLY IN DEBUG: 查看所有的已有标签:从当前的窗口得到的*/
+    void qDebugTheLabelRes();
 
 
 protected:
@@ -104,14 +132,19 @@ protected:
     void mousePressEvent(QMouseEvent *);
     /*重写窗口关闭防止没保存导致发颠的窗口提示保存*/
     void closeEvent(QCloseEvent* events);
+
+    void keyPressEvent(QKeyEvent *e);
+
 signals:
     void finishEditingPoints();
-
+    void finishEveryThingAndReturnsTheNewLyLabelPair();
 private:
     Ui::curPicForLabeling_MainWindow    *ui;
     QPixmap                             pixmap;
+    QPixmap                             AfterEditedPixMap;
     QPen                                usrCurPen;
     labelQuerydialog                    *dialog;
+    setPenWidthWindows                  *setPenWidwindow;
     float width_ratio =                 1.0f;
     float height_ratio =                1.0f;
     unsigned int                        ticks;
@@ -119,6 +152,8 @@ private:
 private slots:
     void reLoadLabelPairList();
     void pushBackToFinalSigCurPicInfo();
+    void showSetPenEidthWindow();
+    void removeTheLastPolyAndLabel();
 };
 
 #endif // CURPICFORLABELING_MAINWINDOW_H

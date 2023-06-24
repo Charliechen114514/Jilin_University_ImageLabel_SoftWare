@@ -58,8 +58,14 @@ public:
     void switchPicDir();
     /*从手动编辑界面种获取当前编辑图像的信息*/
     void fetchFromManuallyLabel();
+    /*凑够手动编辑处刷新labelList供下一次使用*/
+    void fetchLabelListFromManuallyLabel();
+
     /*更新标签链表*/
     void updateLabelListForMainWindow();
+
+    /*更新标签文本控件*/
+    void updateCurrentLabelCheckText();
 private slots:
 
 

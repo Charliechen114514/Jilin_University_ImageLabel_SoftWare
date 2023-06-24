@@ -1,6 +1,5 @@
 #ifndef MANUALLYLABEL_H
 #define MANUALLYLABEL_H
-
 #include <QMainWindow>
 #include <QPaintEvent>
 #include <QMouseEvent>
@@ -39,6 +38,7 @@ public:
     /*构造当前的用户描点的🖊*/
     void initUsrPen();
 
+    void setManuallyWindowLabelList(QList<LabelPair> Labellist);
     /**/
     void initTabTextBox();
 
@@ -52,13 +52,22 @@ public:
 
     void updateCursingelPictureLabelsRecord();
 
+    void updateExistedLabelList();
+
     void updateTextBrowsers();
 
     void saveProcess();
 
     Pair_Label_Shape returnSingelPictureLabelsRecord();
+
+    QList<LabelPair> returnUsableLabelPairListToMainWindow();
+
+    void closeEvent(QCloseEvent*);
+
 signals:
     void finishWholeEditing_ReturnCurSinglePagePointsAndLabelInfo();
+    void refreshMainWindowLabelList();
+
 
 private slots:
     void on_changeColorBtn_clicked();
@@ -71,6 +80,7 @@ private slots:
 
     void on_activeToLabel_clicked();
 
+
 private:
     Ui::manuallyLabel *ui;
     QString curViewPicPath;
@@ -79,6 +89,7 @@ private:
     setPenWidthWindows* showWindow;
     ShapePointsList currentPointList;
     LabelPair currentLabelPair;
+    QList<LabelPair> usableLabels;
     Pair_Label_Shape singelPictureLabelsRecord;
     curPicForLabeling_MainWindow* showPicWindows;
 };

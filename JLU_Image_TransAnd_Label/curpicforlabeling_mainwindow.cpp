@@ -6,7 +6,7 @@
 *
 *   work in where :     curPicForLabeling_MainWindow
 *
-*   Function Name:      icurPicForLabeling_MainWindow
+*   Function Name:      curPicForLabeling_MainWindow
 *
 *   Discriptions:       This function are used in
 *
@@ -28,8 +28,10 @@ curPicForLabeling_MainWindow::curPicForLabeling_MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     dialog = new labelQuerydialog;
+    setPenWidwindow = new setPenWidthWindows;
     curAllowMaxPointsCount = USR_DEF_LABEL_METHOD;
     isSave = 0;
+    labels.clear();
     this->centralWidget()->setMouseTracking(true);//开启鼠标实时追踪，监听鼠标移动事件，默认只有按下时才监听
     this->setMouseTracking(true);
     ticks = 0;
@@ -63,10 +65,37 @@ curPicForLabeling_MainWindow::curPicForLabeling_MainWindow(QWidget *parent) :
     /*链接：都保存*/
     connect(ui->actionsaveAll,&QAction::triggered,this,&curPicForLabeling_MainWindow::saveForResultCurPicAll);
 
-    /*TODO 书写切换画笔颜色和粗度的selections*/
+    /*链接：切换颜色*/
+    connect(ui->actionchangeColor,&QAction::triggered,this,&curPicForLabeling_MainWindow::changeUsrCurPenColor);
 
-    /*TODO 书写撤销与清空的selctions和快键*/
+    /*链接： 切换笔的宽度*/
+
+    /*链接：展示内容*/
+    connect(ui->actionchangeWidth,&QAction::triggered,this,&curPicForLabeling_MainWindow::showSetPenEidthWindow);
+
+    /*链接：设置信号*/
+    connect(setPenWidwindow,&setPenWidthWindows::finishedEdit,this,&curPicForLabeling_MainWindow::changeUsrCurPenWidth);
+
+    /*链接：关闭按钮链接*/
+    connect(ui->actionendLabeling,&QAction::triggered,this,&curPicForLabeling_MainWindow::close);
+
+    /*链接：撤销上一个标记*/
+    connect(ui->actionremoveTheLast,&QAction::triggered,this,&curPicForLabeling_MainWindow::removeTheLastPolyAndLabel);
 }
+
+void curPicForLabeling_MainWindow::initLabelListFromManuallyLabelWindow(QList<LabelPair> labelsget)
+{
+    labels = labelsget;
+    dialog-> getTheCurrentLabelList(labels);
+    dialog-> initTextLableShow();
+    dialog-> showcheckedBoxListsSelections();
+    for(int i = 0 ;i < labels.size();i++){
+        qDebug() << "这是初始标签：";
+        qDebug() << labels[i].second;
+    }
+
+}
+
 
 // delete and release
 curPicForLabeling_MainWindow::~curPicForLabeling_MainWindow()
@@ -82,11 +111,15 @@ curPicForLabeling_MainWindow::~curPicForLabeling_MainWindow()
 *   Function Name:      setcurAllowMaxPointsCount
 *
 *                       [1]setcurAllowMaxPointsCountToStandardRect : helps set to standard rects
+*
 *                       [2]setcurAllowMaxPointsCountToAnyFourPolys : helps set to any four Polygens
+*
 *                       [3]setcurAllowMaxPointsCountToAnyFivePolys : helps set to any five Polygens
 *
-*   Discriptions:       This function are used in set the shape of the polygens
+*   Discriptions:       This function are used in setting the shape of the polygens
+*
 *   parameters :        QWidget *parent
+*
 *   return :            void
 *
 **************************************************************************************************/
@@ -110,17 +143,59 @@ void curPicForLabeling_MainWindow::setcurAllowMaxPointsCountToAnyFivePolys()
     QMessageBox::information(this,"注意!","成功切换到了任意五边形模式");
 }
 
+/**************************************************************************************************
+*
+*   funtions type :     basic_init
+*
+*   work in where :     curPicForLabeling_MainWindow
+*
+*   Function Name:      getPictures
+*
+*   Discriptions:       This function are used in make initializations in pixmap
+*
+*   parameters :        QString curPath
+*
+*   return :            void
+*
+**************************************************************************************************/
+void curPicForLabeling_MainWindow::getPictures(QString curPath)
+{
+    pixmap.load(curPath);
+    width_ratio = (float)pixmap.width()/this->width();
+    height_ratio = (float)pixmap.height()/this->height();
+    pixmap = pixmap.scaled(this->width(),this->height(),Qt::KeepAspectRatio);
+    QPainter painter(&pixmap);
+    painter.drawPixmap(0, 0, pixmap);
+    update();
+}
+
+/**************************************************************************************************
+*
+*   funtions type :     overLoad the virtual function
+*
+*   work in where :     curPicForLabeling_MainWindow
+*
+*   Function Name:      paintEvent
+*
+*   Discriptions:       This function are used in paint the pixs
+*
+*   parameters :        QPaintEvent* (no real params are needed!)
+*
+*   return :            void
+*
+**************************************************************************************************/
 
 void curPicForLabeling_MainWindow::paintEvent(QPaintEvent*)
 {
-
-    QPainter painter(&pixmap);
+    QPixmap pix = pixmap.scaled(this->width(),this->height(),Qt::KeepAspectRatio);
+    QPainter painter(&pix);
     painter.setPen(usrCurPen);
     switch(curAllowMaxPointsCount)
     {
         // special for standard Rects
     case CCSTDC_JLU_IMAGE_LABLE_STANDARD_RECT:
     {
+
         for(int i = 0; i < curPicPoly.size();i++)
         {
             QRect thisRect;
@@ -141,6 +216,7 @@ void curPicForLabeling_MainWindow::paintEvent(QPaintEvent*)
 
         for(int i = 0; i < curPicPoly.size();i++)
         {
+            painter.drawText(curPicPoly[i][0] + QPoint(LABEL_INDEX_TEXT_SHOW_OFFSET_X,LABEL_INDEX_TEXT_SHOW_OFFSET_Y),QString::number(i + 1));
             for(int j = 0; j < curPicPoly[i].size()-1;j++)
             {
                painter.drawLine(curPicPoly[i][j],curPicPoly[i][j + 1]);
@@ -149,13 +225,32 @@ void curPicForLabeling_MainWindow::paintEvent(QPaintEvent*)
             painter.drawLine(curPicPoly[i][curPicPoly[i].size()-1],curPicPoly[i][0]);
             update();
         }
-        painter.end();
+
         emit finishEditingPoints();
     }break;
     }
+    painter.end();
     painter.begin(this);//将当前窗体作为画布
-    painter.drawPixmap(0, 0, pixmap);//将pixmap画到窗体
+    painter.drawPixmap(0, 0, pix);//将pixmap画到窗体
+    /*刷新一下编辑过后的，如果用户保存直接取就好*/
+    AfterEditedPixMap = pix;
 }
+
+/**************************************************************************************************
+*
+*   funtions type :     overLoad the virtual function
+*
+*   work in where :     curPicForLabeling_MainWindow
+*
+*   Function Name:      mousePressEvent
+*
+*   Discriptions:       This function are used in getting points by mouseClicking
+*
+*   parameters :        QMouseEvent *e
+*
+*   return :            void
+*
+**************************************************************************************************/
 void curPicForLabeling_MainWindow::mousePressEvent(QMouseEvent *e)
 {
     if(e->button() == Qt::LeftButton){
@@ -169,20 +264,21 @@ void curPicForLabeling_MainWindow::mousePressEvent(QMouseEvent *e)
         {
             if(ticks < curAllowMaxPointsCount - 1)
             {
-                qDebug() << "第"<< ticks <<"位置点已找好";
-                qDebug() << e->pos();
+                //qDebug() << "第"<< ticks <<"位置点已找好";
+                //qDebug() << e->pos();
                 ticks ++;
                 tempPointsList.push_back(e->pos());
             }
             else
             {
-                qDebug() << "第"<< ticks <<"位置点已找好";
-                qDebug() << e->pos();
+                //qDebug() << "第"<< ticks <<"位置点已找好";
+                //qDebug() << e->pos();
                 ticks = 0;
                 tempPointsList.push_back(e->pos());
                 curPicPoly.push_back(tempPointsList);
                 tempPointsList.clear();
                 dialog->setWindowFlags(Qt::WindowStaysOnTopHint);
+                update();
                 dialog->show();
                 isSave = CCSTDC_JLU_IMAGE_LABLE_UNSAVE;
             }
@@ -190,13 +286,28 @@ void curPicForLabeling_MainWindow::mousePressEvent(QMouseEvent *e)
         }
     }
 }
-
+/**************************************************************************************************
+*
+*   funtions type :     overLoad the virtual function
+*
+*   work in where :     curPicForLabeling_MainWindow
+*
+*   Function Name:      closeEvent
+*
+*   Discriptions:       This function are used in ensuring the save action
+*
+*   parameters :        QCloseEvent *e
+*
+*   return :            void
+*
+**************************************************************************************************/
 void curPicForLabeling_MainWindow::closeEvent(QCloseEvent* events)
 {
     if(isSave == CCSTDC_JLU_IMAGE_LABLE_UNSAVE){
         if(QMessageBox::Yes == QMessageBox::question(this,"嗯？哪里跑？","小子跑路这快，不保存一下?不然会全部消失啊！点击确认以切到保存全部"))
         {
-            saveForResultCurPicAll();
+            LABEL_SAVE_DEF_METHOD;
+            emit finishEveryThingAndReturnsTheNewLyLabelPair();
             events->accept();
         }
         else
@@ -206,22 +317,52 @@ void curPicForLabeling_MainWindow::closeEvent(QCloseEvent* events)
             events->ignore();
         }
     }
+    emit finishEveryThingAndReturnsTheNewLyLabelPair();
     events->accept();
 }
 
-
-
-void curPicForLabeling_MainWindow::getPictures(QString curPath)
+/**************************************************************************************************
+*
+*   funtions type :     overLoad the virtual function
+*
+*   work in where :     curPicForLabeling_MainWindow
+*
+*   Function Name:      keyPressEvent
+*
+*   Discriptions:       This function are used in connecting the keyPress Event...
+*                       Futher actions can be added here!
+*
+*   parameters :        QCloseEvent *e
+*
+*   return :            void
+*
+**************************************************************************************************/
+void curPicForLabeling_MainWindow::keyPressEvent(QKeyEvent* e)
 {
-    pixmap.load(curPath);
-    width_ratio = (float)pixmap.width()/this->width();
-    height_ratio = (float)pixmap.height()/this->height();
-    pixmap = pixmap.scaled(this->width(),this->height(),Qt::KeepAspectRatio);
-    QPainter painter(&pixmap);
-    painter.drawPixmap(0, 0, pixmap);
-    update();
+    if (e->key() == Qt::Key_Z && e->modifiers() == Qt::ControlModifier) //Ctrl+Z撤销
+    {
+        removeTheLastPolyAndLabel();
+    }
+    else if(e->key() == Qt::Key_S && e->modifiers() == Qt::ControlModifier){
+        LABEL_SAVE_DEF_METHOD;
+    }
 }
 
+/**************************************************************************************************
+*
+*   funtions type :     adjust params in class
+*
+*   work in where :     curPicForLabeling_MainWindow
+*
+*   Function Name:      reLoadLabelPairList
+*
+*   Discriptions:       get the labels on the
+*
+*   parameters :        QCloseEvent *e
+*
+*   return :            void
+*
+**************************************************************************************************/
 void curPicForLabeling_MainWindow::reLoadLabelPairList()
 {
     labels.push_back(dialog->returnFinalLabelToOutward());
@@ -229,20 +370,9 @@ void curPicForLabeling_MainWindow::reLoadLabelPairList()
 
 void curPicForLabeling_MainWindow::pushBackToFinalSigCurPicInfo()
 {
-    finalSigCurPicInfo.first.push_back(curPicPoly.last());
+    finalSigCurPicInfo.first.push_back(curPicPoly.back());
     finalSigCurPicInfo.second.push_back(dialog->returnFinalLabelToOutward());
-
-    qDebug() << "有 "<<curPicPoly.size() << "轮廓";
-    for(int i = 0; i < curPicPoly.size();i++)
-    {
-        qDebug() << "这是第" << i << "个轮廓:";
-        for(int j = 0; j < curPicPoly[i].size();j++)
-        {
-            qDebug() << curPicPoly[i][j];
-        }
-        qDebug() << "标签是:" << finalSigCurPicInfo.second[i].first<< ": "<< \
-            finalSigCurPicInfo.second[i].second;
-    }
+    qDebugTheLabelRes();
 }
 
 void curPicForLabeling_MainWindow::initCurUsrPenFromManuallyLabel(QPen pen)
@@ -250,12 +380,31 @@ void curPicForLabeling_MainWindow::initCurUsrPenFromManuallyLabel(QPen pen)
     usrCurPen = pen;
 }
 
+void curPicForLabeling_MainWindow::changeUsrCurPenColor()
+{
+    QColorDialog* newDialog = new QColorDialog;
+    newDialog->move(100,200);
 
+    usrCurPen.setColor(newDialog->getColor());
+    delete newDialog;
+    newDialog = nullptr;
+}
+
+void curPicForLabeling_MainWindow::showSetPenEidthWindow()
+{
+    setPenWidwindow->setWindowFlag(Qt::WindowStaysOnTopHint);
+    setPenWidwindow->show();
+}
+
+void curPicForLabeling_MainWindow::changeUsrCurPenWidth()
+{
+    usrCurPen.setWidth(setPenWidwindow->getFinalSetPenWidth());
+}
 
 void curPicForLabeling_MainWindow::saveForResultCurPicButPicOnly()
 {
 SAVEAGAIN:
-    QString usrDefinedSavedPath = QFileDialog::getSaveFileName(this,tr("保存图像"),"./",tr("*.bmp;; *.png;; *.jpg;; *.tif;; *.GIF"));
+    QString usrDefinedSavedPath = QFileDialog::getSaveFileName(this,tr("保存图像"),"./",tr("*.png;; *.jpg;; *.tif;;*.bmp"));
     if(usrDefinedSavedPath.isEmpty())
     {
         if(QMessageBox::Yes == QMessageBox::question(this,"Ops！","你真的真的不保存嘛？"))
@@ -268,7 +417,7 @@ SAVEAGAIN:
         }
     }
 
-    if(!pixmap.save(usrDefinedSavedPath)){
+    if(!AfterEditedPixMap.save(usrDefinedSavedPath)){
         QMessageBox::critical(NULL,"出错了","T_T保存出错了！！！");
         if(QMessageBox::Yes == QMessageBox::question(this,"Ops！","你要放弃嘛?"))
         {
@@ -286,22 +435,11 @@ SAVEAGAIN:
 
 void curPicForLabeling_MainWindow::saveForResultCurPicButLabelOnly()
 {
-    QString resultToText;
-    for(int i = 0; i < finalSigCurPicInfo.second.size();i++)
-    {
-        resultToText = LABLE_TEXT_INDEX_PREFIX + QString::number(finalSigCurPicInfo.second[i].first) + \
-                            LABLE_TEXT_INSERT_SLASH + LABLE_TEXT_LABLENAME_PREFIX + finalSigCurPicInfo.second[i].second + LABLE_TEXT_INSERT_SLASH;
-        QString pointsSetShow = LABLE_TEXT_POINTSET_SHOW_PREFIX + LABLE_TEXT_INSERT_SLASH ;
-        for(int j = 0 ; j < finalSigCurPicInfo.first[i].size(); j++)
-        {
-            pointsSetShow += LABLE_TEXT_POINT_SHOW_PREFIX + QString::number(finalSigCurPicInfo.first[i][j].x())\
-                + LABLE_TEXT_POINT_SPLIT + QString::number(finalSigCurPicInfo.first[i][j].y()) +LABLE_TEXT_POINT_SHOW_SUFFIX+ LABLE_TEXT_INSERT_SLASH;
-        }
-        pointsSetShow += LABLE_TEXT_POINTSET_END_SHOW;
-        resultToText += pointsSetShow;
-    }
+    qDebug() << "进入保存例程";
+    // qDebugTheLabelRes();
+    QString resultToText = writingMethod();
 SAVEAGAIN_LABLES:
-    QString savePath = QFileDialog::getSaveFileName(this,"保存标签文件","",".txt");
+    QString savePath = QFileDialog::getSaveFileName(this,"保存标签文件","./",".txt");
     if(savePath.isEmpty())
     {
         if(QMessageBox::Yes == QMessageBox::question(this,"Ops！","你真的真的不保存嘛？"))
@@ -317,12 +455,13 @@ SAVEAGAIN_LABLES:
     QFile saveFile(savePath) ;
     if(saveFile.open(QIODevice::ReadWrite|QIODevice::Text)){
         QString temp = resultToText; // 写入内容
-
+        qDebug() << temp;
         // 将内容写入文件
         QTextStream out(&saveFile);
         out << temp;
 
         saveFile.close();
+        isSave = CCSTDC_JLU_IMAGE_LABLE_SAVE;
         QMessageBox::information(this,"成功",QString("成功保存到！\n") + savePath);
     }else{
         QMessageBox::critical(NULL,"出错了","T_T保存出错了！！！");
@@ -332,6 +471,7 @@ SAVEAGAIN_LABLES:
             return;
         }
         else{
+            savePath.clear();
             goto SAVEAGAIN_LABLES;
         }
     }
@@ -344,3 +484,52 @@ void curPicForLabeling_MainWindow::saveForResultCurPicAll()
     saveForResultCurPicButLabelOnly();
     saveForResultCurPicButPicOnly();
 }
+
+void curPicForLabeling_MainWindow::qDebugTheLabelRes()
+{
+    qDebug() << "有 "<<finalSigCurPicInfo.first.size() << "轮廓";
+    for(int i = 0; i < finalSigCurPicInfo.first.size();i++)
+    {
+        //qDebug() << "这是第" << i << "个轮廓:";
+        for(int j = 0; j < finalSigCurPicInfo.first[i].size();j++)
+        {
+            qDebug() << finalSigCurPicInfo.first[i][j];
+        }
+        qDebug() << "标签是:" << finalSigCurPicInfo.second[i].first<< ": "<< \
+            finalSigCurPicInfo.second[i].second;
+    }
+}
+
+void curPicForLabeling_MainWindow::removeTheLastPolyAndLabel()
+{
+    if(finalSigCurPicInfo.first.size()!= 0)
+    {
+        finalSigCurPicInfo.first.pop_back();
+        finalSigCurPicInfo.second.pop_back();
+        qDebug() << "已撤销";
+    }
+    update();
+}
+
+QString curPicForLabeling_MainWindow::writingMethod()
+{
+    QString resultToText;
+
+    for(int i = 0; i < finalSigCurPicInfo.first.size();i++)
+    {
+        resultToText += LABLE_TEXT_INDEX_PREFIX + QString::number(finalSigCurPicInfo.second[i].first - 1) + \
+                        LABLE_TEXT_INSERT_SLASH + LABLE_TEXT_LABLENAME_PREFIX + finalSigCurPicInfo.second[i].second + LABLE_TEXT_INSERT_SLASH;
+        QString pointsSetShow = LABLE_TEXT_POINTSET_SHOW_PREFIX + LABLE_TEXT_INSERT_SLASH ;
+        for(int j = 0 ; j < finalSigCurPicInfo.first[i].size(); j++)
+        {
+            pointsSetShow += LABLE_TEXT_POINT_SHOW_PREFIX + QString::number(finalSigCurPicInfo.first[i][j].x())\
+                             + LABLE_TEXT_POINT_SPLIT + QString::number(finalSigCurPicInfo.first[i][j].y()) +LABLE_TEXT_POINT_SHOW_SUFFIX+ LABLE_TEXT_INSERT_SLASH;
+        }
+        pointsSetShow += LABLE_TEXT_POINTSET_END_SHOW + LABLE_TEXT_INSERT_SLASH ;
+        resultToText += pointsSetShow;
+    }
+
+    return resultToText;
+}
+
+

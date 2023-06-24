@@ -36,6 +36,7 @@ void MainWindow::initMainWindow(){
 
     curViewPicIndex = 0;
     getNewLabelDialog = new labelQuerydialog;
+    labelList = {LabelPair(-1,"default")};
     /*完成主要链接*/
     /*链接新添加单张图片*/
     connect(ui->action_newPicture,&QAction::triggered,this,&MainWindow::getPictureFromUsr);
@@ -53,6 +54,8 @@ void MainWindow::initMainWindow(){
     connect(NULL,&manuallyLabel::finishWholeEditing_ReturnCurSinglePagePointsAndLabelInfo,this,&MainWindow::fetchFromManuallyLabel);
     /*通过添加标签获得新的标签*/
     connect(getNewLabelDialog,&labelQuerydialog::finishSelectingLabel,this,&MainWindow::updateLabelListForMainWindow);
+
+
 }
 /**************************************************************************************************
 *   funtions type :     basic_init
@@ -125,6 +128,7 @@ void MainWindow::initBasicQuickShot()
     toDeleteCurPic->setShortcut(tr("Ctrl+D"));
     ui->menubar->addAction(toDeleteCurPic);
     connect(toDeleteCurPic,&QAction::triggered,this,&MainWindow::on_removeCurPictureBtn_clicked);
+
 }
 
 /**************************************************************************************************
@@ -158,7 +162,6 @@ void MainWindow::getPictureFromUsr()
     if(getPicFile.isEmpty()){
         USR_CANCEL_DFT_REACT;
     }
-
     QImage curImage;
     curImage.load(getPicFile);
     if(curImage.isNull()){
@@ -433,18 +436,18 @@ void MainWindow::on_changeToManuallyLable_clicked()
         USR_INVALID_DFT_REACT;
     }
 
-
-
     editPicWindow = new manuallyLabel(pathPics[curViewPicIndex-1]);
     editPicWindow->setWindowTitle("标注模式");
+    connect(editPicWindow,&manuallyLabel::refreshMainWindowLabelList,this,&MainWindow::fetchLabelListFromManuallyLabel);
+    editPicWindow->setManuallyWindowLabelList(labelList);
     editPicWindow->show();
 }
 
 
 void MainWindow::on_addNewLebelButton_clicked()
 {
-    getNewLabelDialog = new labelQuerydialog();
     getNewLabelDialog->getTheCurrentLabelList(labelList);
+    getNewLabelDialog->setTheFistIndex(-1);
     getNewLabelDialog->show();
 }
 
@@ -453,16 +456,25 @@ void MainWindow::fetchFromManuallyLabel()
     wholeCoreData.push_back(editPicWindow->returnSingelPictureLabelsRecord());
 }
 
+void MainWindow::fetchLabelListFromManuallyLabel()
+{
+    labelList = editPicWindow->returnUsableLabelPairListToMainWindow();
+    updateCurrentLabelCheckText();
+}
+
 void MainWindow::updateLabelListForMainWindow()
 {
     labelList = getNewLabelDialog->reFreshMainWindowsLabelList();
-    QString curLableInfoStr;
-    curLableInfoStr += QString("当前已经有:") + QString::number(labelList.size()) + QString("种标签了\n");
+    updateCurrentLabelCheckText();
+}
+
+void MainWindow::updateCurrentLabelCheckText()
+{
+    QString labelTextRes;
     for(int i = 0; i < labelList.size();i++)
     {
-        curLableInfoStr += QString::number(labelList[i].first) + labelList[i].second + QString("\n");
+        labelTextRes += QString::number(labelList[i].first + 1) +QString(": ") + labelList[i].second + QString("\n");
     }
 
-    ui->currentLabelCheck->setText(curLableInfoStr);
-    return;
+    ui->currentLabelCheck->setText(labelTextRes);
 }

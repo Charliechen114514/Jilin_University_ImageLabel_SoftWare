@@ -8,9 +8,9 @@ labelQuerydialog::labelQuerydialog(QWidget *parent) :
     ui(new Ui::labelQuerydialog)
 {
     ui->setupUi(this);
-    labelList.clear();
+    firstIndex = 0;
     ui->getTextedLineEdit->setText(LABELEDIT_DEF_LABLE);
-    connect(ui->getTextedLineEdit,&labelsQueryTextClass::finisheEditedAndReturnRes,
+    connect(ui->getTextedLineEdit,&labelsQueryTextClass::finishEditingLabels,
             this,&labelQuerydialog::on_acceptAndAddBtn_clicked);
     checkBoxLists = new QButtonGroup;
 }
@@ -53,35 +53,25 @@ void labelQuerydialog::on_acceptAndAddBtn_clicked()
         QMessageBox::critical(NULL,"你小子","小子，还没label呢点个锤子");
         return;
     }
-
-
-    labelList.append(QPair<LabelIndex,LabelName>(labelList.size(),ui->getTextedLineEdit->getResultedLabelName()));
-    for(int i=0; i<labelList.size(); i++)
+    /*成功优化：不必每次链表去重！*/
+    QString curLabelName = ui->getTextedLineEdit->getResultedLabelName();
+    qDebug() << "拿到标签" << curLabelName;
+    bool isAlreadyExisted = false;
+    for(int i = 0; i < labelList.size(); i++)
     {
-        for(int j=i+1; j<labelList.size(); j++)
+        if(labelList.at(i).second == curLabelName)
         {
-            if(labelList.at(i).second == labelList.at(j).second)
-            {
-                labelList.removeAt(j);
-                j--;
-            }
+            QMessageBox::warning(this,"注意！","已经存在这个标签了！");
+            isAlreadyExisted = true;
         }
     }
-    // qDebug() << labelList.size() << ui->getTextedLineEdit->getResultedLabelName();
-    QCheckBox* newBox = new QCheckBox();
-    QString checkBoxText = QString::number(labelList.size()) + QString(":") + ui->getTextedLineEdit->getResultedLabelName();
-    newBox->setText(checkBoxText);
-    checkedBoxLists.append(newBox);
-    for(int i=0; i<checkedBoxLists.size(); i++)
+    if(isAlreadyExisted == false)
     {
-        for(int j=i+1; j<checkedBoxLists.size(); j++)
-        {
-            if(checkedBoxLists.at(i)->text() == checkedBoxLists.at(j)->text())
-            {
-                checkedBoxLists.removeAt(j);
-                j--;
-            }
-        }
+        labelList.append(QPair<LabelIndex,LabelName>(labelList.size() - 1,curLabelName));
+        QCheckBox* newBox = new QCheckBox();
+        QString checkBoxText = QString::number(static_cast<const int>(labelList.size()) + firstIndex) + QString(":") + ui->getTextedLineEdit->getResultedLabelName();
+        newBox->setText(checkBoxText);
+        checkedBoxLists.append(newBox);
     }
     showcheckedBoxListsSelections();
 }

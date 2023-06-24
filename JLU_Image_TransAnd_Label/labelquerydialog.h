@@ -35,11 +35,12 @@ public:
     void showcheckedBoxListsSelections();
     LabelPair returnFinalLabelToOutward(){return finalLabel;}
     QList<LabelPair> reFreshMainWindowsLabelList(){return labelList;}
+    void setTheFistIndex(unsigned int index){firstIndex = index;};
     ~labelQuerydialog();
 
 signals:
     void finishSelectingLabel();
-
+    void newLabelEnlists();
 private slots:
 
 
@@ -55,6 +56,7 @@ private:
     QList<QCheckBox*> checkedBoxLists;
     QButtonGroup* checkBoxLists;
     LabelPair finalLabel;
+    unsigned int firstIndex;
 };
 
 #endif // LABELQUERYDIALOG_H
