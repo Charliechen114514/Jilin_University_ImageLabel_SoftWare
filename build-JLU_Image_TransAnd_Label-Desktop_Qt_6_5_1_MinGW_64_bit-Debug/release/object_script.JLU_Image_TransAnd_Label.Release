@@ -1,0 +1,15 @@
+release/editpiclabelclass.o
+release/labelquerydialog.o
+release/labelsquerytextclass.o
+release/main.o
+release/mainwindow.o
+release/manuallylabel.o
+release/setpenwidthwindows.o
+release/smartlineeditclass.o
+release/moc_editpiclabelclass.o
+release/moc_labelquerydialog.o
+release/moc_labelsquerytextclass.o
+release/moc_mainwindow.o
+release/moc_manuallylabel.o
+release/moc_setpenwidthwindows.o
+release/moc_smartlineeditclass.o
