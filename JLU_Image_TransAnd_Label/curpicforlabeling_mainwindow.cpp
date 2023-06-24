@@ -28,6 +28,7 @@ curPicForLabeling_MainWindow::curPicForLabeling_MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     dialog = new labelQuerydialog;
+    dialog->move(100,200);
     setPenWidwindow = new setPenWidthWindows;
     curAllowMaxPointsCount = USR_DEF_LABEL_METHOD;
     isSave = 0;
@@ -126,6 +127,10 @@ curPicForLabeling_MainWindow::~curPicForLabeling_MainWindow()
 
 void curPicForLabeling_MainWindow::setcurAllowMaxPointsCountToStandardRect()
 {
+    if(isSave == CCSTDC_JLU_IMAGE_LABLE_UNSAVE){
+        QMessageBox::information(NULL,"抱歉","什么懒狗不写这个功能（别骂了不支持混合标点）");
+        return;
+    }
     curAllowMaxPointsCount = 2;
     QMessageBox::information(this,"注意!","成功切换到了标准矩形模式");
 }
@@ -133,12 +138,20 @@ void curPicForLabeling_MainWindow::setcurAllowMaxPointsCountToStandardRect()
 
 void curPicForLabeling_MainWindow::setcurAllowMaxPointsCountToAnyFourPolys()
 {
+    if(isSave == CCSTDC_JLU_IMAGE_LABLE_UNSAVE){
+        QMessageBox::information(NULL,"抱歉","什么懒狗不写这个功能（别骂了不支持混合标点）");
+        return;
+    }
     curAllowMaxPointsCount = 4;
     QMessageBox::information(this,"注意!","成功切换到了任意四边形模式");
 }
 
 void curPicForLabeling_MainWindow::setcurAllowMaxPointsCountToAnyFivePolys()
 {
+    if(isSave == CCSTDC_JLU_IMAGE_LABLE_UNSAVE){
+        QMessageBox::information(NULL,"抱歉","什么懒狗不写这个功能（别骂了不支持混合标点）");
+        return;
+    }
     curAllowMaxPointsCount = 5;
     QMessageBox::information(this,"注意!","成功切换到了任意五边形模式");
 }
@@ -365,7 +378,13 @@ void curPicForLabeling_MainWindow::keyPressEvent(QKeyEvent* e)
 **************************************************************************************************/
 void curPicForLabeling_MainWindow::reLoadLabelPairList()
 {
-    labels.push_back(dialog->returnFinalLabelToOutward());
+    LabelPair getLabel = dialog->returnFinalLabelToOutward();
+    for(int i = 0; i < labels.size();i++){
+        if(getLabel.second == labels[i].second){
+            return;
+        }
+    }
+    labels.push_back(getLabel);
 }
 
 void curPicForLabeling_MainWindow::pushBackToFinalSigCurPicInfo()
@@ -517,7 +536,7 @@ QString curPicForLabeling_MainWindow::writingMethod()
 
     for(int i = 0; i < finalSigCurPicInfo.first.size();i++)
     {
-        resultToText += LABLE_TEXT_INDEX_PREFIX + QString::number(finalSigCurPicInfo.second[i].first - 1) + \
+        resultToText += LABLE_TEXT_INDEX_PREFIX + QString::number(finalSigCurPicInfo.second[i].first) + \
                         LABLE_TEXT_INSERT_SLASH + LABLE_TEXT_LABLENAME_PREFIX + finalSigCurPicInfo.second[i].second + LABLE_TEXT_INSERT_SLASH;
         QString pointsSetShow = LABLE_TEXT_POINTSET_SHOW_PREFIX + LABLE_TEXT_INSERT_SLASH ;
         for(int j = 0 ; j < finalSigCurPicInfo.first[i].size(); j++)

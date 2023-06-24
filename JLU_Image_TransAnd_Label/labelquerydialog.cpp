@@ -1,8 +1,5 @@
 #include "labelquerydialog.h"
 #include "ui_labelquerydialog.h"
-
-
-
 labelQuerydialog::labelQuerydialog(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::labelQuerydialog)
@@ -23,6 +20,35 @@ labelQuerydialog::~labelQuerydialog()
 void labelQuerydialog::getTheCurrentLabelList(QList<LabelPair> labelListFrowOutward)
 {
     labelList = labelListFrowOutward;
+//    for(int i = 0; i < labelList.size(); i++)
+//    {
+//        qDebug() << labelList[i].first << ":  " << labelList[i].second;
+//    }
+}
+
+void labelQuerydialog::removePossibleRepititionLabelsAndReEnum()
+{
+    if(labelList.empty())
+    {
+        return;
+    }
+
+    for(int i = 0; i < labelList.size(); i++)
+    {
+        for(int j = i; j < labelList.size(); j++)
+        {
+            if(labelList[i].second == labelList[j].second)
+            {
+                labelList.removeAt(j);
+                j--;
+            }
+        }
+    }
+
+    for(int i = 0; i < labelList.size(); i++)
+    {
+        labelList[i].first = i + 1;
+    }
 }
 
 void labelQuerydialog::initTextLableShow()
@@ -70,6 +96,12 @@ void labelQuerydialog::on_acceptAndAddBtn_clicked()
         labelList.append(QPair<LabelIndex,LabelName>(labelList.size() - 1,curLabelName));
         QCheckBox* newBox = new QCheckBox();
         QString checkBoxText = QString::number(static_cast<const int>(labelList.size()) + firstIndex) + QString(":") + ui->getTextedLineEdit->getResultedLabelName();
+        qDebug() << "准备添加复选框内容" << checkBoxText;
+        qDebug() << labelList.size();
+            for(int i = 0; i < labelList.size(); i++)
+            {
+                qDebug() << labelList[i].first << ":  " << labelList[i].second;
+            }
         newBox->setText(checkBoxText);
         checkedBoxLists.append(newBox);
     }
@@ -103,6 +135,7 @@ void labelQuerydialog::showcheckedBoxListsSelections()
             checkBoxLists->addButton(checkedBoxLists[i],i);
         }
     }
+    update();
 }
 
 void labelQuerydialog::on_rejectAndTryAgainBtn_clicked()
@@ -115,7 +148,7 @@ void labelQuerydialog::on_ensureTheLabelRes_clicked()
 {
     if(checkBoxLists->checkedId() == -1)
     {
-        QMessageBox::critical(NULL,"啊？","你这不还没选标签嘛，急啥啊?");
+        QMessageBox::critical(this,"啊？","你这不还没选标签嘛，急啥啊?");
         return;
     }
 

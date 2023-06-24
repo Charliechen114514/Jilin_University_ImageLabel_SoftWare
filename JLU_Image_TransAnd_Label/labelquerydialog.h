@@ -37,7 +37,7 @@ public:
     QList<LabelPair> reFreshMainWindowsLabelList(){return labelList;}
     void setTheFistIndex(unsigned int index){firstIndex = index;};
     ~labelQuerydialog();
-
+    void removePossibleRepititionLabelsAndReEnum();
 signals:
     void finishSelectingLabel();
     void newLabelEnlists();

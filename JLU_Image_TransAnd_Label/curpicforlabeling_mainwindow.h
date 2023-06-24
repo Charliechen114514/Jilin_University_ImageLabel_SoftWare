@@ -11,10 +11,11 @@
 #include <QColorDialog>
 #include <QTextStream>
 
-/*Import the self labelQueryClass for detailed labels*/
+/* 导入自己书写的窗口从而方便标注 */
 #include <labelquerydialog.h>
 #include <setpenwidthwindows.h>
 /* Enumerate the usrChoice, here provides the basic*/
+/* 枚举可能的情况 */
 enum curPicChoosePolyPointsCount{
     CCSTDC_JLU_IMAGE_LABLE_STANDARD_RECT    =  2,
     CCSTDC_JLU_IMAGE_LABLE_ANYFOURPOLY      =  4,
@@ -22,6 +23,7 @@ enum curPicChoosePolyPointsCount{
 };
 
 /* Enumerate the save Flags*/
+/* 是否保存的标志*/
 enum isSaveFlag{
     CCSTDC_JLU_IMAGE_LABLE_SAVE             = 1,
     CCSTDC_JLU_IMAGE_LABLE_UNSAVE           = 0
@@ -79,10 +81,10 @@ public:
 
     QPair<QList<CurPolyPoints>,QList<LabelPair>> returnLabelResToManuallyLabel(){return finalSigCurPicInfo;}
 
-    QList<LabelPair> returnThelabelsToManuallyLabel(){return finalSigCurPicInfo.second;};
+    QList<LabelPair> returnThelabelsToManuallyLabel(){return labels;};
 
     QList<CurPolyPoints> curPicPoly;
-
+    /*专门存放种类标签*/
     QList<LabelPair> labels;
 
     QPoint curPos;

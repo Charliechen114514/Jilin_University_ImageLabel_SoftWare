@@ -10,8 +10,11 @@
 #include <QColor>
 #include<QColorDialog>
 #include <setpenwidthwindows.h>
-#include<labelquerydialog.h>
-#include<QFileDialog>
+#include <labelquerydialog.h>
+#include <QFileDialog>
+#define DEF_PEN_COLOR QColor(255,0,0)
+#define DEF_PEN_CURDRAW_COLOR QColor(255,0,0)
+#define DEF_PRN_WIDTH 3
 #define USR_DEF_LABLE_COUNT_TEXT "当前有标签 0 种"
 #include <curpicforlabeling_mainwindow.h>
 
@@ -56,8 +59,6 @@ public:
 
     void updateTextBrowsers();
 
-    void saveProcess();
-
     Pair_Label_Shape returnSingelPictureLabelsRecord();
 
     QList<LabelPair> returnUsableLabelPairListToMainWindow();
@@ -74,17 +75,15 @@ private slots:
 
     void on_changeWidthBtn_clicked();
 
-    void on_cancelAllAndBackToMainWindow_clicked();
-
-    void on_saveAllAndExportTheImage_clicked();
 
     void on_activeToLabel_clicked();
 
 
+    void on_cancelAllAndBackToMainWindow_clicked();
+
 private:
     Ui::manuallyLabel *ui;
     QString curViewPicPath;
-    SAVESIG isSave;
     QPixmap curPixPicMap;
     setPenWidthWindows* showWindow;
     ShapePointsList currentPointList;
@@ -92,6 +91,7 @@ private:
     QList<LabelPair> usableLabels;
     Pair_Label_Shape singelPictureLabelsRecord;
     curPicForLabeling_MainWindow* showPicWindows;
+    bool isIgnoredAllAndLeave;
 };
 
 #endif // MANUALLYLABEL_H

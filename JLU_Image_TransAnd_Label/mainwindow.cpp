@@ -35,8 +35,7 @@ MainWindow::~MainWindow()
 void MainWindow::initMainWindow(){
 
     curViewPicIndex = 0;
-    getNewLabelDialog = new labelQuerydialog;
-    labelList = {LabelPair(-1,"default")};
+    getNewLabelDialog = NULL;
     /*完成主要链接*/
     /*链接新添加单张图片*/
     connect(ui->action_newPicture,&QAction::triggered,this,&MainWindow::getPictureFromUsr);
@@ -49,11 +48,8 @@ void MainWindow::initMainWindow(){
     /*链接替换图片*/
     connect(ui->actionswitchCurPicture,&QAction::triggered,this,&MainWindow::on_changeCurPicBtn_clicked);
     /*链接替换文件夹*/
-    connect(ui->actionswitchCurDir,&QAction::triggered,this,&MainWindow::switchPicDir);
-    /*刷新单张手工编辑完成的数据，这是通过接受返回单张图片的信息得到的*/
-    connect(NULL,&manuallyLabel::finishWholeEditing_ReturnCurSinglePagePointsAndLabelInfo,this,&MainWindow::fetchFromManuallyLabel);
-    /*通过添加标签获得新的标签*/
-    connect(getNewLabelDialog,&labelQuerydialog::finishSelectingLabel,this,&MainWindow::updateLabelListForMainWindow);
+    connect(ui->actionswitchCurDir,&QAction::triggered,this,&MainWindow::switchPicDir);    
+
 
 
 }
@@ -422,8 +418,8 @@ void MainWindow::removeAllPictures()
 *   funtions type :     switchWindow
 *   work in where :     MainWindow      ->      editPicWindow
 *   Function Name:      on_removeCurPictureBtn_clicked
-*   Discriptions:       when pressing the "移除所有图片" menuSign, this function works and the connections are
-*                       linked in the initMainWindows
+*   Discriptions:       when pressing the "移除所有图片" menuSign, this function works and the
+*                       connections are linked in the initMainWindows
 *   parameters :        void
 *   return :            void
 **************************************************************************************************/
@@ -439,6 +435,9 @@ void MainWindow::on_changeToManuallyLable_clicked()
     editPicWindow = new manuallyLabel(pathPics[curViewPicIndex-1]);
     editPicWindow->setWindowTitle("标注模式");
     connect(editPicWindow,&manuallyLabel::refreshMainWindowLabelList,this,&MainWindow::fetchLabelListFromManuallyLabel);
+    /*刷新单张手工编辑完成的数据，这是通过接受返回单张图片的信息得到的*/
+    connect(editPicWindow,&manuallyLabel::finishWholeEditing_ReturnCurSinglePagePointsAndLabelInfo,this,&MainWindow::fetchFromManuallyLabel);
+
     editPicWindow->setManuallyWindowLabelList(labelList);
     editPicWindow->show();
 }
@@ -446,25 +445,43 @@ void MainWindow::on_changeToManuallyLable_clicked()
 
 void MainWindow::on_addNewLebelButton_clicked()
 {
+    getNewLabelDialog = new labelQuerydialog;
+    /*通过添加标签获得新的标签*/
+    connect(getNewLabelDialog,&labelQuerydialog::finishSelectingLabel,this,&MainWindow::updateLabelListForMainWindow);;
     getNewLabelDialog->getTheCurrentLabelList(labelList);
-    getNewLabelDialog->setTheFistIndex(-1);
+    getNewLabelDialog->initTextLableShow();
+    getNewLabelDialog->showcheckedBoxListsSelections();
+    getNewLabelDialog->setTheFistIndex(0);
     getNewLabelDialog->show();
 }
 
 void MainWindow::fetchFromManuallyLabel()
 {
-    wholeCoreData.push_back(editPicWindow->returnSingelPictureLabelsRecord());
+    Pair_Label_Shape getter = editPicWindow->returnSingelPictureLabelsRecord();
+    if(getter.first.isEmpty() || getter.second.isEmpty()){
+        qDebug() << "检测到取消操作";
+        return;
+    }
+    wholeCoreData.push_back(getter);
 }
 
 void MainWindow::fetchLabelListFromManuallyLabel()
 {
-    labelList = editPicWindow->returnUsableLabelPairListToMainWindow();
+    QList<LabelPair> labelListget = editPicWindow->returnUsableLabelPairListToMainWindow();
+    if(!labelListget.isEmpty()){
+        qDebug() << "不是取消操作";
+        labelList = labelListget;
+    }
     updateCurrentLabelCheckText();
+    getNewLabelDialog ->getTheCurrentLabelList(labelList);
 }
 
 void MainWindow::updateLabelListForMainWindow()
 {
     labelList = getNewLabelDialog->reFreshMainWindowsLabelList();
+    for(int i = 0; i < labelList.size(); i++){
+        labelList[i].first = i + 1;
+    }
     updateCurrentLabelCheckText();
 }
 
@@ -473,8 +490,9 @@ void MainWindow::updateCurrentLabelCheckText()
     QString labelTextRes;
     for(int i = 0; i < labelList.size();i++)
     {
-        labelTextRes += QString::number(labelList[i].first + 1) +QString(": ") + labelList[i].second + QString("\n");
+        labelTextRes += QString::number(labelList[i].first) +QString(": ") + labelList[i].second + QString("\n");
     }
 
     ui->currentLabelCheck->setText(labelTextRes);
+    update();
 }

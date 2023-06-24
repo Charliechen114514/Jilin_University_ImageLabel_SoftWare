@@ -1,11 +1,6 @@
 #include "manuallylabel.h"
 #include "ui_manuallylabel.h"
-#define UNSAVE  0
-#define SAVE    1
 
-#define DEF_PEN_COLOR QColor(255,0,0)
-#define DEF_PEN_CURDRAW_COLOR QColor(255,0,0)
-#define DEF_PRN_WIDTH 3
 
 manuallyLabel::manuallyLabel(QString curViewPath,QWidget *parent) :
     QMainWindow(parent),
@@ -16,16 +11,14 @@ setMouseTracking(true);
     tmp.load(curViewPath);
     showWindow = new setPenWidthWindows;
     curViewPicPath = curViewPath;
+    isIgnoredAllAndLeave = false;
     ui->setupUi(this);
-    isSave = UNSAVE;
     ui->editPicLable->initPixelMap(curViewPath);
     ui->editPicLable->setPixmap(QPixmap::fromImage(tmp.scaled(ui->editPicLable->size(),Qt::IgnoreAspectRatio)));
     ui->editPicLable->initUsrPen();
+    qDebug() << "初始化显示标签框代码";
     initTabTextBox();
     connect(showWindow,&setPenWidthWindows::finishedEdit,this,&manuallyLabel::updateCursingelPictureLabelsRecord);
-
-    connect(showPicWindows,&curPicForLabeling_MainWindow::finishEveryThingAndReturnsTheNewLyLabelPair,
-            this,&manuallyLabel::updateExistedLabelList);
 }
 
 
@@ -88,16 +81,31 @@ manuallyLabel::~manuallyLabel()
 }
 
 void manuallyLabel::closeEvent(QCloseEvent* e){
-    emit refreshMainWindowLabelList();
+
+    if(isIgnoredAllAndLeave){
+        e->accept();
+    }
+
     if(QMessageBox::Yes == QMessageBox::question(this,"小小的疑问","你确定离开吗?"))
     {
+        emit refreshMainWindowLabelList();
         e->accept();
     }
     else{
         e->ignore();
     }
 }
-
+void qDebugTheLabelList(QList<LabelPair> listPair)
+{
+    if(listPair.isEmpty()){
+        qDebug() << "LabelList is NULL";
+        return;
+    }
+    for(int i = 0; i < listPair.size();i++)
+    {
+        qDebug() << "标签号" <<  listPair[i].first << " 标签名称: " << listPair[i].second;
+    }
+}
 
 void manuallyLabel::on_changeColorBtn_clicked()
 {
@@ -148,66 +156,20 @@ void manuallyLabel::updateTextBrowsers()
                                 + QString("边形");
 
     ui->showCurShapeTypeTextBrowser->setText(shapeAndPointText);
-    QString showLabel = QString("当前已有标签：") + QString::number(singelPictureLabelsRecord.second.size()) + QString("\n") ;
+    QString showLabel = QString("当前已有标签：") + QString::number(usableLabels.size()) + QString("\n") ;
     for(int i = 0; i < usableLabels.size(); i++)
     {
-        showLabel += QString("第") + QString::number(i + 1) + QString("张轮廓: 标签种类代号为");
+        showLabel += QString("第") + QString::number(i + 1) + QString("种标签，种类代号为");
         showLabel += ( QString::number(usableLabels[i].first)+ QString(": ") + usableLabels[i].second + QString("\n"));
     }
 
     ui->showCurTextLabelCountTextBrowser->setText(showLabel);
 }
 
-void manuallyLabel::on_cancelAllAndBackToMainWindow_clicked()
-{
-    if(isSave == UNSAVE)
-    {
-        if(QMessageBox::Yes == QMessageBox::question(NULL,"喂！！等等！","拜托兄弟，真的不保存一下嘛(点击确定保存哦)，你做出的更改会消失很久很久的!"))
-        {
-            saveProcess();
-            isSave = SAVE;
-        }
-
-    }
-}
-
-void manuallyLabel::saveProcess()
-{
-    if(curPixPicMap.isNull())
-    {
-        QMessageBox::critical(NULL,"阿哲","嗯，我很是怀疑你怎么到达这里的...快点反馈给我bug!");
-        return;
-    }
-Cancel:
-    QString savePath = QFileDialog::getExistingDirectory(this,"选择目录");
-    if(savePath.isNull()){
-        if(QMessageBox::Yes == QMessageBox::question(NULL,"确认一下","不保存了？"))
-        {
-            return;
-        }
-        else
-        {
-            goto Cancel;
-        }
-    }
-
-    savePath += QString("/") + (curViewPicPath.split("/").last().split(".").first());
-    savePath += QString("afterLabeled.png");
-    qDebug()<< savePath;
-
-    qDebug()<<ui->editPicLable->getAfterEditedPixMap().save(savePath);
-
-    return;
-}
 
 Pair_Label_Shape manuallyLabel::returnSingelPictureLabelsRecord()
 {
     return Pair_Label_Shape(singelPictureLabelsRecord);
-}
-
-void manuallyLabel::on_saveAllAndExportTheImage_clicked()
-{
-    saveProcess();
 }
 
 void manuallyLabel::initshowPicWindows()
@@ -216,16 +178,27 @@ void manuallyLabel::initshowPicWindows()
     showPicWindows->getPictures(curViewPicPath);
     showPicWindows->initCurUsrPenFromManuallyLabel(ui->editPicLable->getInterFaceQPen());
     showPicWindows->initLabelListFromManuallyLabelWindow(usableLabels);
+    connect(showPicWindows,&curPicForLabeling_MainWindow::finishEveryThingAndReturnsTheNewLyLabelPair,
+            this,&manuallyLabel::updateExistedLabelList);
     showPicWindows->show();
 }
 
 void manuallyLabel::on_activeToLabel_clicked()
 {
     initshowPicWindows();
-
 }
 
  QList<LabelPair> manuallyLabel::returnUsableLabelPairListToMainWindow()
 {
     return usableLabels;
  }
+
+void manuallyLabel::on_cancelAllAndBackToMainWindow_clicked()
+{
+    usableLabels.clear();
+    singelPictureLabelsRecord.first.clear();
+    singelPictureLabelsRecord.second.clear();
+    isIgnoredAllAndLeave = true;
+    this->close();
+}
+

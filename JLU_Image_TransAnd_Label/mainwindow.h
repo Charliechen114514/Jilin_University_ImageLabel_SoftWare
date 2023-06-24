@@ -9,7 +9,8 @@
 #include<QList>
 #include<opencv2/opencv.hpp>
 
-#include<manuallylabel.h>
+#include <labelclass.h>
+#include <manuallylabel.h>
 #include<labelquerydialog.h>
 QT_BEGIN_NAMESPACE
 
@@ -101,3 +102,4 @@ private:
     manuallyLabel* editPicWindow;
 };
 #endif // MAINWINDOW_H
+
