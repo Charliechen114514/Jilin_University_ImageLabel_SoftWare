@@ -36,6 +36,7 @@ void MainWindow::initMainWindow(){
 
     curViewPicIndex = 0;
     getNewLabelDialog = NULL;
+    helpWindows = new helpAndCheck(this);
     /*完成主要链接*/
     /*链接新添加单张图片*/
     connect(ui->action_newPicture,&QAction::triggered,this,&MainWindow::getPictureFromUsr);
@@ -54,6 +55,11 @@ void MainWindow::initMainWindow(){
 
     connect(ui->actiondeleteOldLabel,&QAction::triggered,this,&MainWindow::on_manageLabelButton_clicked);
 
+    connect(ui->checkQuickKeySequence,&QAction::triggered,helpWindows,&helpAndCheck::show);
+
+    connect(ui->actioncheckAuthor,&QAction::triggered,this,&MainWindow::viewWhoMakeIt);
+
+    connect(ui->actionfindShitBugAndsakForMail,&QAction::triggered,this,&MainWindow::findShitsAndTellAuthors);
 }
 /**************************************************************************************************
 *   funtions type :     basic_init
@@ -507,4 +513,14 @@ void MainWindow::updateCurrentLabelCheckText()
 
     ui->currentLabelCheck->setText(labelTextRes);
     update();
+}
+
+void MainWindow::viewWhoMakeIt()
+{
+    QMessageBox::about(this,"啊哈！欢迎！","这是来自吉林大学的Charliechen114514和changshanzhao制作的小小的标注工具!");
+}
+
+void MainWindow::findShitsAndTellAuthors()
+{
+    QMessageBox::information(this,"啊哈！找对地方了","Charliechen的邮箱:chengh1922.jlu.edu.cn\nchangshanzhao的还得等等");
 }

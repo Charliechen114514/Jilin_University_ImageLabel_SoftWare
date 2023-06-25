@@ -301,12 +301,13 @@ li.checked::marker { content: &quot;\2612&quot;; }
      <string>帮助</string>
     </property>
     <addaction name="checkQuickKeySequence"/>
+    <addaction name="actionfindShitBugAndsakForMail"/>
    </widget>
    <widget class="QMenu" name="menu_6">
     <property name="title">
      <string>关于...</string>
     </property>
-    <addaction name="actioncheckIAuthor"/>
+    <addaction name="actioncheckAuthor"/>
    </widget>
    <addaction name="menu"/>
    <addaction name="menu_2"/>
@@ -396,9 +397,14 @@ li.checked::marker { content: &quot;\2612&quot;; }
     <string>查阅快捷键</string>
    </property>
   </action>
-  <action name="actioncheckIAuthor">
+  <action name="actioncheckAuthor">
    <property name="text">
     <string>看看这玩意谁做的</string>
+   </property>
+  </action>
+  <action name="actionfindShitBugAndsakForMail">
+   <property name="text">
+    <string>发现了bug然后问候作者</string>
    </property>
   </action>
  </widget>

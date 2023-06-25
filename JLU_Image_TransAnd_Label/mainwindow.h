@@ -11,7 +11,8 @@
 
 #include <labelclass.h>
 #include <manuallylabel.h>
-#include<labelquerydialog.h>
+#include <labelquerydialog.h>
+#include "helpandcheck.h"
 QT_BEGIN_NAMESPACE
 
 using namespace cv;
@@ -67,6 +68,10 @@ public:
 
     /*更新标签文本控件*/
     void updateCurrentLabelCheckText();
+    /*看看是谁做了这个工具*/
+    void viewWhoMakeIt();
+    /*我去，危*/
+    void findShitsAndTellAuthors();
 private slots:
 
 
@@ -100,6 +105,7 @@ private:
     QList<Pair_Label_Shape> wholeCoreData;/*have Existed Data*/
     labelQuerydialog* getNewLabelDialog;
     manuallyLabel* editPicWindow;
+    helpAndCheck* helpWindows;
 };
 #endif // MAINWINDOW_H
 
