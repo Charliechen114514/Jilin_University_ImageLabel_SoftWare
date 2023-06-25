@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'mainwindow.h'
 **
-** Created by: The Qt Meta Object Compiler version 68 (Qt 6.5.1)
+** Created by: The Qt Meta Object Compiler version 68 (Qt 6.6.0)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
@@ -21,7 +21,7 @@ QT_BEGIN_MOC_NAMESPACE
 #if !defined(Q_MOC_OUTPUT_REVISION)
 #error "The header file 'mainwindow.h' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 68
-#error "This file was generated using the moc from 6.5.1. It"
+#error "This file was generated using the moc from 6.6.0. It"
 #error "cannot be used with the include files from this version of Qt."
 #error "(The moc has changed too much.)"
 #endif
@@ -45,7 +45,7 @@ static constexpr auto qt_meta_stringdata_CLASSMainWindowENDCLASS = QtMocHelpers:
     "on_changeToManuallyLable_clicked",
     "on_removeCurPictureBtn_clicked",
     "on_changeCurPicBtn_clicked",
-    "on_addNewLebelButton_clicked"
+    "on_manageLabelButton_clicked"
 );
 #else  // !QT_MOC_HAS_STRING_DATA
 struct qt_meta_stringdata_CLASSMainWindowENDCLASS_t {
@@ -70,7 +70,7 @@ Q_CONSTINIT static const qt_meta_stringdata_CLASSMainWindowENDCLASS_t qt_meta_st
         QT_MOC_LITERAL(60, 32),  // "on_changeToManuallyLable_clicked"
         QT_MOC_LITERAL(93, 30),  // "on_removeCurPictureBtn_clicked"
         QT_MOC_LITERAL(124, 26),  // "on_changeCurPicBtn_clicked"
-        QT_MOC_LITERAL(151, 28)   // "on_addNewLebelButton_clicked"
+        QT_MOC_LITERAL(151, 28)   // "on_manageLabelButton_clicked"
     },
     "MainWindow",
     "on_gotoAfterOne_clicked",
@@ -79,7 +79,7 @@ Q_CONSTINIT static const qt_meta_stringdata_CLASSMainWindowENDCLASS_t qt_meta_st
     "on_changeToManuallyLable_clicked",
     "on_removeCurPictureBtn_clicked",
     "on_changeCurPicBtn_clicked",
-    "on_addNewLebelButton_clicked"
+    "on_manageLabelButton_clicked"
 };
 #undef QT_MOC_LITERAL
 #endif // !QT_MOC_HAS_STRING_DATA
@@ -88,7 +88,7 @@ Q_CONSTINIT static const qt_meta_stringdata_CLASSMainWindowENDCLASS_t qt_meta_st
 Q_CONSTINIT static const uint qt_meta_data_CLASSMainWindowENDCLASS[] = {
 
  // content:
-      11,       // revision
+      12,       // revision
        0,       // classname
        0,    0, // classinfo
        6,   14, // methods
@@ -136,7 +136,7 @@ Q_CONSTINIT const QMetaObject MainWindow::staticMetaObject = { {
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'on_changeCurPicBtn_clicked'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
-        // method 'on_addNewLebelButton_clicked'
+        // method 'on_manageLabelButton_clicked'
         QtPrivate::TypeAndForceComplete<void, std::false_type>
     >,
     nullptr
@@ -153,7 +153,7 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 2: _t->on_changeToManuallyLable_clicked(); break;
         case 3: _t->on_removeCurPictureBtn_clicked(); break;
         case 4: _t->on_changeCurPicBtn_clicked(); break;
-        case 5: _t->on_addNewLebelButton_clicked(); break;
+        case 5: _t->on_manageLabelButton_clicked(); break;
         default: ;
         }
     }

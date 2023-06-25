@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created by: Qt User Interface Compiler version 6.5.1
+** Created by: Qt User Interface Compiler version 6.6.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -43,6 +43,10 @@ public:
     QAction *actionswitchCurDir;
     QAction *actionimportlabelIndex;
     QAction *actionaddNewLabel;
+    QAction *actiondeleteOldLabel;
+    QAction *checkQuickKeySequence;
+    QAction *actioncheckAuthor;
+    QAction *actionfindShitBugAndsakForMail;
     QWidget *centralwidget;
     QLabel *viewLabel;
     QToolBox *toolPage;
@@ -60,14 +64,14 @@ public:
     QPushButton *gotoPrevious;
     QPushButton *removeCurPictureBtn;
     QPushButton *changeCurPicBtn;
-    QPushButton *addNewLebelButton;
-    QPushButton *pushButton_4;
+    QPushButton *manageLabelButton;
     QMenuBar *menubar;
     QMenu *menu;
     QMenu *menu_2;
-    QMenu *menu_3;
     QMenu *menu_4;
     QMenu *menu_5;
+    QMenu *menu_3;
+    QMenu *menu_6;
     QStatusBar *statusbar;
 
     void setupUi(QMainWindow *MainWindow)
@@ -103,6 +107,14 @@ public:
         actionimportlabelIndex->setObjectName("actionimportlabelIndex");
         actionaddNewLabel = new QAction(MainWindow);
         actionaddNewLabel->setObjectName("actionaddNewLabel");
+        actiondeleteOldLabel = new QAction(MainWindow);
+        actiondeleteOldLabel->setObjectName("actiondeleteOldLabel");
+        checkQuickKeySequence = new QAction(MainWindow);
+        checkQuickKeySequence->setObjectName("checkQuickKeySequence");
+        actioncheckAuthor = new QAction(MainWindow);
+        actioncheckAuthor->setObjectName("actioncheckAuthor");
+        actionfindShitBugAndsakForMail = new QAction(MainWindow);
+        actionfindShitBugAndsakForMail->setObjectName("actionfindShitBugAndsakForMail");
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName("centralwidget");
         viewLabel = new QLabel(centralwidget);
@@ -138,6 +150,7 @@ public:
         toolPage->addItem(page_2, QString::fromUtf8("\350\207\252\345\212\250\346\240\207\346\263\250"));
         page_3 = new QWidget();
         page_3->setObjectName("page_3");
+        page_3->setGeometry(QRect(0, 0, 169, 457));
         currentLabelCheck = new QTextBrowser(page_3);
         currentLabelCheck->setObjectName("currentLabelCheck");
         currentLabelCheck->setGeometry(QRect(10, 0, 151, 311));
@@ -161,12 +174,9 @@ public:
         changeCurPicBtn = new QPushButton(centralwidget);
         changeCurPicBtn->setObjectName("changeCurPicBtn");
         changeCurPicBtn->setGeometry(QRect(720, 640, 141, 61));
-        addNewLebelButton = new QPushButton(centralwidget);
-        addNewLebelButton->setObjectName("addNewLebelButton");
-        addNewLebelButton->setGeometry(QRect(890, 570, 141, 51));
-        pushButton_4 = new QPushButton(centralwidget);
-        pushButton_4->setObjectName("pushButton_4");
-        pushButton_4->setGeometry(QRect(890, 640, 141, 61));
+        manageLabelButton = new QPushButton(centralwidget);
+        manageLabelButton->setObjectName("manageLabelButton");
+        manageLabelButton->setGeometry(QRect(880, 570, 171, 131));
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName("menubar");
@@ -175,12 +185,14 @@ public:
         menu->setObjectName("menu");
         menu_2 = new QMenu(menubar);
         menu_2->setObjectName("menu_2");
-        menu_3 = new QMenu(menubar);
-        menu_3->setObjectName("menu_3");
         menu_4 = new QMenu(menubar);
         menu_4->setObjectName("menu_4");
         menu_5 = new QMenu(menubar);
         menu_5->setObjectName("menu_5");
+        menu_3 = new QMenu(menubar);
+        menu_3->setObjectName("menu_3");
+        menu_6 = new QMenu(menubar);
+        menu_6->setObjectName("menu_6");
         MainWindow->setMenuBar(menubar);
         statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName("statusbar");
@@ -188,9 +200,10 @@ public:
 
         menubar->addAction(menu->menuAction());
         menubar->addAction(menu_2->menuAction());
-        menubar->addAction(menu_3->menuAction());
         menubar->addAction(menu_4->menuAction());
         menubar->addAction(menu_5->menuAction());
+        menubar->addAction(menu_3->menuAction());
+        menubar->addAction(menu_6->menuAction());
         menu->addSeparator();
         menu->addAction(action_newPicture);
         menu->addAction(action_newDirectory);
@@ -198,14 +211,14 @@ public:
         menu->addAction(actionswitchCurDir);
         menu_2->addAction(actionchangeLightness);
         menu_2->addAction(actionchangeContrary);
-        menu_3->addAction(actionsaveAsPng);
-        menu_3->addAction(actionsaveAsJpg);
-        menu_3->addAction(actiongetLablePositionAsTxt);
-        menu_3->addAction(actiongetLablePositionAsYaml);
         menu_4->addAction(actionremoveSinglePicture);
         menu_4->addAction(actionremoveAllPictures);
         menu_5->addAction(actionimportlabelIndex);
         menu_5->addAction(actionaddNewLabel);
+        menu_5->addAction(actiondeleteOldLabel);
+        menu_3->addAction(checkQuickKeySequence);
+        menu_3->addAction(actionfindShitBugAndsakForMail);
+        menu_6->addAction(actioncheckAuthor);
 
         retranslateUi(MainWindow);
 
@@ -232,6 +245,10 @@ public:
         actionswitchCurDir->setText(QCoreApplication::translate("MainWindow", "\345\210\207\346\215\242\346\226\207\344\273\266\347\233\256\345\275\225", nullptr));
         actionimportlabelIndex->setText(QCoreApplication::translate("MainWindow", "\345\257\274\345\205\245\345\267\262\346\234\211\346\240\207\347\255\276", nullptr));
         actionaddNewLabel->setText(QCoreApplication::translate("MainWindow", "\346\267\273\345\212\240\346\226\260\346\240\207\347\255\276", nullptr));
+        actiondeleteOldLabel->setText(QCoreApplication::translate("MainWindow", "\345\210\240\351\231\244\346\227\247\346\240\207\347\255\276", nullptr));
+        checkQuickKeySequence->setText(QCoreApplication::translate("MainWindow", "\346\237\245\351\230\205\345\277\253\346\215\267\351\224\256", nullptr));
+        actioncheckAuthor->setText(QCoreApplication::translate("MainWindow", "\347\234\213\347\234\213\350\277\231\347\216\251\346\204\217\350\260\201\345\201\232\347\232\204", nullptr));
+        actionfindShitBugAndsakForMail->setText(QCoreApplication::translate("MainWindow", "\345\217\221\347\216\260\344\272\206bug\347\204\266\345\220\216\351\227\256\345\200\231\344\275\234\350\200\205", nullptr));
         viewLabel->setText(QCoreApplication::translate("MainWindow", "\346\267\273\345\212\240\344\275\240\347\232\204\345\233\276\347\211\207\357\274\201", nullptr));
         changeToManuallyLable->setText(QCoreApplication::translate("MainWindow", "\345\210\207\346\215\242\350\207\263\346\240\207\346\263\250\346\250\241\345\274\217", nullptr));
         toolPage->setItemText(toolPage->indexOf(page), QCoreApplication::translate("MainWindow", "\346\211\213\345\212\250\346\240\207\346\263\250", nullptr));
@@ -252,13 +269,13 @@ public:
         gotoPrevious->setText(QCoreApplication::translate("MainWindow", "\344\270\212\344\270\200\344\270\252", nullptr));
         removeCurPictureBtn->setText(QCoreApplication::translate("MainWindow", "\347\247\273\351\231\244\345\275\223\345\211\215\347\232\204\345\233\276\347\211\207", nullptr));
         changeCurPicBtn->setText(QCoreApplication::translate("MainWindow", "\346\233\264\346\215\242\345\275\223\345\211\215\345\233\276\347\211\207", nullptr));
-        addNewLebelButton->setText(QCoreApplication::translate("MainWindow", "\346\267\273\345\212\240\350\210\271\346\226\260\346\240\207\347\255\276", nullptr));
-        pushButton_4->setText(QCoreApplication::translate("MainWindow", "\350\256\251\344\270\200\344\270\252\346\240\207\347\255\276\346\273\232\350\233\213", nullptr));
+        manageLabelButton->setText(QCoreApplication::translate("MainWindow", "\350\260\203\346\225\231\344\275\240\347\232\204\346\240\207\347\255\276", nullptr));
         menu->setTitle(QCoreApplication::translate("MainWindow", "\346\211\223\345\274\200", nullptr));
         menu_2->setTitle(QCoreApplication::translate("MainWindow", "\346\223\215\344\275\234\345\233\276\347\211\207...", nullptr));
-        menu_3->setTitle(QCoreApplication::translate("MainWindow", "\344\277\235\345\255\230\344\270\216\345\257\274\345\207\272", nullptr));
         menu_4->setTitle(QCoreApplication::translate("MainWindow", "\345\210\240\351\231\244\345\233\276\347\211\207...", nullptr));
-        menu_5->setTitle(QCoreApplication::translate("MainWindow", "\345\257\274\345\205\245\346\240\207\347\255\276", nullptr));
+        menu_5->setTitle(QCoreApplication::translate("MainWindow", "\347\256\241\347\220\206\346\240\207\347\255\276", nullptr));
+        menu_3->setTitle(QCoreApplication::translate("MainWindow", "\345\270\256\345\212\251", nullptr));
+        menu_6->setTitle(QCoreApplication::translate("MainWindow", "\345\205\263\344\272\216...", nullptr));
     } // retranslateUi
 
 };

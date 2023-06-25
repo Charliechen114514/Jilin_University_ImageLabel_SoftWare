@@ -1,4 +1,7 @@
+release/curpicforlabeling_mainwindow.o
 release/editpiclabelclass.o
+release/helpandcheck.o
+release/labelclass.o
 release/labelquerydialog.o
 release/labelsquerytextclass.o
 release/main.o
@@ -6,7 +9,9 @@ release/mainwindow.o
 release/manuallylabel.o
 release/setpenwidthwindows.o
 release/smartlineeditclass.o
+release/moc_curpicforlabeling_mainwindow.o
 release/moc_editpiclabelclass.o
+release/moc_helpandcheck.o
 release/moc_labelquerydialog.o
 release/moc_labelsquerytextclass.o
 release/moc_mainwindow.o
