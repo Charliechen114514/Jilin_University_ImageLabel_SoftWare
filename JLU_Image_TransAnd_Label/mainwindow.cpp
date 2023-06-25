@@ -48,9 +48,11 @@ void MainWindow::initMainWindow(){
     /*链接替换图片*/
     connect(ui->actionswitchCurPicture,&QAction::triggered,this,&MainWindow::on_changeCurPicBtn_clicked);
     /*链接替换文件夹*/
-    connect(ui->actionswitchCurDir,&QAction::triggered,this,&MainWindow::switchPicDir);    
+    connect(ui->actionswitchCurDir,&QAction::triggered,this,&MainWindow::switchPicDir);
 
+    connect(ui->actionaddNewLabel,&QAction::triggered,this,&MainWindow::on_manageLabelButton_clicked);
 
+    connect(ui->actiondeleteOldLabel,&QAction::triggered,this,&MainWindow::on_manageLabelButton_clicked);
 
 }
 /**************************************************************************************************
@@ -115,9 +117,15 @@ void MainWindow::initBasicQuickShot()
 
     /*切换图片*/
     QAction* toSwitch = new QAction;
-    toSwitch->setShortcut(QKeySequence(tr("Ctrl+Shift+S")));
+    toSwitch->setShortcut(QKeySequence(tr("Ctrl+Alt+P")));
     ui->menubar->addAction(toSwitch);
     connect(toSwitch,&QAction::triggered,this,&MainWindow::on_changeCurPicBtn_clicked);
+
+    /*切换文件夹*/
+    QAction* toSwitchDir = new QAction;
+    toSwitchDir->setShortcut(QKeySequence(tr("Ctrl+Alt+D")));
+    ui->menubar->addAction(toSwitchDir);
+    connect(toSwitchDir,&QAction::triggered,this,&MainWindow::switchPicDir);
 
     /*删除当前图片*/
     QAction* toDeleteCurPic = new QAction;
@@ -125,6 +133,11 @@ void MainWindow::initBasicQuickShot()
     ui->menubar->addAction(toDeleteCurPic);
     connect(toDeleteCurPic,&QAction::triggered,this,&MainWindow::on_removeCurPictureBtn_clicked);
 
+    /*管理标签*/
+    QAction* toMagageLabels = new QAction;
+    toDeleteCurPic->setShortcut(tr("Ctrl+L"));
+    ui->menubar->addAction(toMagageLabels);
+    connect(toMagageLabels,&QAction::triggered,this,&MainWindow::on_manageLabelButton_clicked);
 }
 
 /**************************************************************************************************
@@ -443,7 +456,7 @@ void MainWindow::on_changeToManuallyLable_clicked()
 }
 
 
-void MainWindow::on_addNewLebelButton_clicked()
+void MainWindow::on_manageLabelButton_clicked()
 {
     getNewLabelDialog = new labelQuerydialog;
     /*通过添加标签获得新的标签*/
@@ -451,7 +464,6 @@ void MainWindow::on_addNewLebelButton_clicked()
     getNewLabelDialog->getTheCurrentLabelList(labelList);
     getNewLabelDialog->initTextLableShow();
     getNewLabelDialog->showcheckedBoxListsSelections();
-    getNewLabelDialog->setTheFistIndex(0);
     getNewLabelDialog->show();
 }
 
@@ -473,12 +485,12 @@ void MainWindow::fetchLabelListFromManuallyLabel()
         labelList = labelListget;
     }
     updateCurrentLabelCheckText();
-    getNewLabelDialog ->getTheCurrentLabelList(labelList);
 }
 
 void MainWindow::updateLabelListForMainWindow()
 {
     labelList = getNewLabelDialog->reFreshMainWindowsLabelList();
+    qDebug() << "接受到" << labelList.size() << "个标签";
     for(int i = 0; i < labelList.size(); i++){
         labelList[i].first = i + 1;
     }

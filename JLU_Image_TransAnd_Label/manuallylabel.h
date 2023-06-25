@@ -47,6 +47,8 @@ public:
 
     void initshowPicWindows();
 
+    void initBasicConnection();
+
     void getEditedChangedWidth();
 
     void getPixmapPath(QString path);
@@ -59,11 +61,17 @@ public:
 
     void updateTextBrowsers();
 
+    void updateUsabelLabelsFromLabelQueryDialog();
+
     Pair_Label_Shape returnSingelPictureLabelsRecord();
 
     QList<LabelPair> returnUsableLabelPairListToMainWindow();
 
     void closeEvent(QCloseEvent*);
+
+    void updatePenWidth();
+
+    void updateLabelMethod();
 
 signals:
     void finishWholeEditing_ReturnCurSinglePagePointsAndLabelInfo();
@@ -81,6 +89,13 @@ private slots:
 
     void on_cancelAllAndBackToMainWindow_clicked();
 
+    void on_manageLabelBtn_clicked();
+
+    void on_saveAllAndExportTheImage_clicked();
+
+    void on_backToDefPen_clicked();
+
+
 private:
     Ui::manuallyLabel *ui;
     QString curViewPicPath;
@@ -92,6 +107,7 @@ private:
     Pair_Label_Shape singelPictureLabelsRecord;
     curPicForLabeling_MainWindow* showPicWindows;
     bool isIgnoredAllAndLeave;
+    labelQuerydialog* dialog;
 };
 
 #endif // MANUALLYLABEL_H

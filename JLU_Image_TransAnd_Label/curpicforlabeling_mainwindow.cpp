@@ -30,8 +30,9 @@ curPicForLabeling_MainWindow::curPicForLabeling_MainWindow(QWidget *parent) :
     dialog = new labelQuerydialog;
     dialog->move(100,200);
     setPenWidwindow = new setPenWidthWindows;
+    isSave = false;
+    isSaveShape = false;
     curAllowMaxPointsCount = USR_DEF_LABEL_METHOD;
-    isSave = 0;
     labels.clear();
     this->centralWidget()->setMouseTracking(true);//开启鼠标实时追踪，监听鼠标移动事件，默认只有按下时才监听
     this->setMouseTracking(true);
@@ -127,31 +128,42 @@ curPicForLabeling_MainWindow::~curPicForLabeling_MainWindow()
 
 void curPicForLabeling_MainWindow::setcurAllowMaxPointsCountToStandardRect()
 {
-    if(isSave == CCSTDC_JLU_IMAGE_LABLE_UNSAVE){
-        QMessageBox::information(NULL,"抱歉","什么懒狗不写这个功能（别骂了不支持混合标点）");
-        return;
+
+    if(isSaveShape == CCSTDC_JLU_IMAGE_LABLE_SAVE){
+        if(curAllowMaxPointsCount != 2)
+        {
+            QMessageBox::information(this,"抱歉","什么懒狗不写这个功能（别骂了不支持混合标点）");
+            return;
+        }
+        else{
+            QMessageBox::information(this,"抱歉","哥们已经是了");
+            return;
+        }
     }
     curAllowMaxPointsCount = 2;
+    isSaveShape = true;
     QMessageBox::information(this,"注意!","成功切换到了标准矩形模式");
 }
 
 
 void curPicForLabeling_MainWindow::setcurAllowMaxPointsCountToAnyFourPolys()
 {
-    if(isSave == CCSTDC_JLU_IMAGE_LABLE_UNSAVE){
-        QMessageBox::information(NULL,"抱歉","什么懒狗不写这个功能（别骂了不支持混合标点）");
+    if(isSaveShape  == CCSTDC_JLU_IMAGE_LABLE_SAVE){
+        QMessageBox::information(this,"抱歉","什么懒狗不写这个功能（别骂了不支持混合标点）");
         return;
     }
     curAllowMaxPointsCount = 4;
+    isSaveShape = true;
     QMessageBox::information(this,"注意!","成功切换到了任意四边形模式");
 }
 
 void curPicForLabeling_MainWindow::setcurAllowMaxPointsCountToAnyFivePolys()
 {
-    if(isSave == CCSTDC_JLU_IMAGE_LABLE_UNSAVE){
-        QMessageBox::information(NULL,"抱歉","什么懒狗不写这个功能（别骂了不支持混合标点）");
+    if(isSaveShape  == CCSTDC_JLU_IMAGE_LABLE_SAVE){
+        QMessageBox::information(this,"抱歉","什么懒狗不写这个功能（别骂了不支持混合标点）");
         return;
     }
+    isSaveShape = true;
     curAllowMaxPointsCount = 5;
     QMessageBox::information(this,"注意!","成功切换到了任意五边形模式");
 }
@@ -266,6 +278,11 @@ void curPicForLabeling_MainWindow::paintEvent(QPaintEvent*)
 **************************************************************************************************/
 void curPicForLabeling_MainWindow::mousePressEvent(QMouseEvent *e)
 {
+    if(isSaveShape == CCSTDC_JLU_IMAGE_LABLE_UNSAVE)
+    {
+        QMessageBox::warning(this,"警告","知道你很急，但是你没有指定标注方法，拒绝标注");
+        return;
+    }
     if(e->button() == Qt::LeftButton){
         //qDebug() << " 左键摁下";
 
@@ -321,6 +338,7 @@ void curPicForLabeling_MainWindow::closeEvent(QCloseEvent* events)
         {
             LABEL_SAVE_DEF_METHOD;
             emit finishEveryThingAndReturnsTheNewLyLabelPair();
+            emit refreshLabelMethod();
             events->accept();
         }
         else
@@ -331,6 +349,7 @@ void curPicForLabeling_MainWindow::closeEvent(QCloseEvent* events)
         }
     }
     emit finishEveryThingAndReturnsTheNewLyLabelPair();
+    emit refreshLabelMethod();
     events->accept();
 }
 
@@ -523,8 +542,11 @@ void curPicForLabeling_MainWindow::removeTheLastPolyAndLabel()
 {
     if(finalSigCurPicInfo.first.size()!= 0)
     {
+        /*撤除保存数据*/
         finalSigCurPicInfo.first.pop_back();
         finalSigCurPicInfo.second.pop_back();
+        /*撤出绘画的点*/
+        curPicPoly.pop_back();
         qDebug() << "已撤销";
     }
     update();

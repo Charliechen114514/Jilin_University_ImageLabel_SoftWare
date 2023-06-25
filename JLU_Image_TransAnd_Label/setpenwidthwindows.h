@@ -17,6 +17,7 @@ public:
     void setWidthByEditLine();
     void getFinalEditWidth();
     unsigned int getFinalSetPenWidth(){return finWidth;}
+
 private slots:
     void on_qulifiedOrRefuse_rejected();
 

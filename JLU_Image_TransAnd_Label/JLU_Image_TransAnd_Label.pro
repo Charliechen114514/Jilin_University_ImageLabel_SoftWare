@@ -11,6 +11,7 @@ CONFIG += c++17
 SOURCES += \
     curpicforlabeling_mainwindow.cpp \
     editpiclabelclass.cpp \
+    helpandcheck.cpp \
     labelclass.cpp \
     labelquerydialog.cpp \
     labelsquerytextclass.cpp \
@@ -23,6 +24,7 @@ SOURCES += \
 HEADERS += \
     curpicforlabeling_mainwindow.h \
     editpiclabelclass.h \
+    helpandcheck.h \
     labelclass.h \
     labelquerydialog.h \
     labelsquerytextclass.h \
@@ -33,6 +35,7 @@ HEADERS += \
 
 FORMS += \
     curpicforlabeling_mainwindow.ui \
+    helpandcheck.ui \
     labelquerydialog.ui \
     mainwindow.ui \
     manuallylabel.ui \

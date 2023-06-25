@@ -35,7 +35,6 @@ public:
     void showcheckedBoxListsSelections();
     LabelPair returnFinalLabelToOutward(){return finalLabel;}
     QList<LabelPair> reFreshMainWindowsLabelList(){return labelList;}
-    void setTheFistIndex(unsigned int index){firstIndex = index;};
     ~labelQuerydialog();
     void removePossibleRepititionLabelsAndReEnum();
 signals:
@@ -50,13 +49,16 @@ private slots:
 
     void on_ensureTheLabelRes_clicked();
 
+    void on_removeLabelButton_clicked();
+
 private:
     Ui::labelQuerydialog *ui;
     QList<LabelPair> labelList;
     QList<QCheckBox*> checkedBoxLists;
     QButtonGroup* checkBoxLists;
     LabelPair finalLabel;
-    unsigned int firstIndex;
+    bool isAdded;
+    bool deleteProcessIn;
 };
 
 #endif // LABELQUERYDIALOG_H

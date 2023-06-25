@@ -140,6 +140,7 @@ protected:
 signals:
     void finishEditingPoints();
     void finishEveryThingAndReturnsTheNewLyLabelPair();
+    void refreshLabelMethod();
 private:
     Ui::curPicForLabeling_MainWindow    *ui;
     QPixmap                             pixmap;
@@ -151,6 +152,7 @@ private:
     float height_ratio =                1.0f;
     unsigned int                        ticks;
     bool                                isSave;
+    bool                                isSaveShape;
 private slots:
     void reLoadLabelPairList();
     void pushBackToFinalSigCurPicInfo();

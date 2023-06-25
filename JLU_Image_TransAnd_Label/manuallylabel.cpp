@@ -1,7 +1,6 @@
 #include "manuallylabel.h"
 #include "ui_manuallylabel.h"
 
-
 manuallyLabel::manuallyLabel(QString curViewPath,QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::manuallyLabel)
@@ -18,7 +17,33 @@ setMouseTracking(true);
     ui->editPicLable->initUsrPen();
     qDebug() << "初始化显示标签框代码";
     initTabTextBox();
-    connect(showWindow,&setPenWidthWindows::finishedEdit,this,&manuallyLabel::updateCursingelPictureLabelsRecord);
+    initBasicConnection();
+}
+
+void manuallyLabel::initBasicConnection()
+{
+    connect(showWindow,&setPenWidthWindows::finishedEdit,this,&manuallyLabel::updatePenWidth);
+    /*connect 一下菜单栏*/
+
+    /*链接更改款式：笔的颜色*/
+    connect(ui->actionchangePenColor,&QAction::triggered,this,&manuallyLabel::on_changeColorBtn_clicked);
+
+    /*链接更改款式：笔的粗细*/
+    connect(ui->actionchangePenWidth,&QAction::triggered,this,&manuallyLabel::on_changeWidthBtn_clicked);
+
+    /*链接标签管理：增加标签*/
+    connect(ui->actionnewLabel,&QAction::triggered,this,&manuallyLabel::on_manageLabelBtn_clicked);
+
+    /*链接标签管理：减少标签*/
+    connect(ui->actiondeleteOldLabel,&QAction::triggered,this,&manuallyLabel::on_manageLabelBtn_clicked);
+
+}
+
+
+void manuallyLabel::updatePenWidth()
+{
+    ui->editPicLable->getInterFaceQPen().setWidth(showWindow->getFinalSetPenWidth());
+    updateTextBrowsers();
 }
 
 
@@ -83,6 +108,7 @@ manuallyLabel::~manuallyLabel()
 void manuallyLabel::closeEvent(QCloseEvent* e){
 
     if(isIgnoredAllAndLeave){
+        emit refreshMainWindowLabelList();
         e->accept();
     }
 
@@ -95,17 +121,7 @@ void manuallyLabel::closeEvent(QCloseEvent* e){
         e->ignore();
     }
 }
-void qDebugTheLabelList(QList<LabelPair> listPair)
-{
-    if(listPair.isEmpty()){
-        qDebug() << "LabelList is NULL";
-        return;
-    }
-    for(int i = 0; i < listPair.size();i++)
-    {
-        qDebug() << "标签号" <<  listPair[i].first << " 标签名称: " << listPair[i].second;
-    }
-}
+
 
 void manuallyLabel::on_changeColorBtn_clicked()
 {
@@ -116,7 +132,7 @@ void manuallyLabel::on_changeColorBtn_clicked()
 void manuallyLabel::on_changeWidthBtn_clicked()
 {
     showWindow->show();
-    updateTextBrowsers();
+
 }
 
 
@@ -150,11 +166,17 @@ void manuallyLabel::updateTextBrowsers()
     colorTextSet += ")";
     qDebug() << colorTextSet;
     ui->showCurColorTextBrowser->setText(colorTextSet);
-
-    QString shapeAndPointText = QString("\n当前，你选择了") + QString::number(ui->editPicLable->getCurAllowMaxPointsCount())
-                                + QString("点的标注,也就是说你标注的图形状是:") + QString::number(ui->editPicLable->getCurAllowMaxPointsCount())
-                                + QString("边形");
-
+    QString shapeAndPointText;
+    if(ui->editPicLable->getCurAllowMaxPointsCount() == 2){
+        shapeAndPointText = QString("\n当前，你选择了标准矩形标注");
+    }
+    else
+    {
+        shapeAndPointText =   QString("\n当前，你选择了") + QString::number(ui->editPicLable->getCurAllowMaxPointsCount())
+                            + QString("点的标注,也就是说你标注的图形状是:")
+                            + QString::number(ui->editPicLable->getCurAllowMaxPointsCount())
+                            + QString("边形");
+    }
     ui->showCurShapeTypeTextBrowser->setText(shapeAndPointText);
     QString showLabel = QString("当前已有标签：") + QString::number(usableLabels.size()) + QString("\n") ;
     for(int i = 0; i < usableLabels.size(); i++)
@@ -166,6 +188,11 @@ void manuallyLabel::updateTextBrowsers()
     ui->showCurTextLabelCountTextBrowser->setText(showLabel);
 }
 
+void manuallyLabel::updateLabelMethod()
+{
+    ui->editPicLable->setCurAllowMaxPointsCount(showPicWindows->curAllowMaxPointsCount);
+    updateTextBrowsers();
+}
 
 Pair_Label_Shape manuallyLabel::returnSingelPictureLabelsRecord()
 {
@@ -180,6 +207,8 @@ void manuallyLabel::initshowPicWindows()
     showPicWindows->initLabelListFromManuallyLabelWindow(usableLabels);
     connect(showPicWindows,&curPicForLabeling_MainWindow::finishEveryThingAndReturnsTheNewLyLabelPair,
             this,&manuallyLabel::updateExistedLabelList);
+    connect(showPicWindows,&curPicForLabeling_MainWindow::refreshLabelMethod,
+            this,&manuallyLabel::updateLabelMethod);
     showPicWindows->show();
 }
 
@@ -201,4 +230,40 @@ void manuallyLabel::on_cancelAllAndBackToMainWindow_clicked()
     isIgnoredAllAndLeave = true;
     this->close();
 }
+
+void manuallyLabel::updateUsabelLabelsFromLabelQueryDialog()
+{
+    usableLabels = dialog->reFreshMainWindowsLabelList();
+    for(int i = 0; i < usableLabels.size(); i++){
+        usableLabels[i].first = i + 1;
+    }
+    updateTextBrowsers();
+}
+
+void manuallyLabel::on_manageLabelBtn_clicked()
+{
+    dialog = new labelQuerydialog;
+    /*通过添加标签获得新的标签*/
+    connect(dialog,&labelQuerydialog::finishSelectingLabel,this,&manuallyLabel::updateUsabelLabelsFromLabelQueryDialog);
+    dialog->getTheCurrentLabelList(usableLabels);
+    dialog->initTextLableShow();
+    dialog->showcheckedBoxListsSelections();
+    dialog->show();
+}
+
+
+void manuallyLabel::on_saveAllAndExportTheImage_clicked()
+{
+    QMessageBox::information(this,"保存成功！","你完成了保存！");
+    this->close();
+}
+
+
+void manuallyLabel::on_backToDefPen_clicked()
+{
+    ui->editPicLable->resetPenToDef();
+    updateTextBrowsers();
+}
+
+
 

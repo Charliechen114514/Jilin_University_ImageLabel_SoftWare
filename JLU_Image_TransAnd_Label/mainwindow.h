@@ -88,7 +88,7 @@ private slots:
     void on_changeCurPicBtn_clicked();
 
     /*添加新标签的窗口*/
-    void on_addNewLebelButton_clicked();
+    void on_manageLabelButton_clicked();
 
 private:
     Ui::MainWindow *ui;

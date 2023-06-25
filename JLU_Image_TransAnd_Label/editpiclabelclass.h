@@ -29,31 +29,18 @@ public:
     QPen getUsrPenInfo();
     void initTabTextBox();
     QPen& getInterFaceQPen();
-    unsigned int getCurAllowMaxPointsCount(){return curAllowMaxPointsCount;}
     QColor helper_getColorRGBs();
     void getCurPointListLabel();
-    Pair_Label_Shape returnBackToManuallyWindow(){return Pair_Label_Shape(pointsRecord,labelList);}
-    QPixmap getAfterEditedPixMap(){return curPixPicMap;}
+    void setCurAllowMaxPointsCount(unsigned int labelMethodPointsMax){CurAllowMaxPointsCount = labelMethodPointsMax;};
+    void resetPenToDef();
+    unsigned int getCurAllowMaxPointsCount(){return CurAllowMaxPointsCount;};
     QPixmap                 curPixPicMap;
     QMainWindow*             showThePic;
-    //debug
-    void printCurLabel();
 signals:
     void finishBothPointsRecordAndLabelsRecord();
 private:
-    QList<QRect>            labelRects;
-    QList<QList<QPoint>>    pointsRecord;
     QPen                    usrPen;
-    QPen                    followLinePen;
-    int                     curAllowMaxPointsCount;
-    int                     ticksForRect;
-    MouseSignal             mouseSignal;
-    QList<QPoint>           tempPointsList;
-    QList<LabelPair>        labelList;
-    int                     ticks;
-    QPoint                  followLines;
-    bool                    isPress;
-    labelQuerydialog*       dialog;
+    int                     CurAllowMaxPointsCount;
 };
 
 const int* helper_getColorRGBs(QColor color);

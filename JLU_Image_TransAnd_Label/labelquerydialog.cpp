@@ -5,7 +5,8 @@ labelQuerydialog::labelQuerydialog(QWidget *parent) :
     ui(new Ui::labelQuerydialog)
 {
     ui->setupUi(this);
-    firstIndex = 0;
+    isAdded = false;
+    deleteProcessIn = false;
     ui->getTextedLineEdit->setText(LABELEDIT_DEF_LABLE);
     connect(ui->getTextedLineEdit,&labelsQueryTextClass::finishEditingLabels,
             this,&labelQuerydialog::on_acceptAndAddBtn_clicked);
@@ -72,7 +73,7 @@ void labelQuerydialog::initTextLableShow()
 }
 
 void labelQuerydialog::on_acceptAndAddBtn_clicked()
-{
+{   
     if(ui->getTextedLineEdit->text() == QString(LABELEDIT_DEF_LABLE)
         || ui->getTextedLineEdit->text() == QString(""))
     {
@@ -95,22 +96,24 @@ void labelQuerydialog::on_acceptAndAddBtn_clicked()
     {
         labelList.append(QPair<LabelIndex,LabelName>(labelList.size() - 1,curLabelName));
         QCheckBox* newBox = new QCheckBox();
-        QString checkBoxText = QString::number(static_cast<const int>(labelList.size()) + firstIndex) + QString(":") + ui->getTextedLineEdit->getResultedLabelName();
-        qDebug() << "准备添加复选框内容" << checkBoxText;
-        qDebug() << labelList.size();
-            for(int i = 0; i < labelList.size(); i++)
-            {
-                qDebug() << labelList[i].first << ":  " << labelList[i].second;
-            }
+        QString checkBoxText = QString::number(labelList.size()) + QString(":") + ui->getTextedLineEdit->getResultedLabelName();
+//        qDebug() << "准备添加复选框内容" << checkBoxText;
+//        qDebug() << labelList.size();
+//            for(int i = 0; i < labelList.size(); i++)
+//            {
+//                qDebug() << labelList[i].first << ":  " << labelList[i].second;
+//            }
         newBox->setText(checkBoxText);
         checkedBoxLists.append(newBox);
     }
     showcheckedBoxListsSelections();
+    isAdded = true;
 }
 
 void labelQuerydialog::showcheckedBoxListsSelections()
 {
     if(checkedBoxLists.empty()){
+        qDebug() << "检测到空显示框";
         return;
     }
     else
@@ -140,7 +143,23 @@ void labelQuerydialog::showcheckedBoxListsSelections()
 
 void labelQuerydialog::on_rejectAndTryAgainBtn_clicked()
 {
-    ui->getTextedLineEdit->setText(LABELEDIT_DEFSHOW);
+    if(isAdded == false){
+        QMessageBox::information(this,"?","哥们没更改啊！");
+        return;
+    }
+
+    if(labelList.empty()){
+        QMessageBox::information(this,"?","别点了别点了，没了没了");
+        return;
+    }
+
+    labelList.removeLast();
+    ui->showbox->removeWidget(checkedBoxLists.last());
+    checkedBoxLists.removeLast();
+    QMessageBox::information(this,"操作成功","成功撤销你上一步添加");
+    QString textCount = QString("现在有标签") + QString::number(labelList.size()) + QString("个！");
+    ui->showLabelCountsTxtBrowser->setText(textCount);
+    isAdded = false;
 }
 
 
@@ -152,7 +171,14 @@ void labelQuerydialog::on_ensureTheLabelRes_clicked()
         return;
     }
 
-    finalLabel = QPair<LabelIndex,LabelName>(checkBoxLists->checkedId() + 1,checkBoxLists->checkedButton()->text().split(":").last());
+    if(deleteProcessIn == true)
+    {
+        deleteProcessIn = false;
+        this->close();
+    }
+
+    finalLabel = QPair<LabelIndex,LabelName>(checkBoxLists->checkedId() + 1,\
+                                            checkBoxLists->checkedButton()->text().split(":").last());
     for(int i=0; i<labelList.size(); i++)
     {
         for(int j=i+1; j<labelList.size(); j++)
@@ -167,5 +193,47 @@ void labelQuerydialog::on_ensureTheLabelRes_clicked()
     emit finishSelectingLabel();
 
     this->close();
+}
+
+
+void labelQuerydialog::on_removeLabelButton_clicked()
+{
+    if(labelList.empty())
+    {
+        QMessageBox::critical(this,"啊？","你没有办法移除一个本来就是一坨空的东西");
+        return;
+    }
+    if(isAdded == true)
+    {
+        if(QMessageBox::Yes == QMessageBox::question(this,"阿哲","这边提供按扭撤销操作，想不想我帮你嗯?"))
+        {
+            on_rejectAndTryAgainBtn_clicked();
+            return;
+        }
+        else
+        {
+            QMessageBox::information(this,"今日无事","今日无事------路易十六特供（笑）");
+            return;
+        }
+    }
+    int RemoveIndex = checkBoxLists->checkedId();
+    if(RemoveIndex == -1)
+    {
+        QMessageBox::critical(this,"啊？","你不告诉我你想移除哪一个，我唯一能做的就是帮你算一卦");
+        return;
+    }
+    if(QMessageBox::No == QMessageBox::question(this,"别反悔兄弟","真的移除标签?这个操作可是不可逆的!!!!!:\n" + labelList[RemoveIndex].second))
+    {
+        QMessageBox::information(this,"啊哈，就知道","好吧，爬");
+        return;
+    }
+    deleteProcessIn = true;
+    qDebug() << " 现在的RemoveIndex是"<< RemoveIndex;
+    qDebug() << labelList[RemoveIndex];
+    labelList.removeAt(RemoveIndex);
+    ui->getTextedLineEdit->setText("");
+    update();
+    on_ensureTheLabelRes_clicked();
+
 }
 

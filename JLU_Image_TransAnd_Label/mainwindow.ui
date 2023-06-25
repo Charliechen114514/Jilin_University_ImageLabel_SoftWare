@@ -133,6 +133,14 @@
      </widget>
     </widget>
     <widget class="QWidget" name="page_3">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>169</width>
+       <height>457</height>
+      </rect>
+     </property>
      <attribute name="label">
       <string>已有标签</string>
      </attribute>
@@ -233,30 +241,17 @@ li.checked::marker { content: &quot;\2612&quot;; }
      <string>更换当前图片</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="addNewLebelButton">
+   <widget class="QPushButton" name="manageLabelButton">
     <property name="geometry">
      <rect>
-      <x>890</x>
+      <x>880</x>
       <y>570</y>
-      <width>141</width>
-      <height>51</height>
+      <width>171</width>
+      <height>131</height>
      </rect>
     </property>
     <property name="text">
-     <string>添加船新标签</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pushButton_4">
-    <property name="geometry">
-     <rect>
-      <x>890</x>
-      <y>640</y>
-      <width>141</width>
-      <height>61</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>让一个标签滚蛋</string>
+     <string>调教你的标签</string>
     </property>
    </widget>
   </widget>
@@ -286,15 +281,6 @@ li.checked::marker { content: &quot;\2612&quot;; }
     <addaction name="actionchangeLightness"/>
     <addaction name="actionchangeContrary"/>
    </widget>
-   <widget class="QMenu" name="menu_3">
-    <property name="title">
-     <string>保存与导出</string>
-    </property>
-    <addaction name="actionsaveAsPng"/>
-    <addaction name="actionsaveAsJpg"/>
-    <addaction name="actiongetLablePositionAsTxt"/>
-    <addaction name="actiongetLablePositionAsYaml"/>
-   </widget>
    <widget class="QMenu" name="menu_4">
     <property name="title">
      <string>删除图片...</string>
@@ -304,16 +290,30 @@ li.checked::marker { content: &quot;\2612&quot;; }
    </widget>
    <widget class="QMenu" name="menu_5">
     <property name="title">
-     <string>导入标签</string>
+     <string>管理标签</string>
     </property>
     <addaction name="actionimportlabelIndex"/>
     <addaction name="actionaddNewLabel"/>
+    <addaction name="actiondeleteOldLabel"/>
+   </widget>
+   <widget class="QMenu" name="menu_3">
+    <property name="title">
+     <string>帮助</string>
+    </property>
+    <addaction name="checkQuickKeySequence"/>
+   </widget>
+   <widget class="QMenu" name="menu_6">
+    <property name="title">
+     <string>关于...</string>
+    </property>
+    <addaction name="actioncheckIAuthor"/>
    </widget>
    <addaction name="menu"/>
    <addaction name="menu_2"/>
-   <addaction name="menu_3"/>
    <addaction name="menu_4"/>
    <addaction name="menu_5"/>
+   <addaction name="menu_3"/>
+   <addaction name="menu_6"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="action_newPicture">
@@ -384,6 +384,21 @@ li.checked::marker { content: &quot;\2612&quot;; }
   <action name="actionaddNewLabel">
    <property name="text">
     <string>添加新标签</string>
+   </property>
+  </action>
+  <action name="actiondeleteOldLabel">
+   <property name="text">
+    <string>删除旧标签</string>
+   </property>
+  </action>
+  <action name="checkQuickKeySequence">
+   <property name="text">
+    <string>查阅快捷键</string>
+   </property>
+  </action>
+  <action name="actioncheckIAuthor">
+   <property name="text">
+    <string>看看这玩意谁做的</string>
    </property>
   </action>
  </widget>

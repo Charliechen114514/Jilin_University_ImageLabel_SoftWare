@@ -69,10 +69,10 @@ li.checked::marker { content: &quot;\2612&quot;; }
   <widget class="QPushButton" name="acceptAndAddBtn">
    <property name="geometry">
     <rect>
-     <x>390</x>
+     <x>360</x>
      <y>230</y>
-     <width>111</width>
-     <height>41</height>
+     <width>131</width>
+     <height>61</height>
     </rect>
    </property>
    <property name="text">
@@ -82,14 +82,14 @@ li.checked::marker { content: &quot;\2612&quot;; }
   <widget class="QPushButton" name="rejectAndTryAgainBtn">
    <property name="geometry">
     <rect>
-     <x>540</x>
+     <x>510</x>
      <y>230</y>
-     <width>101</width>
-     <height>41</height>
+     <width>131</width>
+     <height>61</height>
     </rect>
    </property>
    <property name="text">
-    <string>取消，我反悔！</string>
+    <string>取消，我反悔我的添加！</string>
    </property>
   </widget>
   <widget class="QTextBrowser" name="showText_selectExsitedLabel">
@@ -153,14 +153,27 @@ li.checked::marker { content: &quot;\2612&quot;; }
   <widget class="QPushButton" name="ensureTheLabelRes">
    <property name="geometry">
     <rect>
-     <x>390</x>
-     <y>330</y>
-     <width>111</width>
-     <height>51</height>
+     <x>360</x>
+     <y>310</y>
+     <width>131</width>
+     <height>71</height>
     </rect>
    </property>
    <property name="text">
     <string>确定选择这个标签</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="removeLabelButton">
+   <property name="geometry">
+    <rect>
+     <x>510</x>
+     <y>460</y>
+     <width>131</width>
+     <height>61</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>移除标签</string>
    </property>
   </widget>
  </widget>
