@@ -54,10 +54,20 @@
     <addaction name="actionchangeColor"/>
     <addaction name="actionchangeWidth"/>
    </widget>
+   <widget class="QMenu" name="menu_4">
+    <property name="title">
+     <string>管理辅助标记</string>
+    </property>
+    <addaction name="actionopenTheLabelHelper"/>
+    <addaction name="actioncloseTheLabelHelper"/>
+    <addaction name="actionchangeHelperPenColor"/>
+    <addaction name="actionchangeHelperPenWidth"/>
+   </widget>
    <addaction name="menu"/>
    <addaction name="saveImediately"/>
    <addaction name="menu_2"/>
    <addaction name="menu_3"/>
+   <addaction name="menu_4"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionendLabeling">
@@ -116,6 +126,26 @@
   <action name="actionremoveTheLast">
    <property name="text">
     <string>撤销</string>
+   </property>
+  </action>
+  <action name="actionopenTheLabelHelper">
+   <property name="text">
+    <string>打开辅助标记</string>
+   </property>
+  </action>
+  <action name="actioncloseTheLabelHelper">
+   <property name="text">
+    <string>关闭辅助标记</string>
+   </property>
+  </action>
+  <action name="actionchangeHelperPenColor">
+   <property name="text">
+    <string>更改辅助画笔画笔颜色</string>
+   </property>
+  </action>
+  <action name="actionchangeHelperPenWidth">
+   <property name="text">
+    <string>改变辅助画笔标记笔宽</string>
    </property>
   </action>
  </widget>

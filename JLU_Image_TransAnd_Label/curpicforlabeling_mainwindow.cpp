@@ -26,12 +26,17 @@ curPicForLabeling_MainWindow::curPicForLabeling_MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::curPicForLabeling_MainWindow)
 {
+    setMouseTracking(true);
     ui->setupUi(this);
     dialog = new labelQuerydialog;
     dialog->move(100,200);
     setPenWidwindow = new setPenWidthWindows;
+    followLinePen.setWidth(USR_DEF_FOLLOWLINE_WIDTH);
+    followLinePen.setColor(USR_DEF_FOLLOWLINE_COLOR);
     isSave = false;
     isSaveShape = false;
+    isLabelHelperOpen = USR_DEF_LABEL_HELPER;
+    mousePosRecorder = QPoint(0,0);
     curAllowMaxPointsCount = USR_DEF_LABEL_METHOD;
     labels.clear();
     this->centralWidget()->setMouseTracking(true);//开启鼠标实时追踪，监听鼠标移动事件，默认只有按下时才监听
@@ -48,41 +53,73 @@ curPicForLabeling_MainWindow::curPicForLabeling_MainWindow(QWidget *parent) :
     /*下面的三个信号则是链接标注点的个数问题的*/
 
     /*链接：切换到标准矩形*/
-    connect(ui->actionchangeToRectMode,&QAction::triggered,this,&curPicForLabeling_MainWindow::setcurAllowMaxPointsCountToStandardRect);
+    connect(ui->actionchangeToRectMode,&QAction::triggered,
+            this,&curPicForLabeling_MainWindow::setcurAllowMaxPointsCountToStandardRect);
 
     /*链接：切换到任意四边形*/
-    connect(ui->actionchangeToAnyFourPoly,&QAction::triggered,this,&curPicForLabeling_MainWindow::setcurAllowMaxPointsCountToAnyFourPolys);
+    connect(ui->actionchangeToAnyFourPoly,&QAction::triggered,
+            this,&curPicForLabeling_MainWindow::setcurAllowMaxPointsCountToAnyFourPolys);
 
     /*链接：切换到任意五边形*/
-    connect(ui->actionchangeToFivePoly,&QAction::triggered,this,&curPicForLabeling_MainWindow::setcurAllowMaxPointsCountToAnyFivePolys);
+    connect(ui->actionchangeToFivePoly,&QAction::triggered,
+            this,&curPicForLabeling_MainWindow::setcurAllowMaxPointsCountToAnyFivePolys);
 
     /*下面的三个信号与槽完成保存工作*/
 
     /*链接：只保存图片*/
-    connect(ui->actionsavePicOnly,&QAction::triggered,this,&curPicForLabeling_MainWindow::saveForResultCurPicButPicOnly);
+    connect(ui->actionsavePicOnly,&QAction::triggered,
+            this,&curPicForLabeling_MainWindow::saveForResultCurPicButPicOnly);
 
     /*链接：只保存标签*/
-    connect(ui->actionsaveLabelsOnly,&QAction::triggered,this,&curPicForLabeling_MainWindow::saveForResultCurPicButLabelOnly);
+    connect(ui->actionsaveLabelsOnly,&QAction::triggered,
+            this,&curPicForLabeling_MainWindow::saveForResultCurPicButLabelOnly);
 
     /*链接：都保存*/
-    connect(ui->actionsaveAll,&QAction::triggered,this,&curPicForLabeling_MainWindow::saveForResultCurPicAll);
+    connect(ui->actionsaveAll,&QAction::triggered,
+            this,&curPicForLabeling_MainWindow::saveForResultCurPicAll);
 
     /*链接：切换颜色*/
-    connect(ui->actionchangeColor,&QAction::triggered,this,&curPicForLabeling_MainWindow::changeUsrCurPenColor);
+    connect(ui->actionchangeColor,&QAction::triggered,
+            this,&curPicForLabeling_MainWindow::changeUsrCurPenColor);
 
     /*链接： 切换笔的宽度*/
 
     /*链接：展示内容*/
-    connect(ui->actionchangeWidth,&QAction::triggered,this,&curPicForLabeling_MainWindow::showSetPenEidthWindow);
+    connect(ui->actionchangeWidth,&QAction::triggered,
+            this,&curPicForLabeling_MainWindow::showSetPenEidthWindow);
+    connect(ui->actionchangeHelperPenWidth,&QAction::triggered,
+            this,&curPicForLabeling_MainWindow::showSetPenEidthWindow);
 
-    /*链接：设置信号*/
-    connect(setPenWidwindow,&setPenWidthWindows::finishedEdit,this,&curPicForLabeling_MainWindow::changeUsrCurPenWidth);
+    /*链接：设置信号接受从而更改标记画笔的宽度*/
+    connect(setPenWidwindow,&setPenWidthWindows::finishedEdit,
+            this,&curPicForLabeling_MainWindow::changeUsrCurPenWidth);
 
+    /*链接：设置信号接受从而更改标记辅助标记画笔的宽度*/
+    connect(setPenWidwindow,&setPenWidthWindows::finishedEdit,
+            this,&curPicForLabeling_MainWindow::changeFollowLinePenWidth);
     /*链接：关闭按钮链接*/
-    connect(ui->actionendLabeling,&QAction::triggered,this,&curPicForLabeling_MainWindow::close);
+    connect(ui->actionendLabeling,&QAction::triggered,
+            this,&curPicForLabeling_MainWindow::close);
 
     /*链接：撤销上一个标记*/
-    connect(ui->actionremoveTheLast,&QAction::triggered,this,&curPicForLabeling_MainWindow::removeTheLastPolyAndLabel);
+    connect(ui->actionremoveTheLast,&QAction::triggered,
+            this,&curPicForLabeling_MainWindow::removeTheLastPolyAndLabel);
+
+    /*链接：打开辅助标记*/
+    connect(ui->actionopenTheLabelHelper,&QAction::triggered,
+            this,&curPicForLabeling_MainWindow::openModeOfLabelHelper);
+
+    /*链接：关闭辅助标记*/
+    connect(ui->actioncloseTheLabelHelper,&QAction::triggered,
+            this,&curPicForLabeling_MainWindow::closeModeOfLabelHelper);
+
+    /*链接：改变辅助标记画笔颜色*/
+    connect(ui->actionchangeHelperPenColor,&QAction::triggered,
+            this,&curPicForLabeling_MainWindow::changeFollowLinePenColor);
+
+    /*链接：改变辅助标记画笔粗度*/
+    connect(ui->actionchangeHelperPenWidth,&QAction::triggered,
+            this,&curPicForLabeling_MainWindow::changeFollowLinePenWidth);
 }
 
 void curPicForLabeling_MainWindow::initLabelListFromManuallyLabelWindow(QList<LabelPair> labelsget)
@@ -212,6 +249,7 @@ void curPicForLabeling_MainWindow::getPictures(QString curPath)
 
 void curPicForLabeling_MainWindow::paintEvent(QPaintEvent*)
 {
+    setMouseTracking(true);
     QPixmap pix = pixmap.scaled(this->width(),this->height(),Qt::KeepAspectRatio);
     QPainter painter(&pix);
     painter.setPen(usrCurPen);
@@ -259,6 +297,13 @@ void curPicForLabeling_MainWindow::paintEvent(QPaintEvent*)
     painter.drawPixmap(0, 0, pix);//将pixmap画到窗体
     /*刷新一下编辑过后的，如果用户保存直接取就好*/
     AfterEditedPixMap = pix;
+    if(isLabelHelperOpen)
+    {
+        QPainter followLinePainter(this);
+        followLinePainter.setPen(followLinePen);
+        followLinePainter.drawLine(mousePosRecorder.x(),0,mousePosRecorder.x(),height());
+        followLinePainter.drawLine(0,mousePosRecorder.y(),width(),mousePosRecorder.y());
+    }
 }
 
 /**************************************************************************************************
@@ -378,7 +423,18 @@ void curPicForLabeling_MainWindow::keyPressEvent(QKeyEvent* e)
     else if(e->key() == Qt::Key_S && e->modifiers() == Qt::ControlModifier){
         LABEL_SAVE_DEF_METHOD;
     }
+    else if(e->key() == Qt::Key_H && e->modifiers() == Qt::ControlModifier){
+        changeModeOfLabelHelperDirect();
+    }
 }
+
+void curPicForLabeling_MainWindow::mouseMoveEvent(QMouseEvent* e)
+{
+    mousePosRecorder = e->pos();
+}
+
+
+
 
 /**************************************************************************************************
 *
@@ -428,6 +484,17 @@ void curPicForLabeling_MainWindow::changeUsrCurPenColor()
     newDialog = nullptr;
 }
 
+void curPicForLabeling_MainWindow::changeFollowLinePenColor()
+{
+    QColorDialog* newDialog = new QColorDialog;
+    newDialog->move(100,200);
+
+    followLinePen.setColor(newDialog->getColor());
+    delete newDialog;
+    newDialog = nullptr;
+}
+
+
 void curPicForLabeling_MainWindow::showSetPenEidthWindow()
 {
     setPenWidwindow->setWindowFlag(Qt::WindowStaysOnTopHint);
@@ -439,6 +506,37 @@ void curPicForLabeling_MainWindow::changeUsrCurPenWidth()
     usrCurPen.setWidth(setPenWidwindow->getFinalSetPenWidth());
 }
 
+void curPicForLabeling_MainWindow::changeFollowLinePenWidth()
+{
+    followLinePen.setWidth(setPenWidwindow->getFinalSetPenWidth());
+}
+
+void curPicForLabeling_MainWindow::openModeOfLabelHelper()
+{
+    if(isLabelHelperOpen)
+    {
+        QMessageBox::warning(this,"喂喂喂","哥们已经开了别点了");
+        return;
+    }
+
+    isLabelHelperOpen = true;
+}
+
+void curPicForLabeling_MainWindow::closeModeOfLabelHelper()
+{
+    if(!isLabelHelperOpen)
+    {
+        QMessageBox::warning(this,"喂喂喂","哥们已经开了别点了");
+        return;
+    }
+
+    isLabelHelperOpen = false;
+}
+
+void curPicForLabeling_MainWindow::changeModeOfLabelHelperDirect()
+{
+    isLabelHelperOpen = !isLabelHelperOpen;
+}
 void curPicForLabeling_MainWindow::saveForResultCurPicButPicOnly()
 {
 SAVEAGAIN:
