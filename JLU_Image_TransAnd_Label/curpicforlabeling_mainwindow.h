@@ -15,6 +15,7 @@
 /* 导入自己书写的窗口从而方便标注 */
 #include <labelquerydialog.h>
 #include <setpenwidthwindows.h>
+#include <setorshiftcurmaxpointcountswindows.h>
 /* Enumerate the usrChoice, here provides the basic*/
 /* 枚举可能的情况 */
 enum curPicChoosePolyPointsCount{
@@ -82,20 +83,17 @@ class curPicForLabeling_MainWindow : public QMainWindow
 public:
     explicit curPicForLabeling_MainWindow(QWidget *parent = nullptr);
 
-    void getPictures(QString picPath);
-
     ~curPicForLabeling_MainWindow();
 
-    QPair<QList<CurPolyPoints>,QList<LabelPair>> returnLabelResToManuallyLabel(){return finalSigCurPicInfo;}
 
-    QList<LabelPair> returnThelabelsToManuallyLabel(){return labels;};
+    void                                initPicturesListWithPicsPath(QList<QString> picPathList);
     /*初始化画笔*/
     void                                initCurUsrPenFromManuallyLabel(QPen pen);
     /*从标记窗口初始化标签列*/
     void                                initLabelListFromManuallyLabelWindow(QList<LabelPair> labelsget);
     /*初始化连接关系*/
     void                                initBasicConnection();
-
+    void                                initCurMaxPointCount();
     /*更改画笔颜色*/
     void                                changeUsrCurPenColor();
     /*更改画笔宽度*/
@@ -105,17 +103,13 @@ public:
     /*更改辅助标记笔宽度*/
     void                                changeFollowLinePenWidth();
     /*更改标注点数量*/
-
-    /*更改到标准矩形*/ /*实际上是只需要标注两个点即可*/
-    void                                setcurAllowMaxPointsCountToStandardRect();
-    /*更改到任意四边形*/
-    void                                setcurAllowMaxPointsCountToAnyFourPolys();
-    /*更改到任意五边形*/
-    void                                setcurAllowMaxPointsCountToAnyFivePolys();
     /* 打开或者关闭辅助标记 */
     void                                openModeOfLabelHelper();
     void                                closeModeOfLabelHelper();
     void                                changeModeOfLabelHelperDirect();
+
+    /*切换图片*/
+    void                                moveToAfterPic();
     /*保存标签与图片*/
 
     /*只保存图片*/
@@ -124,8 +118,31 @@ public:
     void                                saveForResultCurPicButLabelOnly();
     /*他妈的我全都要*/
     void                                saveForResultCurPicAll();
+    /*设置固定标签保存路径*/
+    void                                setAlwaysSaveOnFixedPathForLabels();
+    /*设置固定图像保存路径*/
+    void                                setAlwaysSaveOnFixedPathForPics();
+    /*设置固定标注方法*/
+    void                                setAlwaysLabelInFixedMethod();
+    /*改写固定标签路径*/
+    void                                shiftAlwaysSaveOnFixedPathForLabels();
+    /*改写固定图像路径*/
+    void                                shiftAlwaysSaveOnFixedPathForPics();
+    /*改写固定标注方法*/
+    void                                shiftAlwaysLabelInFixedMethod();
+    /*取消固定标签路径*/
+    void                                cancelTheAlwaysSaveOnFixedPathForLabels(){isAlwaysSaveConstPlaceForLabels = false;}
+    /*取消固定图片路径*/
+    void                                cancelTheAlwaysSaveOnFixedPathForPics(){isAlwaysSaveConstPlaceForPics = false;}
+    /*取消固定标注方法*/
+    void                                cancelAlwaysLabelInFixedMethod(){isAlwaysSuchMethodOfLabeling = false;}
     /*书写标签文件方法*/
     QString                             writingMethod();
+
+    /*public getter*/
+    curPoints_LabelPair_Pair            returnLabelResToManuallyLabel(){return finalSigCurPicInfo;}
+
+    QList<LabelPair>                    returnThelabelsToManuallyLabel(){return labels;};
     /*ONLY IN DEBUG: 查看所有的已有标签:从当前的窗口得到的*/
     void                                qDebugTheLabelRes();
     QList<CurPolyPoints>                curPicPoly;
@@ -158,19 +175,29 @@ signals:
     void                                refreshLabelMethod();
 private:
     Ui::curPicForLabeling_MainWindow    *ui;
+    QString                             AlwaysLabelSavePath;
+    QString                             AlwaysPictureSavePath;
     QPixmap                             pixmap;
     QPixmap                             AfterEditedPixMap;
+    QList<QPixmap>                      WholeGroupPics;
+    QList<QString>                      WholeGroupPicsPathList;
     QPen                                usrCurPen;
     QPen                                followLinePen;
     labelQuerydialog                    *dialog;
     setPenWidthWindows                  *setPenWidwindow;
+    setOrShiftCurMaxPointCountsWindows  *setCurMaxPointCountWindows;
     QPoint                              mousePosRecorder; /*for focusing on*/
     float width_ratio =                 1.0f;
     float height_ratio =                1.0f;
     unsigned int                        ticks;
+    int                                 curViewIndex;
     bool                                isSave;
+    bool                                isAlwaysSaveConstPlaceForPics;
+    bool                                isAlwaysSaveConstPlaceForLabels;
+    bool                                isAlwaysSuchMethodOfLabeling;
     bool                                isSaveShape;
     bool                                isLabelHelperOpen;
+    bool                                isAlreadyAutoDefSave;
 private slots:
     void                                reLoadLabelPairList();
     void                                pushBackToFinalSigCurPicInfo();

@@ -24,7 +24,6 @@ class editpiclabelClass : public QLabel
     Q_OBJECT
 public:
     explicit editpiclabelClass(QWidget *parent = nullptr);
-    void initPixelMap(QString filePath);
     void initUsrPen();
     QPen getUsrPenInfo();
     void initTabTextBox();

@@ -10,11 +10,6 @@ editpiclabelClass::editpiclabelClass(QWidget *parent)
 }
 
 
-void editpiclabelClass::initPixelMap(QString path)
-{
-    curPixPicMap = QPixmap(path);
-}
-
 void editpiclabelClass::resetPenToDef()
 {
     usrPen.setColor(USR_DEF_PEN_COLOR);
@@ -42,4 +37,3 @@ const int* helper_getColorRGBs(QColor color){
     return QVector<int>{color.red(),color.green(),color.blue()}.constData();
 
 }
-

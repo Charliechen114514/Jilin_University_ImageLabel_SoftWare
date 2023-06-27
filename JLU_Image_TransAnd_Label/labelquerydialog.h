@@ -6,6 +6,8 @@
 #include <QMessageBox>
 #include <QCheckBox>
 #include <QButtonGroup>
+#include <QEvent>
+#include <QMessageBox>
 #define CHECKBOXSTARTSHOW_X     10
 #define CHECKBOXSTARTSHOW_Y     15
 #define CHECKBOXSHOW_WIDTH      100
@@ -40,6 +42,7 @@ public:
 signals:
     void finishSelectingLabel();
     void newLabelEnlists();
+    void refuseSaving();
 private slots:
 
 
@@ -51,6 +54,7 @@ private slots:
 
     void on_removeLabelButton_clicked();
 
+    void closeEvent(QCloseEvent* events);
 private:
     Ui::labelQuerydialog *ui;
     QList<LabelPair> labelList;
@@ -59,6 +63,7 @@ private:
     LabelPair finalLabel;
     bool isAdded;
     bool deleteProcessIn;
+    bool isSave;
 };
 
 #endif // LABELQUERYDIALOG_H

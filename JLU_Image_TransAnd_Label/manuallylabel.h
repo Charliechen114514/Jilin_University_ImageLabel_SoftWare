@@ -36,14 +36,18 @@ class manuallyLabel : public QMainWindow
 
 public:
     /*初始化构造函数，于是需要图片路径以供这个类的初始化*/
-    explicit manuallyLabel(QString curViewPath,QWidget *parent = nullptr);
+    explicit manuallyLabel(QWidget *parent = nullptr);
 
     /*构造当前的用户描点的🖊*/
     void initUsrPen();
 
+    void setManuallyWindowPixMapLists(QList<QString> mapPicLists);
+
     void setManuallyWindowLabelList(QList<LabelPair> Labellist);
     /**/
     void initTabTextBox();
+
+    void initBasicQuickKey();
 
     void initshowPicWindows();
 
@@ -79,6 +83,8 @@ signals:
 
 
 private slots:
+    void refreshProcessBarAndTextBrowser();
+
     void on_changeColorBtn_clicked();
 
     void on_changeWidthBtn_clicked();
@@ -96,18 +102,25 @@ private slots:
     void on_backToDefPen_clicked();
 
 
+    void on_toPreviousPic_clicked();
+
+    void on_toAfterPic_clicked();
+
 private:
-    Ui::manuallyLabel *ui;
-    QString curViewPicPath;
-    QPixmap curPixPicMap;
-    setPenWidthWindows* showWindow;
-    ShapePointsList currentPointList;
-    LabelPair currentLabelPair;
-    QList<LabelPair> usableLabels;
-    Pair_Label_Shape singelPictureLabelsRecord;
-    curPicForLabeling_MainWindow* showPicWindows;
-    bool isIgnoredAllAndLeave;
-    labelQuerydialog* dialog;
+    Ui::manuallyLabel               *ui;
+    QString                         curViewPicPath;
+    QPixmap                         curPixPicMap;
+    QList<QPixmap>                  FromMainWindowMapList;
+    QList<QString>                  groupPicPathLists;
+    setPenWidthWindows*             showWindow;
+    ShapePointsList                 currentPointList;
+    LabelPair                       currentLabelPair;
+    QList<LabelPair>                usableLabels;
+    Pair_Label_Shape                singelPictureLabelsRecord;
+    curPicForLabeling_MainWindow*   showPicWindows;
+    bool                            isIgnoredAllAndLeave;
+    labelQuerydialog*               dialog;
+    int                             curViewIndex;
 };
 
 #endif // MANUALLYLABEL_H

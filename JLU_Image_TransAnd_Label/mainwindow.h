@@ -19,6 +19,12 @@ using namespace cv;
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
 
+#define USR_CANCEL_DFT_REACT return
+#define USR_INVALID_DFT_REACT return
+#define DEBUG_PIC_PATH "./default_png/def_png.png"
+#define ALLOWING_PICDIR_TYPE QString("*.jpg;*.png;*.bmp").split(";")
+#define ALLOWING_PICSIG_TYPE "PNG 图片(*.png);;JPG 图片(*.jpg);;BMP图片(*.bmp)"
+#define EMPTY_SHOWN_PNG "./def_png.png"
 
 /*type reDefine the current type and get the type LabelPair*/
 typedef unsigned int LabelIndex;

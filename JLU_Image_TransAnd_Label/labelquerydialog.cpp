@@ -162,6 +162,21 @@ void labelQuerydialog::on_rejectAndTryAgainBtn_clicked()
     isAdded = false;
 }
 
+void labelQuerydialog::closeEvent(QCloseEvent* e)
+{
+    if(isSave == false)
+    {
+        if(QMessageBox::Yes == QMessageBox::question(this,"你没保存就跑啊","保存嘛？（想跑路？）"))
+        {
+            e->ignore();
+        }
+        else
+        {
+            emit refuseSaving();
+            e->accept();
+        }
+    }
+}
 
 void labelQuerydialog::on_ensureTheLabelRes_clicked()
 {
@@ -191,7 +206,7 @@ void labelQuerydialog::on_ensureTheLabelRes_clicked()
         }
     }
     emit finishSelectingLabel();
-
+    isSave = true;
     this->close();
 }
 

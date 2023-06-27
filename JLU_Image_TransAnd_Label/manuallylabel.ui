@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1149</width>
-    <height>778</height>
+    <height>797</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -20,7 +20,7 @@
       <x>0</x>
       <y>-10</y>
       <width>841</width>
-      <height>751</height>
+      <height>621</height>
      </rect>
     </property>
     <property name="text">
@@ -200,6 +200,55 @@ li.checked::marker { content: &quot;\2612&quot;; }
     </property>
     <property name="text">
      <string>管理标签</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="toPreviousPic">
+    <property name="geometry">
+     <rect>
+      <x>60</x>
+      <y>700</y>
+      <width>201</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>上一张</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="toAfterPic">
+    <property name="geometry">
+     <rect>
+      <x>600</x>
+      <y>700</y>
+      <width>211</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>下一张</string>
+    </property>
+   </widget>
+   <widget class="QProgressBar" name="showProgressBar">
+    <property name="geometry">
+     <rect>
+      <x>60</x>
+      <y>650</y>
+      <width>391</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="value">
+     <number>24</number>
+    </property>
+   </widget>
+   <widget class="QTextBrowser" name="showCurProcess">
+    <property name="geometry">
+     <rect>
+      <x>470</x>
+      <y>650</y>
+      <width>361</width>
+      <height>31</height>
+     </rect>
     </property>
    </widget>
   </widget>

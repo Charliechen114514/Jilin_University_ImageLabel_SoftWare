@@ -1,12 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-#define USR_CANCEL_DFT_REACT return
-#define USR_INVALID_DFT_REACT return
-#define DEBUG_PIC_PATH "../JLU_Image_TransAnd_Label/"
-#define ALLOWING_PICDIR_TYPE QString("*.jpg;*.png;*.bmp").split(";")
-#define ALLOWING_PICSIG_TYPE "PNG 图片(*.png);;JPG 图片(*.jpg);;BMP图片(*.bmp)"
-#define EMPTY_SHOWN_PNG "../JLU_Image_TransAnd_Label/default_png/def_png.png"
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -74,7 +68,7 @@ void MainWindow::initDefaultPictures()
 {
     def_png.load(EMPTY_SHOWN_PNG);
     if(def_png.isNull()){
-        QMessageBox::information(NULL,"无法加载图片","啊哈！好像加载不了默认的图片呢...");
+        // QMessageBox::information(NULL,"无法加载图片","啊哈！好像加载不了默认的图片呢...");
         def_png.fill(Qt::white);
     }
 
@@ -140,10 +134,10 @@ void MainWindow::initBasicQuickShot()
     connect(toDeleteCurPic,&QAction::triggered,this,&MainWindow::on_removeCurPictureBtn_clicked);
 
     /*管理标签*/
-    QAction* toMagageLabels = new QAction;
+    QAction* toManageLabels = new QAction;
     toDeleteCurPic->setShortcut(tr("Ctrl+L"));
-    ui->menubar->addAction(toMagageLabels);
-    connect(toMagageLabels,&QAction::triggered,this,&MainWindow::on_manageLabelButton_clicked);
+    ui->menubar->addAction(toManageLabels);
+    connect(toManageLabels,&QAction::triggered,this,&MainWindow::on_manageLabelButton_clicked);
 }
 
 /**************************************************************************************************
@@ -451,13 +445,15 @@ void MainWindow::on_changeToManuallyLable_clicked()
         USR_INVALID_DFT_REACT;
     }
 
-    editPicWindow = new manuallyLabel(pathPics[curViewPicIndex-1]);
+    editPicWindow = new manuallyLabel();
     editPicWindow->setWindowTitle("标注模式");
     connect(editPicWindow,&manuallyLabel::refreshMainWindowLabelList,this,&MainWindow::fetchLabelListFromManuallyLabel);
     /*刷新单张手工编辑完成的数据，这是通过接受返回单张图片的信息得到的*/
     connect(editPicWindow,&manuallyLabel::finishWholeEditing_ReturnCurSinglePagePointsAndLabelInfo,this,&MainWindow::fetchFromManuallyLabel);
 
+    editPicWindow->setManuallyWindowPixMapLists(pathPics);
     editPicWindow->setManuallyWindowLabelList(labelList);
+
     editPicWindow->show();
 }
 

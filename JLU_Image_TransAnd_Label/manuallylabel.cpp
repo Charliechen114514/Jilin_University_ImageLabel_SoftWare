@@ -1,23 +1,19 @@
 #include "manuallylabel.h"
 #include "ui_manuallylabel.h"
 
-manuallyLabel::manuallyLabel(QString curViewPath,QWidget *parent) :
+manuallyLabel::manuallyLabel(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::manuallyLabel)
 {
 setMouseTracking(true);
-    QImage tmp;
-    tmp.load(curViewPath);
     showWindow = new setPenWidthWindows;
-    curViewPicPath = curViewPath;
     isIgnoredAllAndLeave = false;
     ui->setupUi(this);
-    ui->editPicLable->initPixelMap(curViewPath);
-    ui->editPicLable->setPixmap(QPixmap::fromImage(tmp.scaled(ui->editPicLable->size(),Qt::IgnoreAspectRatio)));
     ui->editPicLable->initUsrPen();
     qDebug() << "初始化显示标签框代码";
     initTabTextBox();
     initBasicConnection();
+    initBasicQuickKey();
 }
 
 void manuallyLabel::initBasicConnection()
@@ -39,6 +35,71 @@ void manuallyLabel::initBasicConnection()
 
 }
 
+void manuallyLabel::initBasicQuickKey()
+{
+    QAction* toPrevious = new QAction;
+    toPrevious->setShortcut(QKeySequence(tr("A")));
+    ui->menubar->addAction(toPrevious);
+    connect(toPrevious,&QAction::triggered,this,&manuallyLabel::on_toPreviousPic_clicked);
+
+    QAction* toAfter = new QAction;
+    toAfter->setShortcut(QKeySequence(tr("D")));
+    ui->menubar->addAction(toAfter);
+    connect(toAfter,&QAction::triggered,this,&manuallyLabel::on_toPreviousPic_clicked);
+
+    QAction* toPrevious2 = new QAction;
+    toPrevious2->setShortcut(QKeySequence(tr("Left")));
+    ui->menubar->addAction(toPrevious2);
+    connect(toPrevious2,&QAction::triggered,this,&manuallyLabel::on_toPreviousPic_clicked);
+
+    QAction* toAfter2 = new QAction;
+    toAfter2->setShortcut(QKeySequence(tr("Right")));
+    ui->menubar->addAction(toAfter2);
+    connect(toAfter2,&QAction::triggered,this,&manuallyLabel::on_toAfterPic_clicked);
+}
+
+void manuallyLabel::initTabTextBox()
+{
+    QString colorTextSet = "当前的颜色是: RGB(";
+    colorTextSet += QString::number(
+        *helper_getColorRGBs((ui->editPicLable->getUsrPenInfo().color()))
+        );
+
+    colorTextSet += ",";
+    colorTextSet += QString::number(
+        *(helper_getColorRGBs((ui->editPicLable->getUsrPenInfo().color())) + 1)
+        );
+    colorTextSet += ",";
+    colorTextSet += QString::number(
+        *(helper_getColorRGBs((ui->editPicLable->getUsrPenInfo().color())) + 2)
+        );
+
+    colorTextSet += ")";
+    qDebug() << colorTextSet;
+    ui->showCurColorTextBrowser->setText(colorTextSet);
+
+    QString shapeAndPointText = QString("\n当前，你选择了") + QString::number(ui->editPicLable->getCurAllowMaxPointsCount())
+                                + QString("点的标注,也就是说你标注的图形状是:") + QString::number(ui->editPicLable->getCurAllowMaxPointsCount())
+                                + QString("边形");
+
+    ui->showCurShapeTypeTextBrowser->setText(shapeAndPointText);
+
+    ui->showCurTextLabelCountTextBrowser->setText(USR_DEF_LABLE_COUNT_TEXT);
+}
+
+void manuallyLabel::initshowPicWindows()
+{
+    showPicWindows = new curPicForLabeling_MainWindow;
+    showPicWindows->initPicturesListWithPicsPath(groupPicPathLists);
+    showPicWindows->initCurUsrPenFromManuallyLabel(ui->editPicLable->getInterFaceQPen());
+    showPicWindows->initLabelListFromManuallyLabelWindow(usableLabels);
+    connect(showPicWindows,&curPicForLabeling_MainWindow::finishEveryThingAndReturnsTheNewLyLabelPair,
+            this,&manuallyLabel::updateExistedLabelList);
+    connect(showPicWindows,&curPicForLabeling_MainWindow::refreshLabelMethod,
+            this,&manuallyLabel::updateLabelMethod);
+
+    showPicWindows->show();
+}
 
 void manuallyLabel::updatePenWidth()
 {
@@ -70,35 +131,28 @@ void manuallyLabel::setManuallyWindowLabelList(QList<LabelPair> Labellist)
     usableLabels = Labellist;
     updateTextBrowsers();
 }
-void manuallyLabel::initTabTextBox()
+
+void manuallyLabel::setManuallyWindowPixMapLists(QList<QString> mapPicLists)
 {
-    QString colorTextSet = "当前的颜色是: RGB(";
-    colorTextSet += QString::number(
-        *helper_getColorRGBs((ui->editPicLable->getUsrPenInfo().color()))
-        );
 
-    colorTextSet += ",";
-    colorTextSet += QString::number(
-        *(helper_getColorRGBs((ui->editPicLable->getUsrPenInfo().color())) + 1)
-        );
-    colorTextSet += ",";
-    colorTextSet += QString::number(
-        *(helper_getColorRGBs((ui->editPicLable->getUsrPenInfo().color())) + 2)
-        );
-
-    colorTextSet += ")";
-    qDebug() << colorTextSet;
-    ui->showCurColorTextBrowser->setText(colorTextSet);
-
-    QString shapeAndPointText = QString("\n当前，你选择了") + QString::number(ui->editPicLable->getCurAllowMaxPointsCount())
-                                + QString("点的标注,也就是说你标注的图形状是:") + QString::number(ui->editPicLable->getCurAllowMaxPointsCount())
-                                + QString("边形");
-
-    ui->showCurShapeTypeTextBrowser->setText(shapeAndPointText);
-
-    ui->showCurTextLabelCountTextBrowser->setText(USR_DEF_LABLE_COUNT_TEXT);
+    if(mapPicLists.isEmpty()){
+        QMessageBox::critical(this,"？","不是哥们怎么到这里的?");
+        return;
+    }
+    groupPicPathLists = mapPicLists;
+    for(int i = 0; i < mapPicLists.size();i++)
+    {
+        FromMainWindowMapList.push_back(
+            QPixmap::fromImage(
+                QImage(mapPicLists[i]).scaled(ui->editPicLable->size(),Qt::IgnoreAspectRatio)
+                )
+            );
+    }
+    curViewIndex = 0;
+    ui->editPicLable->setPixmap(FromMainWindowMapList.first());
+    ui->showProgressBar->setRange(0,FromMainWindowMapList.size());
+    return;
 }
-
 
 manuallyLabel::~manuallyLabel()
 {
@@ -199,18 +253,7 @@ Pair_Label_Shape manuallyLabel::returnSingelPictureLabelsRecord()
     return Pair_Label_Shape(singelPictureLabelsRecord);
 }
 
-void manuallyLabel::initshowPicWindows()
-{
-    showPicWindows = new curPicForLabeling_MainWindow;
-    showPicWindows->getPictures(curViewPicPath);
-    showPicWindows->initCurUsrPenFromManuallyLabel(ui->editPicLable->getInterFaceQPen());
-    showPicWindows->initLabelListFromManuallyLabelWindow(usableLabels);
-    connect(showPicWindows,&curPicForLabeling_MainWindow::finishEveryThingAndReturnsTheNewLyLabelPair,
-            this,&manuallyLabel::updateExistedLabelList);
-    connect(showPicWindows,&curPicForLabeling_MainWindow::refreshLabelMethod,
-            this,&manuallyLabel::updateLabelMethod);
-    showPicWindows->show();
-}
+
 
 void manuallyLabel::on_activeToLabel_clicked()
 {
@@ -265,5 +308,37 @@ void manuallyLabel::on_backToDefPen_clicked()
     updateTextBrowsers();
 }
 
+
+
+
+void manuallyLabel::on_toPreviousPic_clicked()
+{
+    curViewIndex--;
+
+    if(curViewIndex <= 0 ){
+        QMessageBox::information(this,"注意！","你已经结束浏览最后一张照片，将自动为你跳转到第一张");
+        curViewIndex = FromMainWindowMapList.size() - 1;
+    }
+    ui->editPicLable->setPixmap(FromMainWindowMapList[curViewIndex]);
+    refreshProcessBarAndTextBrowser();
+}
+
+void manuallyLabel::on_toAfterPic_clicked()
+{
+    curViewIndex++;
+    if(curViewIndex >= FromMainWindowMapList.size()){
+        QMessageBox::information(this,"注意！","你已经结束浏览最后一张照片，将自动为你跳转到第一张");
+        curViewIndex = 0;
+    }
+    qDebug() << curViewIndex;
+    ui->editPicLable->setPixmap(FromMainWindowMapList[curViewIndex]);
+    refreshProcessBarAndTextBrowser();
+}
+
+void manuallyLabel::refreshProcessBarAndTextBrowser()
+{
+    ui->showProgressBar->setValue(curViewIndex);
+    ui->showCurProcess->setText("当前你在第 " + QString::number(curViewIndex-1) +" 张图片处！");
+}
 
 

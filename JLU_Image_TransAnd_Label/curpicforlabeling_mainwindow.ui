@@ -10,6 +10,9 @@
     <height>600</height>
    </rect>
   </property>
+  <property name="mouseTracking">
+   <bool>true</bool>
+  </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
@@ -39,12 +42,14 @@
     <addaction name="actionsaveAll"/>
    </widget>
    <widget class="QMenu" name="menu_2">
+    <property name="font">
+     <font>
+      <bold>false</bold>
+     </font>
+    </property>
     <property name="title">
      <string>更改形状</string>
     </property>
-    <addaction name="actionchangeToAnyFourPoly"/>
-    <addaction name="actionchangeToRectMode"/>
-    <addaction name="actionchangeToFivePoly"/>
     <addaction name="actionchangeAndActivateSelectMode"/>
    </widget>
    <widget class="QMenu" name="menu_3">
@@ -63,6 +68,13 @@
     <addaction name="actionchangeHelperPenColor"/>
     <addaction name="actionchangeHelperPenWidth"/>
    </widget>
+   <widget class="QMenu" name="menu_5">
+    <property name="title">
+     <string>切换图片</string>
+    </property>
+    <addaction name="actiontoAfterPic"/>
+   </widget>
+   <addaction name="menu_5"/>
    <addaction name="menu"/>
    <addaction name="saveImediately"/>
    <addaction name="menu_2"/>
@@ -72,7 +84,7 @@
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionendLabeling">
    <property name="text">
-    <string>结束标记</string>
+    <string>结束标记（保存所有）</string>
    </property>
   </action>
   <action name="actionsavePicOnly">
@@ -110,7 +122,7 @@
   </action>
   <action name="actionchangeAndActivateSelectMode">
    <property name="text">
-    <string>切换到自定义</string>
+    <string>更换形状</string>
    </property>
   </action>
   <action name="actionchangeColor">
@@ -146,6 +158,16 @@
   <action name="actionchangeHelperPenWidth">
    <property name="text">
     <string>改变辅助画笔标记笔宽</string>
+   </property>
+  </action>
+  <action name="actiontoPreviousPic">
+   <property name="text">
+    <string>切换到上一张</string>
+   </property>
+  </action>
+  <action name="actiontoAfterPic">
+   <property name="text">
+    <string>切换到下一张</string>
    </property>
   </action>
  </widget>
