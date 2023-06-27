@@ -30,6 +30,7 @@ void MainWindow::initMainWindow(){
 
     curViewPicIndex = 0;
     getNewLabelDialog = NULL;
+    isIgnoreFailed = true;
     helpWindows = new helpAndCheck(this);
     /*完成主要链接*/
     /*链接新添加单张图片*/
@@ -151,8 +152,20 @@ void MainWindow::initBasicQuickShot()
 **************************************************************************************************/
 void MainWindow::imgShow(unsigned int visitIndex)
 {
-    QImage curShow = listImage[visitIndex];
-    ui->viewLabel->setPixmap(QPixmap::fromImage(curShow.scaled(ui->viewLabel->size(),Qt::IgnoreAspectRatio)));
+    curViewPic.load(pathPics[visitIndex]);
+    if(curViewPic.isNull())
+    {
+        if(QMessageBox::Yes == QMessageBox::question(this,"注意！","无法显示图片！将会更换图片或者删除之，点击确定表示更换"))
+        {
+            on_changeCurPicBtn_clicked();
+        }
+        else
+        {
+            pathPics.removeAt(visitIndex);
+
+        }
+    }
+    ui->viewLabel->setPixmap(QPixmap::fromImage(curViewPic.scaled(ui->viewLabel->size(),Qt::IgnoreAspectRatio)));
     refreshProcessBar(visitIndex + 1);
 }
 /**************************************************************************************************
@@ -177,11 +190,10 @@ void MainWindow::getPictureFromUsr()
         QMessageBox::critical(NULL,"出错了","没有办法加载图片...兄弟看看文件路径?");
         USR_INVALID_DFT_REACT;
     }
-    listImage.push_back(curImage);
     pathPics.push_back(getPicFile);
-    ui->curPlaceProcessBar->setRange(0,listImage.size());
-    curViewPicIndex = listImage.size();
-    imgShow(listImage.size()-1);
+    ui->curPlaceProcessBar->setRange(0,pathPics.size());
+    curViewPicIndex = pathPics.size();
+    imgShow(pathPics.size()-1);
 }
 
 /**************************************************************************************************
@@ -227,39 +239,66 @@ void MainWindow::getDirectoryFromUsr()
         FilePathAll.push_back(curPath);
         qDebug() << "Have locate the file successfully of the :" << i <<" - " << curPath;
     }
-
-    for(int i = 0; i < FilePathAll.size(); i++)
+    if(!isIgnoreFailed)
     {
-        QMessageBox curBox;
-        curBox.setText("无法加载图片！请再三确保您的图片文件路径是合法的！");
-        curBox.setWindowTitle("加载失败了！");
-        curBox.resize(480,640);
-        QPushButton* cancelAllLoadingBehavior = curBox.addButton(tr("好吧，我放弃加载全部!"),QMessageBox::ActionRole);
-        QPushButton* cancelCurOneAndContinue = curBox.addButton(tr("前进，不择手段的前进！"),QMessageBox::ActionRole);
-        QImage currentImg;
-        currentImg.load(FilePathAll[i]);
-        if(currentImg.isNull())
+        for(int i = 0; i < FilePathAll.size(); i++)
         {
-            curBox.exec();
-            if(curBox.clickedButton() == cancelAllLoadingBehavior){
-                QMessageBox::information(this,"你取消了加载所有的图片！","你取消了加载所有的图片！");
-                USR_CANCEL_DFT_REACT;
+            curViewPic.load(FilePathAll[i]);
+            if(curViewPic.isNull())
+            {
+                if(isIgnoreFailed)
+                {
+                    FilePathAll.removeAt(i);
+                    i--;
+                }
+                else
+                {
+                    if(dealFailedInput())
+                    {
+                        FilePathAll.removeAt(i);
+                        i--;
+                        continue;
+                    }
+                    else
+                    {
+                        FilePathAll.clear();
+                    }
+                }
             }
-            else if(curBox.clickedButton() == cancelCurOneAndContinue){
-                QMessageBox::information(this,"好的，继续加载!","好的，继续加载!");
-                continue;
-            }
+
         }
-
-        listImage.push_back(currentImg);
-        pathPics.push_back(FilePathAll[i]);
     }
-
-    ui->curPlaceProcessBar->setRange(0,listImage.size());
-    curViewPicIndex = listImage.size();
-    imgShow(listImage.size()-1);
+    curViewPic.load(FilePathAll.last());
+    pathPics.append(FilePathAll);
+    ui->curPlaceProcessBar->setRange(0,pathPics.size());
+    curViewPicIndex = pathPics.size();
+    imgShow(pathPics.size()-1);
 
 }
+
+bool MainWindow::dealFailedInput()
+{
+    QMessageBox curBox;
+    curBox.setText("无法加载图片！请再三确保您的图片文件路径是合法的！");
+    curBox.setWindowTitle("加载失败了！");
+    curBox.resize(480,640);
+    QPushButton* cancelAllLoadingBehavior = curBox.addButton(tr("好吧，我放弃加载全部!"),QMessageBox::ActionRole);
+    QPushButton* cancelCurOneAndContinue = curBox.addButton(tr("前进，不择手段的前进！"),QMessageBox::ActionRole);
+    curBox.exec();
+    if(curBox.clickedButton() == cancelAllLoadingBehavior){
+        QMessageBox::information(this,"你取消了加载所有的图片！","你取消了加载所有的图片！");
+        return 1;
+    }
+    else if(curBox.clickedButton() == cancelCurOneAndContinue)
+    {
+        QMessageBox::information(this,"好的，继续加载!","好的，继续加载!");
+        return 0;
+    }
+    return 0;
+}
+
+
+
 
 /**************************************************************************************************
 *   funtions type :     adjustments on widgets
@@ -273,7 +312,7 @@ void MainWindow::refreshProcessBar(int curViewIndex)
 {
     //qDebug() << curViewIndex << " one and totally "<<listImage.size() << " and the ratios is "<< static_cast<int>(curViewIndex/listImage.size());
     ui->curPlaceProcessBar->setValue(curViewIndex);
-    QString textBar = "当先你在:"+QString::number(curViewIndex) + "/" + QString::number(listImage.size());
+    QString textBar = "当先你在:"+QString::number(curViewIndex) + "/" + QString::number(pathPics.size());
     ui->processTextLine->setText(textBar);
 }
 
@@ -288,12 +327,12 @@ void MainWindow::refreshProcessBar(int curViewIndex)
 **************************************************************************************************/
 void MainWindow::on_gotoAfterOne_clicked()
 {
-    if(listImage.size() == 0){
+    if(pathPics.size() == 0){
         QMessageBox::information(this,"Caution!","我不认为你对一个空的玩意点击下一个有什么好的动机...嗯");
         return;
     }
     curViewPicIndex++;
-    if(curViewPicIndex > listImage.size()){
+    if(curViewPicIndex > pathPics.size()){
         QMessageBox::information(this,"Caution!","你已经浏览完最后一张图片了，将自动跳转到第一张图片...");
         curViewPicIndex = 1;
     }
@@ -312,14 +351,14 @@ void MainWindow::on_gotoAfterOne_clicked()
 **************************************************************************************************/
 void MainWindow::on_gotoPrevious_clicked()
 {
-    if(listImage.size() == 0){
+    if(pathPics.size() == 0){
         QMessageBox::information(this,"Caution!","我不认为你对一个空的玩意点击上一个有什么好的动机...嗯");
         return;
     }
     curViewPicIndex--;
     if(curViewPicIndex <= 0){
         QMessageBox::information(this,"Caution!","你已经浏览完最前一张图片了，将自动跳转到最后一张图片...");
-        curViewPicIndex = listImage.size();
+        curViewPicIndex = pathPics.size();
     }
     imgShow(curViewPicIndex - 1);
     return;
@@ -337,16 +376,16 @@ void MainWindow::on_gotoPrevious_clicked()
 void MainWindow::on_removeCurPictureBtn_clicked()
 {
     curViewPicIndex--;
-    if(listImage.size() == 0){
+    if(pathPics.size() == 0){
         QMessageBox::critical(NULL,"出错了！","我们一般认为移除空的东西是一种有毛病的行为！");
         USR_INVALID_DFT_REACT;
     }
 
-    listImage.removeAt(curViewPicIndex);
-    ui->curPlaceProcessBar->setRange(0,listImage.size());
+    pathPics.removeAt(curViewPicIndex);
+    ui->curPlaceProcessBar->setRange(0,pathPics.size());
     refreshProcessBar(curViewPicIndex);
 
-    if(listImage.size() == 0){
+    if(pathPics.size() == 0){
         QMessageBox::information(NULL,"注意","图片列表已经清空了");
         return;
     }
@@ -373,13 +412,13 @@ void MainWindow::on_changeCurPicBtn_clicked()
         USR_CANCEL_DFT_REACT;
     }
 
-    QImage curImage;
-    curImage.load(getPicFile);
-    if(curImage.isNull()){
+    curViewPic.load(getPicFile);
+    if(curViewPic.isNull()){
         QMessageBox::critical(NULL,"出错了","没有办法加载图片...兄弟看看文件路径?");
+        imgShow(curViewPicIndex - 1);
         USR_INVALID_DFT_REACT;
     }
-    listImage.replace(curViewPicIndex-1,curImage);
+    pathPics.replace(curViewPicIndex-1,getPicFile);
 
     imgShow(curViewPicIndex - 1);
 }
@@ -395,7 +434,7 @@ void MainWindow::on_changeCurPicBtn_clicked()
 **************************************************************************************************/
 void MainWindow::switchPicDir()
 {
-    if(listImage.size() == 0){
+    if(pathPics.size() == 0){
         QMessageBox::information(NULL,"建议","我觉得，你是不是应该考虑添加文件夹呢?");
         getDirectoryFromUsr();
         return;
@@ -416,12 +455,12 @@ void MainWindow::switchPicDir()
 **************************************************************************************************/
 void MainWindow::removeAllPictures()
 {
-    if(listImage.size() == 0){
+    if(pathPics.size() == 0){
         QMessageBox::critical(NULL,"出错了！","我们一般认为移除空的东西是一种有毛病的行为！");
         USR_INVALID_DFT_REACT;
     }
 
-    listImage.clear();
+    pathPics.clear();
     ui->curPlaceProcessBar->setRange(0,1);
     refreshProcessBar(0);
     initDefaultPictures();

@@ -690,7 +690,7 @@ void curPicForLabeling_MainWindow::setAlwaysSaveOnFixedPathForLabels()
         }
     }
 
-    AlwaysLabelSavePath = QFileDialog::getExistingDirectory(this,"选择标签默认保存路径","./");
+    AlwaysLabelSavePath = QFileDialog::getExistingDirectory(this,"选择文件夹","./");
     if(AlwaysLabelSavePath.isEmpty()){
         return;
     }
@@ -716,7 +716,7 @@ void curPicForLabeling_MainWindow::shiftAlwaysSaveOnFixedPathForLabels()
         }
     }
 
-    AlwaysLabelSavePath = QFileDialog::getExistingDirectory(this,"选择标签默认保存路径","./");
+    AlwaysLabelSavePath = QFileDialog::getExistingDirectory(this,"选择文件夹","./");
     if(AlwaysLabelSavePath.isEmpty()){
         return;
     }
@@ -741,7 +741,7 @@ void curPicForLabeling_MainWindow::setAlwaysSaveOnFixedPathForPics()
         }
     }
 
-    AlwaysPictureSavePath = QFileDialog::getExistingDirectory(this,"选择标签默认保存路径","./");
+    AlwaysPictureSavePath = QFileDialog::getExistingDirectory(this,"选择文件夹","./");
     if(AlwaysPictureSavePath.isEmpty())
     {
         return;
@@ -767,7 +767,7 @@ void curPicForLabeling_MainWindow::shiftAlwaysSaveOnFixedPathForPics()
         }
     }
 
-    AlwaysPictureSavePath = QFileDialog::getExistingDirectory(this,"选择图像默认保存路径","./");
+    AlwaysPictureSavePath = QFileDialog::getExistingDirectory(this,"选择文件夹","./");
     if(AlwaysPictureSavePath.isEmpty())
     {
         return;
@@ -867,3 +867,5 @@ QString curPicForLabeling_MainWindow::writingMethod()
 
     return resultToText;
 }
+
+

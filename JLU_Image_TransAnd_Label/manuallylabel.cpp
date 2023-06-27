@@ -45,7 +45,7 @@ void manuallyLabel::initBasicQuickKey()
     QAction* toAfter = new QAction;
     toAfter->setShortcut(QKeySequence(tr("D")));
     ui->menubar->addAction(toAfter);
-    connect(toAfter,&QAction::triggered,this,&manuallyLabel::on_toPreviousPic_clicked);
+    connect(toAfter,&QAction::triggered,this,&manuallyLabel::on_toAfterPic_clicked);
 
     QAction* toPrevious2 = new QAction;
     toPrevious2->setShortcut(QKeySequence(tr("Left")));
@@ -118,14 +118,6 @@ void manuallyLabel::updateExistedLabelList()
     updateTextBrowsers();
 }
 
-void manuallyLabel::getPixmapPath(QString path)
-{
-    curViewPicPath = path;
-    QImage tmp;
-    tmp.load(path);
-    ui->editPicLable->setPixmap(QPixmap::fromImage(tmp.scaled(ui->editPicLable->size(),Qt::IgnoreAspectRatio)));
-}
-
 void manuallyLabel::setManuallyWindowLabelList(QList<LabelPair> Labellist)
 {
     usableLabels = Labellist;
@@ -140,17 +132,10 @@ void manuallyLabel::setManuallyWindowPixMapLists(QList<QString> mapPicLists)
         return;
     }
     groupPicPathLists = mapPicLists;
-    for(int i = 0; i < mapPicLists.size();i++)
-    {
-        FromMainWindowMapList.push_back(
-            QPixmap::fromImage(
-                QImage(mapPicLists[i]).scaled(ui->editPicLable->size(),Qt::IgnoreAspectRatio)
-                )
-            );
-    }
     curViewIndex = 0;
-    ui->editPicLable->setPixmap(FromMainWindowMapList.first());
-    ui->showProgressBar->setRange(0,FromMainWindowMapList.size());
+    curPixPicMap.load(groupPicPathLists.first());
+    ui->editPicLable->setPixmap(QPixmap::fromImage(curPixPicMap.scaled(ui->editPicLable->size(),Qt::IgnoreAspectRatio)));
+    ui->showProgressBar->setRange(0,groupPicPathLists.size());
     return;
 }
 
@@ -317,21 +302,23 @@ void manuallyLabel::on_toPreviousPic_clicked()
 
     if(curViewIndex <= 0 ){
         QMessageBox::information(this,"注意！","你已经结束浏览最后一张照片，将自动为你跳转到第一张");
-        curViewIndex = FromMainWindowMapList.size() - 1;
+        curViewIndex = groupPicPathLists.size() - 1;
     }
-    ui->editPicLable->setPixmap(FromMainWindowMapList[curViewIndex]);
+    curPixPicMap.load(groupPicPathLists[curViewIndex]);
+    ui->editPicLable->setPixmap(QPixmap::fromImage(curPixPicMap.scaled(ui->editPicLable->size(),Qt::KeepAspectRatio)));
     refreshProcessBarAndTextBrowser();
 }
 
 void manuallyLabel::on_toAfterPic_clicked()
 {
     curViewIndex++;
-    if(curViewIndex >= FromMainWindowMapList.size()){
+    if(curViewIndex >= groupPicPathLists.size()){
         QMessageBox::information(this,"注意！","你已经结束浏览最后一张照片，将自动为你跳转到第一张");
         curViewIndex = 0;
     }
     qDebug() << curViewIndex;
-    ui->editPicLable->setPixmap(FromMainWindowMapList[curViewIndex]);
+    curPixPicMap.load(groupPicPathLists[curViewIndex]);
+    ui->editPicLable->setPixmap(QPixmap::fromImage(curPixPicMap.scaled(ui->editPicLable->size(),Qt::KeepAspectRatio)));
     refreshProcessBarAndTextBrowser();
 }
 

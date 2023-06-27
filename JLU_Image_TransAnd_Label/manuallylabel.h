@@ -55,7 +55,6 @@ public:
 
     void getEditedChangedWidth();
 
-    void getPixmapPath(QString path);
 
     ~manuallyLabel();
 
@@ -109,8 +108,7 @@ private slots:
 private:
     Ui::manuallyLabel               *ui;
     QString                         curViewPicPath;
-    QPixmap                         curPixPicMap;
-    QList<QPixmap>                  FromMainWindowMapList;
+    QImage                          curPixPicMap;
     QList<QString>                  groupPicPathLists;
     setPenWidthWindows*             showWindow;
     ShapePointsList                 currentPointList;

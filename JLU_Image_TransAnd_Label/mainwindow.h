@@ -57,6 +57,9 @@ public:
     /*Import the Directory Functions*/
     /*通过文件夹的方式导入图片*/
     void getDirectoryFromUsr();
+
+    bool dealFailedInput();
+
     /*ProcessBar Check and set*/
     /*进度条的刷新*/
     void refreshProcessBar(int curViewIndex);
@@ -103,7 +106,7 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    QList<QImage> listImage;
+    QImage      curViewPic;
     QList<QString> pathPics;
     unsigned int curViewPicIndex;
     QImage def_png;
@@ -112,6 +115,7 @@ private:
     labelQuerydialog* getNewLabelDialog;
     manuallyLabel* editPicWindow;
     helpAndCheck* helpWindows;
+    bool isIgnoreFailed;
 };
 #endif // MAINWINDOW_H
 
