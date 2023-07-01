@@ -13,6 +13,7 @@
 #include <manuallylabel.h>
 #include <labelquerydialog.h>
 #include "helpandcheck.h"
+#include <setseperatormainwindow.h>
 QT_BEGIN_NAMESPACE
 
 using namespace cv;
@@ -21,7 +22,7 @@ QT_END_NAMESPACE
 
 #define USR_CANCEL_DFT_REACT return
 #define USR_INVALID_DFT_REACT return
-#define DEBUG_PIC_PATH "./default_png/def_png.png"
+#define DEBUG_PIC_PATH "."
 #define ALLOWING_PICDIR_TYPE QString("*.jpg;*.png;*.bmp").split(";")
 #define ALLOWING_PICSIG_TYPE "PNG 图片(*.png);;JPG 图片(*.jpg);;BMP图片(*.bmp)"
 #define EMPTY_SHOWN_PNG "./def_png.png"
@@ -96,7 +97,7 @@ private slots:
     /*删除单张当前图片 - 按钮*/
     void on_removeCurPictureBtn_clicked();
 
-
+    void resizeEvent(QResizeEvent*);
 
     /*RNM，退图片！-按钮*/
     void on_changeCurPicBtn_clicked();
@@ -104,18 +105,27 @@ private slots:
     /*添加新标签的窗口*/
     void on_manageLabelButton_clicked();
 
+    void importLabelsFromUsr();
+
+    void showSetSeperatorMainWindow();
+
+    void getSetSeperatorFromSSMW();
 private:
-    Ui::MainWindow *ui;
-    QImage      curViewPic;
-    QList<QString> pathPics;
-    unsigned int curViewPicIndex;
-    QImage def_png;
-    QList<LabelPair> labelList;
-    QList<Pair_Label_Shape> wholeCoreData;/*have Existed Data*/
-    labelQuerydialog* getNewLabelDialog;
-    manuallyLabel* editPicWindow;
-    helpAndCheck* helpWindows;
-    bool isIgnoreFailed;
+    Ui::MainWindow                                  *ui;
+    QImage                                          curViewPic;
+    QList<QString>                                  pathPics;
+    unsigned int                                    curViewPicIndex;
+    QImage                                          def_png;
+    QList<LabelPair>                                labelList;
+    QList<Pair_Label_Shape>                         wholeCoreData;/*have Existed Data*/
+    labelQuerydialog*                               getNewLabelDialog;
+    manuallyLabel*                                  editPicWindow;
+    helpAndCheck*                                   helpWindows;
+    SetSeperatorMainWindow*                         setSeperatorWindows;
+    bool                                            isIgnoreFailed;
+    QString                                         defLabelsSeperator;
+    QString                                         curLabelsSeperator;
+    QStringList                                     writingMethod;
 };
 #endif // MAINWINDOW_H
 

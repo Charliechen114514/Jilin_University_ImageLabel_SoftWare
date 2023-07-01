@@ -20,6 +20,7 @@ SOURCES += \
     manuallylabel.cpp \
     setorshiftcurmaxpointcountswindows.cpp \
     setpenwidthwindows.cpp \
+    setseperatormainwindow.cpp \
     smartlineeditclass.cpp
 
 HEADERS += \
@@ -33,6 +34,7 @@ HEADERS += \
     manuallylabel.h \
     setorshiftcurmaxpointcountswindows.h \
     setpenwidthwindows.h \
+    setseperatormainwindow.h \
     smartlineeditclass.h
 
 FORMS += \
@@ -42,7 +44,8 @@ FORMS += \
     mainwindow.ui \
     manuallylabel.ui \
     setorshiftcurmaxpointcountswindows.ui \
-    setpenwidthwindows.ui
+    setpenwidthwindows.ui \
+    setseperatormainwindow.ui
 
 INCLUDEPATH += D:\QT_Opencv_Compile\opencv_build\install\include
 LIBS += D:\QT_Opencv_Compile\opencv_build\install\x64\mingw\bin\\libopencv_*.dll

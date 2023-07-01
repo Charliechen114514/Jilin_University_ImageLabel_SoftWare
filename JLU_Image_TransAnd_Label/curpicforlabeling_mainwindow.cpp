@@ -27,47 +27,60 @@ curPicForLabeling_MainWindow::curPicForLabeling_MainWindow(QWidget *parent) :
     ui(new Ui::curPicForLabeling_MainWindow)
 {
     ui->setupUi(this);
+    /*预设定窗口显示的位置*/
     dialog = new labelQuerydialog;
     dialog->move(100,200);
+    /*设定好默认保存的路径位置*/
     AlwaysLabelSavePath = "";
     AlwaysPictureSavePath = "";
+    /*关闭默认保存设置*/
     isAlreadyAutoDefSave = false;
+    /*设置好默认的窗口*/
     setPenWidwindow = new setPenWidthWindows;
     setCurMaxPointCountWindows = new setOrShiftCurMaxPointCountsWindows;
+    /*设置总是在窗顶*/
     setCurMaxPointCountWindows->setWindowModality(Qt::ApplicationModal);
-    setCurMaxPointCountWindows->show();
+    /*询问是否要保存在固定路径*/
+
+    /*标签的*/
     if(QMessageBox::Yes == QMessageBox::question(this,"啊我不知道写什么窗口标题","要设置固定的标签保存路径嘛?")){
         setAlwaysSaveOnFixedPathForLabels();
         qDebug() << AlwaysLabelSavePath;
         isAlreadyAutoDefSave = true;
     }
+    /*图像的*/
     if(QMessageBox::Yes == QMessageBox::question(this,"啊我不知道写什么窗口标题","要设置固定的图像保存路径嘛?")){
         setAlwaysSaveOnFixedPathForPics();
         qDebug() << AlwaysPictureSavePath;
         isAlreadyAutoDefSave = true;;
     }
+    /*显示这个窗口*/
+    setCurMaxPointCountWindows->show();
+    /*初始化画笔*/
     followLinePen.setWidth(USR_DEF_FOLLOWLINE_WIDTH);
     followLinePen.setColor(USR_DEF_FOLLOWLINE_COLOR);
+    /*设定保存项为 否*/
     isSave = false;
-    isSaveShape = true;
+    /*默认打开辅助标记*/
     isLabelHelperOpen = USR_DEF_LABEL_HELPER;
     mousePosRecorder = QPoint(0,0);
-    labels.clear();
     this->centralWidget()->setMouseTracking(true);//开启鼠标实时追踪，监听鼠标移动事件，默认只有按下时才监听
     ticks = 0;
     curViewIndex = 0;
     initBasicConnection();
+
 }
 
 void curPicForLabeling_MainWindow::initBasicConnection()
 {
-    /*重新加载可能新产生的标签链表*/
+    /*链接：重新加载可能新产生的标签链表*/
     connect(dialog,&labelQuerydialog::finishSelectingLabel,
             this,&curPicForLabeling_MainWindow::reLoadLabelPairList);
 
-    /*每标记完一个轮廓刷新我们的最后的结果，等到用户表达结束或者返回的时候，直接返回拿到的数据*/
+    /*链接：每标记完一个轮廓刷新我们的最后的结果，等到用户表达结束或者返回的时候，直接返回拿到的数据*/
     connect(dialog,&labelQuerydialog::finishSelectingLabel,
             this,&curPicForLabeling_MainWindow::pushBackToFinalSigCurPicInfo);
+    /*链接：取消设定，我们就要弹出一个先前做的更改*/
     connect(dialog,&labelQuerydialog::refuseSaving,this,&curPicForLabeling_MainWindow::removeTheLastPolyAndLabel);
 
     /*下面的三个信号与槽完成保存工作*/
@@ -90,9 +103,10 @@ void curPicForLabeling_MainWindow::initBasicConnection()
 
     /*链接： 切换笔的宽度*/
 
-    /*链接：展示内容*/
+    /*链接：链接更改标注画笔的粗度*/
     connect(ui->actionchangeWidth,&QAction::triggered,
             this,&curPicForLabeling_MainWindow::showSetPenEidthWindow);
+    /*链接：链接更改辅助标注画笔的粗度*/
     connect(ui->actionchangeHelperPenWidth,&QAction::triggered,
             this,&curPicForLabeling_MainWindow::showSetPenEidthWindow);
 
@@ -135,6 +149,7 @@ void curPicForLabeling_MainWindow::initBasicConnection()
     connect(ui->actiontoAfterPic,&QAction::triggered,
             this,&curPicForLabeling_MainWindow::moveToAfterPic);
 
+    /*链接：完成编辑标注点个数最大值选择而触发初始化*/
     connect(setCurMaxPointCountWindows,&setOrShiftCurMaxPointCountsWindows::finishSelectAndReadyReturn,
             this,&curPicForLabeling_MainWindow::initCurMaxPointCount);
 }
@@ -160,6 +175,7 @@ void curPicForLabeling_MainWindow::initCurUsrPenFromManuallyLabel(QPen pen)
 void curPicForLabeling_MainWindow::initCurMaxPointCount()
 {
     curAllowMaxPointsCount = setCurMaxPointCountWindows->returnFinalSeletionInCurMaxPointCount();
+    isSaveShape = true;
 }
 
 // delete and release
@@ -301,6 +317,15 @@ void curPicForLabeling_MainWindow::paintEvent(QPaintEvent*)
                painter.drawLine(curPicPoly[i][j],curPicPoly[i][j + 1]);
             }
             painter.drawLine(curPicPoly[i][curPicPoly[i].size()-1],curPicPoly[i][0]);
+            update();
+        }
+        for(int i = 1; i < tempPointsList.size();i++)
+        {
+            if(static_cast<unsigned int>(i) == curAllowMaxPointsCount - 1)
+            {
+               painter.drawLine(tempPointsList[i],tempPointsList[0]);
+            }
+            painter.drawLine(tempPointsList[i-1],tempPointsList[i]);
             update();
         }
         painter.end();
@@ -446,6 +471,9 @@ void curPicForLabeling_MainWindow::keyPressEvent(QKeyEvent* e)
     }
     else if(e->key() == Qt::Key_A || e->key() == Qt::Key_Right){
         moveToAfterPic();
+    }
+    else if((e->key() == Qt::Key_Left && e->modifiers() == Qt::ControlModifier) || e->key() == Qt::Key_Backspace){
+        removeTheLastSinglePoints();
     }
 }
 
@@ -833,6 +861,18 @@ void curPicForLabeling_MainWindow::qDebugTheLabelRes()
     }
 }
 
+void curPicForLabeling_MainWindow::removeTheLastSinglePoints()
+{
+    if(tempPointsList.size() != 0)
+    {
+        tempPointsList.pop_back();
+        ticks--;
+        qDebug() << "已经撤销了单个点了";
+    }
+    update();
+    return;
+}
+
 void curPicForLabeling_MainWindow::removeTheLastPolyAndLabel()
 {
     if(finalSigCurPicInfo.first.size()!= 0)
@@ -845,6 +885,7 @@ void curPicForLabeling_MainWindow::removeTheLastPolyAndLabel()
         qDebug() << "已撤销";
     }
     update();
+    return;
 }
 
 QString curPicForLabeling_MainWindow::writingMethod()

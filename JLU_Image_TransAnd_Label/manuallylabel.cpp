@@ -35,6 +35,16 @@ void manuallyLabel::initBasicConnection()
 
 }
 
+void manuallyLabel::resizeEvent(QResizeEvent*)
+{
+    ui->editPicLable->setPixmap(QPixmap::fromImage(curPixPicMap.scaled(ui->editPicLable->size(),Qt::IgnoreAspectRatio)));
+}
+
+
+
+
+
+
 void manuallyLabel::initBasicQuickKey()
 {
     QAction* toPrevious = new QAction;

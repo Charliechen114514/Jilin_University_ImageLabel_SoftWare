@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 10.0.1, 2023-06-27T18:21:58. -->
+<!-- Written by QtCreator 10.0.1, 2023-07-01T20:36:29. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -137,8 +137,8 @@
     <value type="int" key="Qt4ProjectManager.Qt4BuildConfiguration.BuildConfiguration">2</value>
    </valuemap>
    <valuemap type="QVariantMap" key="ProjectExplorer.Target.BuildConfiguration.1">
-    <value type="QString" key="ProjectExplorer.BuildConfiguration.BuildDirectory">D:\BuildProjectsExp\JLU_Label_Software_w1.0.0\buildTarget</value>
-    <value type="QString" key="ProjectExplorer.BuildConfiguration.BuildDirectory.shadowDir">D:/BuildProjectsExp/JLU_Label_Software_w1.0.0/buildTarget</value>
+    <value type="QString" key="ProjectExplorer.BuildConfiguration.BuildDirectory">D:\QT projects\JLU_Image_TransAnd_Label</value>
+    <value type="QString" key="ProjectExplorer.BuildConfiguration.BuildDirectory.shadowDir">D:/QT projects/JLU_Image_TransAnd_Label</value>
     <valuemap type="QVariantMap" key="ProjectExplorer.BuildConfiguration.BuildStepList.0">
      <valuemap type="QVariantMap" key="ProjectExplorer.BuildStepList.Step.0">
       <value type="bool" key="ProjectExplorer.BuildStep.Enabled">true</value>

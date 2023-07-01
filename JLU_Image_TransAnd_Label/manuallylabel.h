@@ -72,6 +72,8 @@ public:
 
     void closeEvent(QCloseEvent*);
 
+    void resizeEvent(QResizeEvent*);
+
     void updatePenWidth();
 
     void updateLabelMethod();

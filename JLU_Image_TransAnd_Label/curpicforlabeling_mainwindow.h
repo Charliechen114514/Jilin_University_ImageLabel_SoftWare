@@ -170,7 +170,9 @@ protected:
     /*重写鼠标移动事件*/
     void                                mouseMoveEvent(QMouseEvent *);
 signals:
+    /*信号1：完成编辑点*/
     void                                finishEditingPoints();
+    /*向手动编辑的主窗口返回标签*/
     void                                finishEveryThingAndReturnsTheNewLyLabelPair();
     void                                refreshLabelMethod();
 private:
@@ -203,6 +205,7 @@ private slots:
     void                                pushBackToFinalSigCurPicInfo();
     void                                showSetPenEidthWindow();
     void                                removeTheLastPolyAndLabel();
+    void                                removeTheLastSinglePoints();
 };
 
 #endif // CURPICFORLABELING_MAINWINDOW_H

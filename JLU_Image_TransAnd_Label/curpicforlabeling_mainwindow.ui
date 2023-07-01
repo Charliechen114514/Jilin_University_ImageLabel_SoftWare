@@ -32,6 +32,7 @@
     </property>
     <addaction name="actionendLabeling"/>
     <addaction name="actionremoveTheLast"/>
+    <addaction name="actionremoveTheLastPoint"/>
    </widget>
    <widget class="QMenu" name="saveImediately">
     <property name="title">
@@ -74,12 +75,19 @@
     </property>
     <addaction name="actiontoAfterPic"/>
    </widget>
+   <widget class="QMenu" name="menu_6">
+    <property name="title">
+     <string>高级设置</string>
+    </property>
+    <addaction name="actionresetNewMethod"/>
+   </widget>
    <addaction name="menu_5"/>
    <addaction name="menu"/>
    <addaction name="saveImediately"/>
    <addaction name="menu_2"/>
    <addaction name="menu_3"/>
    <addaction name="menu_4"/>
+   <addaction name="menu_6"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionendLabeling">
@@ -137,7 +145,7 @@
   </action>
   <action name="actionremoveTheLast">
    <property name="text">
-    <string>撤销</string>
+    <string>撤销上一个轮廓</string>
    </property>
   </action>
   <action name="actionopenTheLabelHelper">
@@ -168,6 +176,16 @@
   <action name="actiontoAfterPic">
    <property name="text">
     <string>切换到下一张</string>
+   </property>
+  </action>
+  <action name="actionremoveTheLastPoint">
+   <property name="text">
+    <string>撤销上一个标注点</string>
+   </property>
+  </action>
+  <action name="actionresetNewMethod">
+   <property name="text">
+    <string>重写标注文件</string>
    </property>
   </action>
  </widget>

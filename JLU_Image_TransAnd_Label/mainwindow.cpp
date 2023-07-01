@@ -32,6 +32,10 @@ void MainWindow::initMainWindow(){
     getNewLabelDialog = NULL;
     isIgnoreFailed = true;
     helpWindows = new helpAndCheck(this);
+    setSeperatorWindows = new SetSeperatorMainWindow;
+    defLabelsSeperator = ";";
+    setSeperatorWindows->getSeperatorFromMainWindow(defLabelsSeperator);
+    curLabelsSeperator = ";";
     /*完成主要链接*/
     /*链接新添加单张图片*/
     connect(ui->action_newPicture,&QAction::triggered,this,&MainWindow::getPictureFromUsr);
@@ -55,6 +59,10 @@ void MainWindow::initMainWindow(){
     connect(ui->actioncheckAuthor,&QAction::triggered,this,&MainWindow::viewWhoMakeIt);
 
     connect(ui->actionfindShitBugAndsakForMail,&QAction::triggered,this,&MainWindow::findShitsAndTellAuthors);
+
+    connect(ui->actionimportlabelIndex,&QAction::triggered,this,&MainWindow::importLabelsFromUsr);
+
+    connect(ui->actionSetLabelSeperator,&QAction::triggered,this,&MainWindow::showSetSeperatorMainWindow);
 }
 /**************************************************************************************************
 *   funtions type :     basic_init
@@ -139,6 +147,12 @@ void MainWindow::initBasicQuickShot()
     toDeleteCurPic->setShortcut(tr("Ctrl+L"));
     ui->menubar->addAction(toManageLabels);
     connect(toManageLabels,&QAction::triggered,this,&MainWindow::on_manageLabelButton_clicked);
+
+    /*导入标签*/
+    QAction* toImportLabel = new QAction;
+    toImportLabel->setShortcut(tr("Ctrl + I"));
+    ui->menubar->addAction(toImportLabel);
+    connect(toImportLabel,&QAction::triggered,this,&MainWindow::importLabelsFromUsr);
 }
 
 /**************************************************************************************************
@@ -168,6 +182,12 @@ void MainWindow::imgShow(unsigned int visitIndex)
     ui->viewLabel->setPixmap(QPixmap::fromImage(curViewPic.scaled(ui->viewLabel->size(),Qt::IgnoreAspectRatio)));
     refreshProcessBar(visitIndex + 1);
 }
+
+void MainWindow::resizeEvent(QResizeEvent*)
+{
+    ui->viewLabel->setPixmap(QPixmap::fromImage(curViewPic.scaled(ui->viewLabel->size(),Qt::IgnoreAspectRatio)));
+}
+
 /**************************************************************************************************
 *   funtions type :     getter
 *   work in where :     MainWindow
@@ -210,6 +230,7 @@ void MainWindow::getDirectoryFromUsr()
 {
     QString getDirPath = QFileDialog::getExistingDirectory(this,"选择目录",DEBUG_PIC_PATH);
     if(getDirPath.isEmpty()){
+        QMessageBox::information(this,"注意","路径无效");
         USR_CANCEL_DFT_REACT;
     }
     QDir getDir(getDirPath);
@@ -558,4 +579,68 @@ void MainWindow::viewWhoMakeIt()
 void MainWindow::findShitsAndTellAuthors()
 {
     QMessageBox::information(this,"啊哈！找对地方了","Charliechen的邮箱:chengh1922.jlu.edu.cn\nchangshanzhao的还得等等");
+}
+
+void MainWindow::importLabelsFromUsr()
+{
+    QString filePath = QFileDialog::getOpenFileName(this,"选择准备导入的已有的标签文件",".","txt文件(.txt)");
+    if(filePath.isEmpty())
+    {
+        return;
+    }
+    qDebug() << filePath;
+    QFile readLabel(filePath);
+    readLabel.open(QIODevice::ReadOnly);
+    QStringList labels = QString(readLabel.readAll()).split(curLabelsSeperator);
+    if(labels.empty())
+    {
+        QMessageBox::critical(this,"发生错误","喂！怎么是空的啊！");
+    }
+    LabelPair temp;
+    int curIndex = 0;
+    if(labelList.empty())
+    {
+        curIndex = 1;
+    }
+    else
+    {
+        curIndex = labelList.last().first + 1;
+    }
+
+    bool duplicateFlag = false;
+    for(int i = 0; i < labels.size(); i++)
+    {
+        qDebug() << labels[i];
+        temp.first = curIndex;
+        temp.second = labels[i];
+        for(int j = 0; j < labelList.size();j++)
+        {
+            if(temp.second == labelList[j].second)
+            {
+                duplicateFlag = true;
+                break;
+            }
+        }
+        if(duplicateFlag)
+        {
+            duplicateFlag = false;
+            continue;
+        }
+        labelList.push_back(temp);
+        curIndex++;
+    }
+    updateCurrentLabelCheckText();
+    return;
+}
+
+void MainWindow::showSetSeperatorMainWindow()
+{
+    connect(setSeperatorWindows,&SetSeperatorMainWindow::finishEditAndReadyReturn,this,&MainWindow::getSetSeperatorFromSSMW);
+    setSeperatorWindows->getSeperatorFromMainWindow(curLabelsSeperator);
+    setSeperatorWindows->show();
+}
+
+void MainWindow::getSetSeperatorFromSSMW()
+{
+    curLabelsSeperator = setSeperatorWindows->returnOutFinalSeperator();
 }
