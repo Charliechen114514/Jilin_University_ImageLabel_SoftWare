@@ -1,6 +1,0 @@
-[labels_index]: 1
-[labels_name]: a
-{
-[212, 75]
-[447, 316]
-}
