@@ -1,6 +1,5 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -678,7 +677,15 @@ void MainWindow::fetchLabelListFromManuallyLabel()
     }
     updateCurrentLabelCheckText();
 }
-
+void MainWindow::fetchLabelListFromManuallyLabel_auto()
+{
+    QList<LabelPair> labelListget = autolabelWindow->returnUsableLabelPairListToMainWindow();
+    if(!labelListget.isEmpty()){
+        qDebug() << "不是取消操作";
+        labelList = labelListget;
+    }
+    updateCurrentLabelCheckText();
+}
 /**************************************************************************************************
 *
 *   funtions type :     update
@@ -844,3 +851,23 @@ void MainWindow::getSetSeperatorFromSSMW()
 {
     curLabelsSeperator = setSeperatorWindows->returnOutFinalSeperator();
 }
+
+void MainWindow::on_pushButton_3_clicked()
+{
+    if(pathPics.empty()){
+
+        QMessageBox::critical(this,"发生错误！","哥们你图片呢？");
+
+        USR_INVALID_DFT_REACT;
+    }
+
+    autolabelWindow = new autolabel(this);
+    autolabelWindow->setWindowTitle("自动标注模式");
+    autolabelWindow->setSeperator(curLabelsSeperator);
+    connect(autolabelWindow,&autolabel::refreshMainWindowLabelList,this,&MainWindow::fetchLabelListFromManuallyLabel_auto);
+
+
+
+    autolabelWindow->show();
+}
+

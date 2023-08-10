@@ -8,6 +8,7 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    autolabel.cpp \
     curpicforlabeling_mainwindow.cpp \
     editpiclabelclass.cpp \
     helpandcheck.cpp \
@@ -20,10 +21,10 @@ SOURCES += \
     setorshiftcurmaxpointcountswindows.cpp \
     setpenwidthwindows.cpp \
     setseperatormainwindow.cpp \
-    smartlineeditclass.cpp \
-    autolabel.cpp
+    smartlineeditclass.cpp
 
 HEADERS += \
+    autolabel.h \
     curpicforlabeling_mainwindow.h \
     editpiclabelclass.h \
     helpandcheck.h \
@@ -35,10 +36,10 @@ HEADERS += \
     setorshiftcurmaxpointcountswindows.h \
     setpenwidthwindows.h \
     setseperatormainwindow.h \
-    smartlineeditclass.h \
-    autolabel.h
+    smartlineeditclass.h
 
 FORMS += \
+    autolabel.ui \
     curpicforlabeling_mainwindow.ui \
     helpandcheck.ui \
     labelquerydialog.ui \
@@ -57,14 +58,14 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 RESOURCES += \
     def_source.qrc
 
-win32:CONFIG(release, debug|release): LIBS += -LD:/opencv/mybuild/install/x64/vc16/lib/ -lopencv_world460
-else:win32:CONFIG(debug, debug|release): LIBS += -LD:/opencv/mybuild/install/x64/vc16/lib/ -lopencv_world460d
+INCLUDEPATH +=
+INCLUDEPATH +=  \
+    D:/opencv/mybuild/install/include \
+    D:/opencv/mybuild/install/include/opencv2 \
+    D:/opencv/mybuild/install/x64/vc16/
+DEPENDPATH += D:/opencv/mybuild/install/x64/vc16/
 
-INCLUDEPATH += D:/opencv/mybuild/install/include
-DEPENDPATH += D:/opencv/mybuild/install/include
 
-win32:CONFIG(release, debug|release): LIBS += -LD:/opencv/mybuild/install/x64/vc16/lib/ -lopencv_img_hash460
-else:win32:CONFIG(debug, debug|release): LIBS += -LD:/opencv/mybuild/install/x64/vc16/lib/ -lopencv_img_hash460d
-
-INCLUDEPATH += D:/opencv/mybuild/install/include/opencv2
-DEPENDPATH += D:/opencv/mybuild/install/include/opencv2
+LIBS += \
+    D:/opencv/mybuild/install/x64/vc16/lib/opencv_world460d.lib \
+    D:/opencv/mybuild/install/x64/vc16/lib/opencv_img_hash460d.lib

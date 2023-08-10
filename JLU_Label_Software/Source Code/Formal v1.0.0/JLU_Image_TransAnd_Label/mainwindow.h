@@ -10,6 +10,7 @@
 
 #include <labelclass.h>
 #include <manuallylabel.h>
+#include <autolabel.h>
 #include <labelquerydialog.h>
 #include "helpandcheck.h"
 #include <setseperatormainwindow.h>
@@ -67,6 +68,7 @@ public:
     void switchPicDir();
     /*从手动编辑界面种获取当前编辑图像的信息*/
     void fetchFromManuallyLabel();
+    void fetchLabelListFromManuallyLabel_auto();
     /*凑够手动编辑处刷新labelList供下一次使用*/
     void fetchLabelListFromManuallyLabel();
 
@@ -108,6 +110,8 @@ private slots:
     void showSetSeperatorMainWindow();
 
     void getSetSeperatorFromSSMW();
+    void on_pushButton_3_clicked();
+
 private:
     Ui::MainWindow                                  *ui;
     /* 存储当前的图片 */
@@ -125,6 +129,7 @@ private:
     labelQuerydialog*                               getNewLabelDialog;
     /* 标注模式窗口 */
     manuallyLabel*                                  editPicWindow;
+    autolabel*                                      autolabelWindow;
     /* 帮助窗口 */
     helpAndCheck*                                   helpWindows;
     /* 设置导入标签的分割符 */
