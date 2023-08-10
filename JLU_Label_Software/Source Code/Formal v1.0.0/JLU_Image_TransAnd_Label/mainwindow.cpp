@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+using namespace cv;
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -320,8 +321,8 @@ void MainWindow::getDirectoryFromUsr()
     curViewPic.load(FilePathAll.last());
     pathPics.append(FilePathAll);
     ui->curPlaceProcessBar->setRange(0,pathPics.size());
-    curViewPicIndex = pathPics.size();
-    imgShow(pathPics.size()-1);
+    curViewPicIndex = 0;
+    imgShow(0);
 
 }
 
@@ -677,15 +678,7 @@ void MainWindow::fetchLabelListFromManuallyLabel()
     }
     updateCurrentLabelCheckText();
 }
-void MainWindow::fetchLabelListFromManuallyLabel_auto()
-{
-    QList<LabelPair> labelListget = autolabelWindow->returnUsableLabelPairListToMainWindow();
-    if(!labelListget.isEmpty()){
-        qDebug() << "不是取消操作";
-        labelList = labelListget;
-    }
-    updateCurrentLabelCheckText();
-}
+
 /**************************************************************************************************
 *
 *   funtions type :     update
@@ -854,20 +847,75 @@ void MainWindow::getSetSeperatorFromSSMW()
 
 void MainWindow::on_pushButton_3_clicked()
 {
-    if(pathPics.empty()){
-
-        QMessageBox::critical(this,"发生错误！","哥们你图片呢？");
-
-        USR_INVALID_DFT_REACT;
+    if(pathPics.size()==0)
+    {
+        QMessageBox::critical(this,"发生错误！","请先加载图片文件夹!");
+        return;
     }
-
-    autolabelWindow = new autolabel(this);
-    autolabelWindow->setWindowTitle("自动标注模式");
-    autolabelWindow->setSeperator(curLabelsSeperator);
-    connect(autolabelWindow,&autolabel::refreshMainWindowLabelList,this,&MainWindow::fetchLabelListFromManuallyLabel_auto);
-
-
-
-    autolabelWindow->show();
+    isauto = true;
+    Mat initMat = imread(pathPics[curViewPicIndex].toStdString());
+    tracker = TrackerCSRT::create();
+    QMessageBox::information(this,"提示","按enter或空格键确认并退出!");
+    roi = selectROI("tracker", initMat);
+    if (roi.width == 0 || roi.height == 0)
+       QMessageBox::critical(this,"发生错误！","你设置检测区域了吗?");
+    else
+       destroyAllWindows();
+    tracker->init(initMat, roi);
 }
 
+Mat MainWindow::ImageToMat(QImage &image) //QImage转Mat
+{
+    Mat mat = Mat::zeros(image.height(), image.width(),image.format()); //初始化Mat
+    switch(image.format()) //判断image的类型
+    {
+    case QImage::QImage::Format_Grayscale8:  //灰度图
+        mat = Mat(image.height(), image.width(),
+                  CV_8UC1,(void*)image.constBits(),image.bytesPerLine());
+        break;
+    case QImage::Format_RGB888: //3通道彩色
+        mat = Mat(image.height(), image.width(),
+                  CV_8UC3,(void*)image.constBits(),image.bytesPerLine());
+        break;
+    case QImage::Format_ARGB32: //4通道彩色
+        mat = Mat(image.height(), image.width(),
+                  CV_8UC4,(void*)image.constBits(),image.bytesPerLine());
+        break;
+    default:
+        return mat;
+    }
+    return mat;
+}
+
+
+QImage MainWindow::MatToImage(Mat &m) //Mat转QImage
+{
+    //判断m的类型，可能是CV_8UC1  CV_8UC2  CV_8UC3  CV_8UC4
+    switch(m.type())
+    { //QIamge 构造函数, ((const uchar *data, 宽(列),高(行), 一行共多少个（字节）通道，宽度*字节数，宏参数)
+    case CV_8UC1:
+    {
+        QImage img((uchar *)m.data,m.cols,m.rows,m.cols * 1,QImage::Format_Grayscale8);
+        return img;
+    }
+    break;
+    case CV_8UC3:   //一个像素点由三个字节组成
+    {
+        //cvtColor(m,m,COLOR_BGR2RGB); BGR转RGB
+        QImage img((uchar *)m.data,m.cols,m.rows,m.cols * 3,QImage::Format_RGB888);
+        return img.rgbSwapped(); //opencv是BGR  Qt默认是RGB  所以RGB顺序转换
+    }
+    break;
+    case CV_8UC4:
+    {
+        QImage img((uchar *)m.data,m.cols,m.rows,m.cols * 4,QImage::Format_RGBA8888);
+        return img;
+    }
+    break;
+    default:
+    {
+        QImage img; //如果遇到一个图片均不属于这三种，返回一个空的图片
+        return img;
+    }
+    }
+}

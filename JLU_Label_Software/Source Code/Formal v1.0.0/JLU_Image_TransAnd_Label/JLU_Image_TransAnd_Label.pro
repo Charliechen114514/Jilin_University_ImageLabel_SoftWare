@@ -8,7 +8,6 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    autolabel.cpp \
     curpicforlabeling_mainwindow.cpp \
     editpiclabelclass.cpp \
     helpandcheck.cpp \
@@ -24,7 +23,6 @@ SOURCES += \
     smartlineeditclass.cpp
 
 HEADERS += \
-    autolabel.h \
     curpicforlabeling_mainwindow.h \
     editpiclabelclass.h \
     helpandcheck.h \
@@ -39,7 +37,6 @@ HEADERS += \
     smartlineeditclass.h
 
 FORMS += \
-    autolabel.ui \
     curpicforlabeling_mainwindow.ui \
     helpandcheck.ui \
     labelquerydialog.ui \

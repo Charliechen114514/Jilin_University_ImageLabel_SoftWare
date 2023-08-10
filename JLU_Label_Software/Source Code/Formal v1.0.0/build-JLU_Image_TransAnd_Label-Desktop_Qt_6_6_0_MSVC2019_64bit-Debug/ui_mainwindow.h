@@ -81,7 +81,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName("MainWindow");
-        MainWindow->resize(1043, 767);
+        MainWindow->resize(1043, 773);
         action_newPicture = new QAction(MainWindow);
         action_newPicture->setObjectName("action_newPicture");
         action_newDirectory = new QAction(MainWindow);
@@ -145,14 +145,14 @@ public:
         toolPage->setFrameShadow(QFrame::Sunken);
         page = new QWidget();
         page->setObjectName("page");
-        page->setGeometry(QRect(0, 0, 198, 526));
+        page->setGeometry(QRect(0, 0, 198, 508));
         changeToManuallyLable = new QPushButton(page);
         changeToManuallyLable->setObjectName("changeToManuallyLable");
         changeToManuallyLable->setGeometry(QRect(10, 10, 111, 41));
         toolPage->addItem(page, QString::fromUtf8("\346\211\213\345\212\250\346\240\207\346\263\250"));
         page_2 = new QWidget();
         page_2->setObjectName("page_2");
-        page_2->setGeometry(QRect(0, 0, 198, 526));
+        page_2->setGeometry(QRect(0, 0, 198, 508));
         pushButton = new QPushButton(page_2);
         pushButton->setObjectName("pushButton");
         pushButton->setGeometry(QRect(0, 70, 111, 51));
@@ -165,7 +165,7 @@ public:
         toolPage->addItem(page_2, QString::fromUtf8("\350\207\252\345\212\250\346\240\207\346\263\250"));
         page_3 = new QWidget();
         page_3->setObjectName("page_3");
-        page_3->setGeometry(QRect(0, 0, 198, 526));
+        page_3->setGeometry(QRect(0, 0, 198, 508));
         currentLabelCheck = new QTextBrowser(page_3);
         currentLabelCheck->setObjectName("currentLabelCheck");
         currentLabelCheck->setGeometry(QRect(10, 0, 151, 311));
@@ -240,9 +240,18 @@ public:
         gridLayout_2->addWidget(curPlaceProcessBar, 2, 0, 1, 2);
 
         MainWindow->setCentralWidget(centralwidget);
+        manageLabelButton->raise();
+        toolPage->raise();
+        viewLabel->raise();
+        processTextLine->raise();
+        changeCurPicBtn->raise();
+        removeCurPictureBtn->raise();
+        gotoAfterOne->raise();
+        curPlaceProcessBar->raise();
+        gotoPrevious->raise();
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName("menubar");
-        menubar->setGeometry(QRect(0, 0, 1043, 17));
+        menubar->setGeometry(QRect(0, 0, 1043, 21));
         menu = new QMenu(menubar);
         menu->setObjectName("menu");
         menu_4 = new QMenu(menubar);

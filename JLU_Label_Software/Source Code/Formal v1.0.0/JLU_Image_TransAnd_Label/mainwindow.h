@@ -7,10 +7,12 @@
 #include<QMessageBox>
 #include<QDebug>
 #include<QList>
-
+#include <opencv2/core/utility.hpp>
+#include <opencv2/tracking.hpp>
+#include <opencv2/videoio.hpp>
+#include <opencv2/highgui.hpp>
 #include <labelclass.h>
 #include <manuallylabel.h>
-#include <autolabel.h>
 #include <labelquerydialog.h>
 #include "helpandcheck.h"
 #include <setseperatormainwindow.h>
@@ -68,7 +70,6 @@ public:
     void switchPicDir();
     /*从手动编辑界面种获取当前编辑图像的信息*/
     void fetchFromManuallyLabel();
-    void fetchLabelListFromManuallyLabel_auto();
     /*凑够手动编辑处刷新labelList供下一次使用*/
     void fetchLabelListFromManuallyLabel();
 
@@ -81,6 +82,10 @@ public:
     void viewWhoMakeIt();
     /*我去，危*/
     void findShitsAndTellAuthors();
+    /*QImage转Mat*/
+    cv::Mat ImageToMat(QImage &image);
+    /*Mat转QImage*/
+    QImage MatToImage(cv::Mat &m);
 private slots:
 
 
@@ -129,7 +134,6 @@ private:
     labelQuerydialog*                               getNewLabelDialog;
     /* 标注模式窗口 */
     manuallyLabel*                                  editPicWindow;
-    autolabel*                                      autolabelWindow;
     /* 帮助窗口 */
     helpAndCheck*                                   helpWindows;
     /* 设置导入标签的分割符 */
@@ -142,6 +146,9 @@ private:
     QString                                         curLabelsSeperator;
     /* 写方法 */
     QStringList                                     writingMethod;
+    bool                                            isauto;
+    cv::Ptr<cv::Tracker>                            tracker;
+    cv::Rect                                        roi;
 };
 #endif // MAINWINDOW_H
 

@@ -50,8 +50,7 @@ OBJECTS_DIR   = debug
 
 ####### Files
 
-SOURCES       = ..\JLU_Image_TransAnd_Label\autolabel.cpp \
-		..\JLU_Image_TransAnd_Label\curpicforlabeling_mainwindow.cpp \
+SOURCES       = ..\JLU_Image_TransAnd_Label\curpicforlabeling_mainwindow.cpp \
 		..\JLU_Image_TransAnd_Label\editpiclabelclass.cpp \
 		..\JLU_Image_TransAnd_Label\helpandcheck.cpp \
 		..\JLU_Image_TransAnd_Label\labelclass.cpp \
@@ -64,7 +63,6 @@ SOURCES       = ..\JLU_Image_TransAnd_Label\autolabel.cpp \
 		..\JLU_Image_TransAnd_Label\setpenwidthwindows.cpp \
 		..\JLU_Image_TransAnd_Label\setseperatormainwindow.cpp \
 		..\JLU_Image_TransAnd_Label\smartlineeditclass.cpp debug\qrc_def_source.cpp \
-		debug\moc_autolabel.cpp \
 		debug\moc_curpicforlabeling_mainwindow.cpp \
 		debug\moc_editpiclabelclass.cpp \
 		debug\moc_helpandcheck.cpp \
@@ -76,8 +74,7 @@ SOURCES       = ..\JLU_Image_TransAnd_Label\autolabel.cpp \
 		debug\moc_setpenwidthwindows.cpp \
 		debug\moc_setseperatormainwindow.cpp \
 		debug\moc_smartlineeditclass.cpp
-OBJECTS       = debug\autolabel.obj \
-		debug\curpicforlabeling_mainwindow.obj \
+OBJECTS       = debug\curpicforlabeling_mainwindow.obj \
 		debug\editpiclabelclass.obj \
 		debug\helpandcheck.obj \
 		debug\labelclass.obj \
@@ -91,7 +88,6 @@ OBJECTS       = debug\autolabel.obj \
 		debug\setseperatormainwindow.obj \
 		debug\smartlineeditclass.obj \
 		debug\qrc_def_source.obj \
-		debug\moc_autolabel.obj \
 		debug\moc_curpicforlabeling_mainwindow.obj \
 		debug\moc_editpiclabelclass.obj \
 		debug\moc_helpandcheck.obj \
@@ -104,8 +100,7 @@ OBJECTS       = debug\autolabel.obj \
 		debug\moc_setseperatormainwindow.obj \
 		debug\moc_smartlineeditclass.obj
 
-DIST          =  ..\JLU_Image_TransAnd_Label\autolabel.h \
-		..\JLU_Image_TransAnd_Label\curpicforlabeling_mainwindow.h \
+DIST          =  ..\JLU_Image_TransAnd_Label\curpicforlabeling_mainwindow.h \
 		..\JLU_Image_TransAnd_Label\editpiclabelclass.h \
 		..\JLU_Image_TransAnd_Label\helpandcheck.h \
 		..\JLU_Image_TransAnd_Label\labelclass.h \
@@ -116,8 +111,7 @@ DIST          =  ..\JLU_Image_TransAnd_Label\autolabel.h \
 		..\JLU_Image_TransAnd_Label\setorshiftcurmaxpointcountswindows.h \
 		..\JLU_Image_TransAnd_Label\setpenwidthwindows.h \
 		..\JLU_Image_TransAnd_Label\setseperatormainwindow.h \
-		..\JLU_Image_TransAnd_Label\smartlineeditclass.h ..\JLU_Image_TransAnd_Label\autolabel.cpp \
-		..\JLU_Image_TransAnd_Label\curpicforlabeling_mainwindow.cpp \
+		..\JLU_Image_TransAnd_Label\smartlineeditclass.h ..\JLU_Image_TransAnd_Label\curpicforlabeling_mainwindow.cpp \
 		..\JLU_Image_TransAnd_Label\editpiclabelclass.cpp \
 		..\JLU_Image_TransAnd_Label\helpandcheck.cpp \
 		..\JLU_Image_TransAnd_Label\labelclass.cpp \
@@ -204,9 +198,9 @@ DESTDIR_TARGET = debug\JLU_Image_TransAnd_Label.exe
 first: all
 all: Makefile.Debug  debug\JLU_Image_TransAnd_Label.exe
 
-debug\JLU_Image_TransAnd_Label.exe: C:\Qt\6.6.0\msvc2019_64\lib\Qt6Widgetsd.lib C:\Qt\6.6.0\msvc2019_64\lib\Qt6Guid.lib C:\Qt\6.6.0\msvc2019_64\lib\Qt6Cored.lib C:\Qt\6.6.0\msvc2019_64\lib\Qt6EntryPointd.lib ui_autolabel.h ui_curpicforlabeling_mainwindow.h ui_helpandcheck.h ui_labelquerydialog.h ui_mainwindow.h ui_manuallylabel.h ui_setorshiftcurmaxpointcountswindows.h ui_setpenwidthwindows.h ui_setseperatormainwindow.h $(OBJECTS) 
+debug\JLU_Image_TransAnd_Label.exe: C:\Qt\6.6.0\msvc2019_64\lib\Qt6Widgetsd.lib C:\Qt\6.6.0\msvc2019_64\lib\Qt6Guid.lib C:\Qt\6.6.0\msvc2019_64\lib\Qt6Cored.lib C:\Qt\6.6.0\msvc2019_64\lib\Qt6EntryPointd.lib ui_curpicforlabeling_mainwindow.h ui_helpandcheck.h ui_labelquerydialog.h ui_mainwindow.h ui_manuallylabel.h ui_setorshiftcurmaxpointcountswindows.h ui_setpenwidthwindows.h ui_setseperatormainwindow.h $(OBJECTS) 
 	$(LINKER) $(LFLAGS) /MANIFEST:embed /OUT:$(DESTDIR_TARGET) @<<
-debug\autolabel.obj debug\curpicforlabeling_mainwindow.obj debug\editpiclabelclass.obj debug\helpandcheck.obj debug\labelclass.obj debug\labelquerydialog.obj debug\labelsquerytextclass.obj debug\main.obj debug\mainwindow.obj debug\manuallylabel.obj debug\setorshiftcurmaxpointcountswindows.obj debug\setpenwidthwindows.obj debug\setseperatormainwindow.obj debug\smartlineeditclass.obj debug\qrc_def_source.obj debug\moc_autolabel.obj debug\moc_curpicforlabeling_mainwindow.obj debug\moc_editpiclabelclass.obj debug\moc_helpandcheck.obj debug\moc_labelquerydialog.obj debug\moc_labelsquerytextclass.obj debug\moc_mainwindow.obj debug\moc_manuallylabel.obj debug\moc_setorshiftcurmaxpointcountswindows.obj debug\moc_setpenwidthwindows.obj debug\moc_setseperatormainwindow.obj debug\moc_smartlineeditclass.obj
+debug\curpicforlabeling_mainwindow.obj debug\editpiclabelclass.obj debug\helpandcheck.obj debug\labelclass.obj debug\labelquerydialog.obj debug\labelsquerytextclass.obj debug\main.obj debug\mainwindow.obj debug\manuallylabel.obj debug\setorshiftcurmaxpointcountswindows.obj debug\setpenwidthwindows.obj debug\setseperatormainwindow.obj debug\smartlineeditclass.obj debug\qrc_def_source.obj debug\moc_curpicforlabeling_mainwindow.obj debug\moc_editpiclabelclass.obj debug\moc_helpandcheck.obj debug\moc_labelquerydialog.obj debug\moc_labelsquerytextclass.obj debug\moc_mainwindow.obj debug\moc_manuallylabel.obj debug\moc_setorshiftcurmaxpointcountswindows.obj debug\moc_setpenwidthwindows.obj debug\moc_setseperatormainwindow.obj debug\moc_smartlineeditclass.obj
 $(LIBS)
 <<
 
@@ -216,10 +210,10 @@ qmake: FORCE
 qmake_all: FORCE
 
 dist:
-	$(ZIP) JLU_Image_TransAnd_Label.zip $(SOURCES) $(DIST) ..\JLU_Image_TransAnd_Label\JLU_Image_TransAnd_Label.pro C:\Qt\6.6.0\msvc2019_64\mkspecs\features\spec_pre.prf C:\Qt\6.6.0\msvc2019_64\mkspecs\common\windows-desktop.conf C:\Qt\6.6.0\msvc2019_64\mkspecs\features\win32\windows_vulkan_sdk.prf C:\Qt\6.6.0\msvc2019_64\mkspecs\common\windows-vulkan.conf C:\Qt\6.6.0\msvc2019_64\mkspecs\common\msvc-desktop.conf C:\Qt\6.6.0\msvc2019_64\mkspecs\qconfig.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_ext_freetype.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_ext_libjpeg.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_ext_libpng.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_concurrent.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_concurrent_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_core.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_core_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_dbus.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_dbus_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_designer.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_designer_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_designercomponents_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_devicediscovery_support_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_entrypoint_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_example_icons_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_fb_support_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_freetype_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_gui.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_gui_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_harfbuzz_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_help.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_help_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_jpeg_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_labsanimation.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_labsanimation_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_labsfolderlistmodel.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_labsfolderlistmodel_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_labsqmlmodels.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_labsqmlmodels_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_labssettings.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_labssettings_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_labssharedimage.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_labssharedimage_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_labswavefrontmesh.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_labswavefrontmesh_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_linguist.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_linguist_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_network.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_network_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_opengl.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_opengl_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_openglwidgets.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_openglwidgets_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_packetprotocol_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_png_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_printsupport.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_printsupport_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_qdoccatch_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_qdoccatchconversionsprivate.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_qdoccatchconversionsprivate_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_qdoccatchgeneratorsprivate.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_qdoccatchgeneratorsprivate_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_qml.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_qml_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_qmlcompiler_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_qmlcore.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_qmlcore_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_qmldebug_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_qmldom_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_qmlintegration.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_qmlintegration_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_qmllocalstorage.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_qmllocalstorage_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_qmlls_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_qmlmodels.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_qmlmodels_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_qmltest.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_qmltest_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_qmltoolingsettings_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_qmltyperegistrar_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_qmlworkerscript.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_qmlworkerscript_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_qmlxmllistmodel.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_qmlxmllistmodel_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_quick.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_quick_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_quickcontrols2.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_quickcontrols2_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_quickcontrols2impl.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_quickcontrols2impl_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_quickcontrolstestutilsprivate_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_quickdialogs2.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_quickdialogs2_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_quickdialogs2quickimpl.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_quickdialogs2quickimpl_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_quickdialogs2utils.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_quickdialogs2utils_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_quickeffects_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_quicklayouts.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_quicklayouts_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_quickparticles_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_quickshapes_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_quicktemplates2.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_quicktemplates2_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_quicktestutilsprivate_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_quickwidgets.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_quickwidgets_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_sql.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_sql_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_svg.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_svg_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_svgwidgets.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_svgwidgets_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_testlib.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_testlib_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_tools_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_uiplugin.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_uitools.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_uitools_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_widgets.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_widgets_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_xml.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_xml_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_zlib_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\features\qt_functions.prf C:\Qt\6.6.0\msvc2019_64\mkspecs\features\qt_config.prf C:\Qt\6.6.0\msvc2019_64\mkspecs\win32-msvc\qmake.conf C:\Qt\6.6.0\msvc2019_64\mkspecs\features\spec_post.prf .qmake.stash C:\Qt\6.6.0\msvc2019_64\mkspecs\features\exclusive_builds.prf C:\Qt\6.6.0\msvc2019_64\mkspecs\common\msvc-version.conf C:\Qt\6.6.0\msvc2019_64\mkspecs\features\toolchain.prf C:\Qt\6.6.0\msvc2019_64\mkspecs\features\default_pre.prf C:\Qt\6.6.0\msvc2019_64\mkspecs\features\win32\default_pre.prf C:\Qt\6.6.0\msvc2019_64\mkspecs\features\resolve_config.prf C:\Qt\6.6.0\msvc2019_64\mkspecs\features\exclusive_builds_post.prf C:\Qt\6.6.0\msvc2019_64\mkspecs\features\default_post.prf C:\Qt\6.6.0\msvc2019_64\mkspecs\features\build_pass.prf C:\Qt\6.6.0\msvc2019_64\mkspecs\features\qml_debug.prf C:\Qt\6.6.0\msvc2019_64\mkspecs\features\entrypoint.prf C:\Qt\6.6.0\msvc2019_64\mkspecs\features\precompile_header.prf C:\Qt\6.6.0\msvc2019_64\mkspecs\features\warn_on.prf C:\Qt\6.6.0\msvc2019_64\mkspecs\features\permissions.prf C:\Qt\6.6.0\msvc2019_64\mkspecs\features\qt.prf C:\Qt\6.6.0\msvc2019_64\mkspecs\features\resources_functions.prf C:\Qt\6.6.0\msvc2019_64\mkspecs\features\resources.prf C:\Qt\6.6.0\msvc2019_64\mkspecs\features\moc.prf C:\Qt\6.6.0\msvc2019_64\mkspecs\features\win32\opengl.prf C:\Qt\6.6.0\msvc2019_64\mkspecs\features\uic.prf C:\Qt\6.6.0\msvc2019_64\mkspecs\features\qmake_use.prf C:\Qt\6.6.0\msvc2019_64\mkspecs\features\file_copies.prf C:\Qt\6.6.0\msvc2019_64\mkspecs\features\win32\windows.prf C:\Qt\6.6.0\msvc2019_64\mkspecs\features\testcase_targets.prf C:\Qt\6.6.0\msvc2019_64\mkspecs\features\exceptions.prf C:\Qt\6.6.0\msvc2019_64\mkspecs\features\yacc.prf C:\Qt\6.6.0\msvc2019_64\mkspecs\features\lex.prf ..\JLU_Image_TransAnd_Label\JLU_Image_TransAnd_Label.pro ..\JLU_Image_TransAnd_Label\def_source.qrc C:\Qt\6.6.0\msvc2019_64\lib\Qt6Widgetsd.prl C:\Qt\6.6.0\msvc2019_64\lib\Qt6Guid.prl C:\Qt\6.6.0\msvc2019_64\lib\Qt6Cored.prl C:\Qt\6.6.0\msvc2019_64\lib\Qt6EntryPointd.prl   ..\JLU_Image_TransAnd_Label\def_source.qrc C:\Qt\6.6.0\msvc2019_64\mkspecs\features\data\dummy.cpp ..\JLU_Image_TransAnd_Label\autolabel.h ..\JLU_Image_TransAnd_Label\curpicforlabeling_mainwindow.h ..\JLU_Image_TransAnd_Label\editpiclabelclass.h ..\JLU_Image_TransAnd_Label\helpandcheck.h ..\JLU_Image_TransAnd_Label\labelclass.h ..\JLU_Image_TransAnd_Label\labelquerydialog.h ..\JLU_Image_TransAnd_Label\labelsquerytextclass.h ..\JLU_Image_TransAnd_Label\mainwindow.h ..\JLU_Image_TransAnd_Label\manuallylabel.h ..\JLU_Image_TransAnd_Label\setorshiftcurmaxpointcountswindows.h ..\JLU_Image_TransAnd_Label\setpenwidthwindows.h ..\JLU_Image_TransAnd_Label\setseperatormainwindow.h ..\JLU_Image_TransAnd_Label\smartlineeditclass.h  ..\JLU_Image_TransAnd_Label\autolabel.cpp ..\JLU_Image_TransAnd_Label\curpicforlabeling_mainwindow.cpp ..\JLU_Image_TransAnd_Label\editpiclabelclass.cpp ..\JLU_Image_TransAnd_Label\helpandcheck.cpp ..\JLU_Image_TransAnd_Label\labelclass.cpp ..\JLU_Image_TransAnd_Label\labelquerydialog.cpp ..\JLU_Image_TransAnd_Label\labelsquerytextclass.cpp ..\JLU_Image_TransAnd_Label\main.cpp ..\JLU_Image_TransAnd_Label\mainwindow.cpp ..\JLU_Image_TransAnd_Label\manuallylabel.cpp ..\JLU_Image_TransAnd_Label\setorshiftcurmaxpointcountswindows.cpp ..\JLU_Image_TransAnd_Label\setpenwidthwindows.cpp ..\JLU_Image_TransAnd_Label\setseperatormainwindow.cpp ..\JLU_Image_TransAnd_Label\smartlineeditclass.cpp ..\JLU_Image_TransAnd_Label\autolabel.ui ..\JLU_Image_TransAnd_Label\curpicforlabeling_mainwindow.ui ..\JLU_Image_TransAnd_Label\helpandcheck.ui ..\JLU_Image_TransAnd_Label\labelquerydialog.ui ..\JLU_Image_TransAnd_Label\mainwindow.ui ..\JLU_Image_TransAnd_Label\manuallylabel.ui ..\JLU_Image_TransAnd_Label\setorshiftcurmaxpointcountswindows.ui ..\JLU_Image_TransAnd_Label\setpenwidthwindows.ui ..\JLU_Image_TransAnd_Label\setseperatormainwindow.ui    
+	$(ZIP) JLU_Image_TransAnd_Label.zip $(SOURCES) $(DIST) ..\JLU_Image_TransAnd_Label\JLU_Image_TransAnd_Label.pro C:\Qt\6.6.0\msvc2019_64\mkspecs\features\spec_pre.prf C:\Qt\6.6.0\msvc2019_64\mkspecs\common\windows-desktop.conf C:\Qt\6.6.0\msvc2019_64\mkspecs\features\win32\windows_vulkan_sdk.prf C:\Qt\6.6.0\msvc2019_64\mkspecs\common\windows-vulkan.conf C:\Qt\6.6.0\msvc2019_64\mkspecs\common\msvc-desktop.conf C:\Qt\6.6.0\msvc2019_64\mkspecs\qconfig.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_ext_freetype.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_ext_libjpeg.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_ext_libpng.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_concurrent.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_concurrent_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_core.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_core_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_dbus.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_dbus_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_designer.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_designer_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_designercomponents_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_devicediscovery_support_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_entrypoint_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_example_icons_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_fb_support_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_freetype_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_gui.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_gui_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_harfbuzz_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_help.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_help_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_jpeg_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_labsanimation.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_labsanimation_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_labsfolderlistmodel.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_labsfolderlistmodel_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_labsqmlmodels.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_labsqmlmodels_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_labssettings.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_labssettings_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_labssharedimage.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_labssharedimage_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_labswavefrontmesh.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_labswavefrontmesh_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_linguist.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_linguist_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_network.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_network_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_opengl.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_opengl_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_openglwidgets.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_openglwidgets_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_packetprotocol_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_png_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_printsupport.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_printsupport_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_qdoccatch_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_qdoccatchconversionsprivate.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_qdoccatchconversionsprivate_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_qdoccatchgeneratorsprivate.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_qdoccatchgeneratorsprivate_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_qml.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_qml_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_qmlcompiler_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_qmlcore.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_qmlcore_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_qmldebug_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_qmldom_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_qmlintegration.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_qmlintegration_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_qmllocalstorage.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_qmllocalstorage_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_qmlls_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_qmlmodels.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_qmlmodels_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_qmltest.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_qmltest_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_qmltoolingsettings_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_qmltyperegistrar_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_qmlworkerscript.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_qmlworkerscript_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_qmlxmllistmodel.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_qmlxmllistmodel_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_quick.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_quick_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_quickcontrols2.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_quickcontrols2_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_quickcontrols2impl.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_quickcontrols2impl_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_quickcontrolstestutilsprivate_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_quickdialogs2.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_quickdialogs2_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_quickdialogs2quickimpl.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_quickdialogs2quickimpl_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_quickdialogs2utils.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_quickdialogs2utils_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_quickeffects_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_quicklayouts.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_quicklayouts_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_quickparticles_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_quickshapes_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_quicktemplates2.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_quicktemplates2_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_quicktestutilsprivate_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_quickwidgets.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_quickwidgets_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_sql.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_sql_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_svg.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_svg_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_svgwidgets.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_svgwidgets_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_testlib.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_testlib_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_tools_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_uiplugin.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_uitools.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_uitools_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_widgets.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_widgets_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_xml.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_xml_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\modules\qt_lib_zlib_private.pri C:\Qt\6.6.0\msvc2019_64\mkspecs\features\qt_functions.prf C:\Qt\6.6.0\msvc2019_64\mkspecs\features\qt_config.prf C:\Qt\6.6.0\msvc2019_64\mkspecs\win32-msvc\qmake.conf C:\Qt\6.6.0\msvc2019_64\mkspecs\features\spec_post.prf .qmake.stash C:\Qt\6.6.0\msvc2019_64\mkspecs\features\exclusive_builds.prf C:\Qt\6.6.0\msvc2019_64\mkspecs\common\msvc-version.conf C:\Qt\6.6.0\msvc2019_64\mkspecs\features\toolchain.prf C:\Qt\6.6.0\msvc2019_64\mkspecs\features\default_pre.prf C:\Qt\6.6.0\msvc2019_64\mkspecs\features\win32\default_pre.prf C:\Qt\6.6.0\msvc2019_64\mkspecs\features\resolve_config.prf C:\Qt\6.6.0\msvc2019_64\mkspecs\features\exclusive_builds_post.prf C:\Qt\6.6.0\msvc2019_64\mkspecs\features\default_post.prf C:\Qt\6.6.0\msvc2019_64\mkspecs\features\build_pass.prf C:\Qt\6.6.0\msvc2019_64\mkspecs\features\qml_debug.prf C:\Qt\6.6.0\msvc2019_64\mkspecs\features\entrypoint.prf C:\Qt\6.6.0\msvc2019_64\mkspecs\features\precompile_header.prf C:\Qt\6.6.0\msvc2019_64\mkspecs\features\warn_on.prf C:\Qt\6.6.0\msvc2019_64\mkspecs\features\permissions.prf C:\Qt\6.6.0\msvc2019_64\mkspecs\features\qt.prf C:\Qt\6.6.0\msvc2019_64\mkspecs\features\resources_functions.prf C:\Qt\6.6.0\msvc2019_64\mkspecs\features\resources.prf C:\Qt\6.6.0\msvc2019_64\mkspecs\features\moc.prf C:\Qt\6.6.0\msvc2019_64\mkspecs\features\win32\opengl.prf C:\Qt\6.6.0\msvc2019_64\mkspecs\features\uic.prf C:\Qt\6.6.0\msvc2019_64\mkspecs\features\qmake_use.prf C:\Qt\6.6.0\msvc2019_64\mkspecs\features\file_copies.prf C:\Qt\6.6.0\msvc2019_64\mkspecs\features\win32\windows.prf C:\Qt\6.6.0\msvc2019_64\mkspecs\features\testcase_targets.prf C:\Qt\6.6.0\msvc2019_64\mkspecs\features\exceptions.prf C:\Qt\6.6.0\msvc2019_64\mkspecs\features\yacc.prf C:\Qt\6.6.0\msvc2019_64\mkspecs\features\lex.prf ..\JLU_Image_TransAnd_Label\JLU_Image_TransAnd_Label.pro ..\JLU_Image_TransAnd_Label\def_source.qrc C:\Qt\6.6.0\msvc2019_64\lib\Qt6Widgetsd.prl C:\Qt\6.6.0\msvc2019_64\lib\Qt6Guid.prl C:\Qt\6.6.0\msvc2019_64\lib\Qt6Cored.prl C:\Qt\6.6.0\msvc2019_64\lib\Qt6EntryPointd.prl   ..\JLU_Image_TransAnd_Label\def_source.qrc C:\Qt\6.6.0\msvc2019_64\mkspecs\features\data\dummy.cpp ..\JLU_Image_TransAnd_Label\curpicforlabeling_mainwindow.h ..\JLU_Image_TransAnd_Label\editpiclabelclass.h ..\JLU_Image_TransAnd_Label\helpandcheck.h ..\JLU_Image_TransAnd_Label\labelclass.h ..\JLU_Image_TransAnd_Label\labelquerydialog.h ..\JLU_Image_TransAnd_Label\labelsquerytextclass.h ..\JLU_Image_TransAnd_Label\mainwindow.h ..\JLU_Image_TransAnd_Label\manuallylabel.h ..\JLU_Image_TransAnd_Label\setorshiftcurmaxpointcountswindows.h ..\JLU_Image_TransAnd_Label\setpenwidthwindows.h ..\JLU_Image_TransAnd_Label\setseperatormainwindow.h ..\JLU_Image_TransAnd_Label\smartlineeditclass.h  ..\JLU_Image_TransAnd_Label\curpicforlabeling_mainwindow.cpp ..\JLU_Image_TransAnd_Label\editpiclabelclass.cpp ..\JLU_Image_TransAnd_Label\helpandcheck.cpp ..\JLU_Image_TransAnd_Label\labelclass.cpp ..\JLU_Image_TransAnd_Label\labelquerydialog.cpp ..\JLU_Image_TransAnd_Label\labelsquerytextclass.cpp ..\JLU_Image_TransAnd_Label\main.cpp ..\JLU_Image_TransAnd_Label\mainwindow.cpp ..\JLU_Image_TransAnd_Label\manuallylabel.cpp ..\JLU_Image_TransAnd_Label\setorshiftcurmaxpointcountswindows.cpp ..\JLU_Image_TransAnd_Label\setpenwidthwindows.cpp ..\JLU_Image_TransAnd_Label\setseperatormainwindow.cpp ..\JLU_Image_TransAnd_Label\smartlineeditclass.cpp ..\JLU_Image_TransAnd_Label\curpicforlabeling_mainwindow.ui ..\JLU_Image_TransAnd_Label\helpandcheck.ui ..\JLU_Image_TransAnd_Label\labelquerydialog.ui ..\JLU_Image_TransAnd_Label\mainwindow.ui ..\JLU_Image_TransAnd_Label\manuallylabel.ui ..\JLU_Image_TransAnd_Label\setorshiftcurmaxpointcountswindows.ui ..\JLU_Image_TransAnd_Label\setpenwidthwindows.ui ..\JLU_Image_TransAnd_Label\setseperatormainwindow.ui    
 
 clean: compiler_clean 
-	-$(DEL_FILE) debug\autolabel.obj debug\curpicforlabeling_mainwindow.obj debug\editpiclabelclass.obj debug\helpandcheck.obj debug\labelclass.obj debug\labelquerydialog.obj debug\labelsquerytextclass.obj debug\main.obj debug\mainwindow.obj debug\manuallylabel.obj debug\setorshiftcurmaxpointcountswindows.obj debug\setpenwidthwindows.obj debug\setseperatormainwindow.obj debug\smartlineeditclass.obj debug\qrc_def_source.obj debug\moc_autolabel.obj debug\moc_curpicforlabeling_mainwindow.obj debug\moc_editpiclabelclass.obj debug\moc_helpandcheck.obj debug\moc_labelquerydialog.obj debug\moc_labelsquerytextclass.obj debug\moc_mainwindow.obj debug\moc_manuallylabel.obj debug\moc_setorshiftcurmaxpointcountswindows.obj debug\moc_setpenwidthwindows.obj debug\moc_setseperatormainwindow.obj debug\moc_smartlineeditclass.obj
+	-$(DEL_FILE) debug\curpicforlabeling_mainwindow.obj debug\editpiclabelclass.obj debug\helpandcheck.obj debug\labelclass.obj debug\labelquerydialog.obj debug\labelsquerytextclass.obj debug\main.obj debug\mainwindow.obj debug\manuallylabel.obj debug\setorshiftcurmaxpointcountswindows.obj debug\setpenwidthwindows.obj debug\setseperatormainwindow.obj debug\smartlineeditclass.obj debug\qrc_def_source.obj debug\moc_curpicforlabeling_mainwindow.obj debug\moc_editpiclabelclass.obj debug\moc_helpandcheck.obj debug\moc_labelquerydialog.obj debug\moc_labelsquerytextclass.obj debug\moc_mainwindow.obj debug\moc_manuallylabel.obj debug\moc_setorshiftcurmaxpointcountswindows.obj debug\moc_setpenwidthwindows.obj debug\moc_setseperatormainwindow.obj debug\moc_smartlineeditclass.obj
 	-$(DEL_FILE) debug\JLU_Image_TransAnd_Label.vc.pdb debug\JLU_Image_TransAnd_Label.ilk debug\JLU_Image_TransAnd_Label.idb
 
 distclean: clean 
@@ -251,215 +245,9 @@ compiler_moc_predefs_clean:
 debug\moc_predefs.h: C:\Qt\6.6.0\msvc2019_64\mkspecs\features\data\dummy.cpp
 	cl -BxC:\Qt\6.6.0\msvc2019_64\bin\qmake.exe -nologo -Zc:wchar_t -FS -Zc:rvalueCast -Zc:inline -Zc:strictStrings -Zc:throwingNew -permissive- -Zc:__cplusplus -Zc:externConstexpr -Zi -MDd -std:c++17 -utf-8 -W3 -w34100 -w34189 -w44996 -w44456 -w44457 -w44458 -wd4577 -wd4467 -E C:\Qt\6.6.0\msvc2019_64\mkspecs\features\data\dummy.cpp 2>NUL >debug\moc_predefs.h
 
-compiler_moc_header_make_all: debug\moc_autolabel.cpp debug\moc_curpicforlabeling_mainwindow.cpp debug\moc_editpiclabelclass.cpp debug\moc_helpandcheck.cpp debug\moc_labelquerydialog.cpp debug\moc_labelsquerytextclass.cpp debug\moc_mainwindow.cpp debug\moc_manuallylabel.cpp debug\moc_setorshiftcurmaxpointcountswindows.cpp debug\moc_setpenwidthwindows.cpp debug\moc_setseperatormainwindow.cpp debug\moc_smartlineeditclass.cpp
+compiler_moc_header_make_all: debug\moc_curpicforlabeling_mainwindow.cpp debug\moc_editpiclabelclass.cpp debug\moc_helpandcheck.cpp debug\moc_labelquerydialog.cpp debug\moc_labelsquerytextclass.cpp debug\moc_mainwindow.cpp debug\moc_manuallylabel.cpp debug\moc_setorshiftcurmaxpointcountswindows.cpp debug\moc_setpenwidthwindows.cpp debug\moc_setseperatormainwindow.cpp debug\moc_smartlineeditclass.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) debug\moc_autolabel.cpp debug\moc_curpicforlabeling_mainwindow.cpp debug\moc_editpiclabelclass.cpp debug\moc_helpandcheck.cpp debug\moc_labelquerydialog.cpp debug\moc_labelsquerytextclass.cpp debug\moc_mainwindow.cpp debug\moc_manuallylabel.cpp debug\moc_setorshiftcurmaxpointcountswindows.cpp debug\moc_setpenwidthwindows.cpp debug\moc_setseperatormainwindow.cpp debug\moc_smartlineeditclass.cpp
-debug\moc_autolabel.cpp: ..\JLU_Image_TransAnd_Label\autolabel.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtWidgets\QMainWindow \
-		C:\Qt\6.6.0\msvc2019_64\include\QtWidgets\qmainwindow.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtWidgets\qtwidgetsglobal.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtGui\qtguiglobal.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qglobal.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qtversionchecks.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qtconfiginclude.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qconfig.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qtcore-config.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qtconfigmacros.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qtcoreexports.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qcompilerdetection.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qsystemdetection.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qprocessordetection.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qtdeprecationmarkers.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qtpreprocessorsupport.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qassert.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qtnoop.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qtypes.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qtversion.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qtclasshelpermacros.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qtypeinfo.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qcontainerfwd.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qsysinfo.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qlogging.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qflags.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qcompare_impl.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qatomic.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qbasicatomic.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qatomic_cxx11.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qgenericatomic.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qconstructormacros.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qdarwinhelpers.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qexceptionhandling.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qforeach.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qttypetraits.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qfunctionpointer.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qglobalstatic.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qmalloc.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qminmax.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qnumeric.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qoverload.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qswap.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qtenvironmentvariables.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qtresource.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qttranslation.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qversiontagging.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtGui\qtgui-config.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtGui\qtguiexports.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtWidgets\qtwidgets-config.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtWidgets\qtwidgetsexports.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtWidgets\qwidget.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtGui\qwindowdefs.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qobjectdefs.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qnamespace.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qtmetamacros.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qobjectdefs_impl.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qfunctionaltools_impl.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtGui\qwindowdefs_win.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qobject.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qstring.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qchar.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qstringview.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qbytearray.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qrefcount.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qarraydata.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qpair.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qarraydatapointer.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qarraydataops.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qcontainertools_impl.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qxptype_traits.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\q20functional.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\q20memory.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qbytearrayalgorithms.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qbytearrayview.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qstringfwd.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\q20type_traits.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qstringliteral.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qstringalgorithms.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qlatin1stringview.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qanystringview.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qutf8stringview.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qstringtokenizer.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qstringbuilder.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qlist.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qhashfunctions.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qiterator.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qbytearraylist.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qstringlist.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qalgorithms.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qstringmatcher.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qcoreevent.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qscopedpointer.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qmetatype.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qcompare.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qdatastream.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qiodevicebase.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qfloat16.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qmath.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qiterable.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qmetacontainer.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qcontainerinfo.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qtaggedpointer.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qscopeguard.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qobject_impl.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qbindingstorage.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qmargins.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\q23utility.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtGui\qaction.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtGui\qkeysequence.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtGui\qicon.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qsize.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtGui\qpixmap.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtGui\qpaintdevice.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qrect.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qpoint.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtGui\qcolor.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtGui\qrgb.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtGui\qrgba64.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qshareddata.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtGui\qimage.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtGui\qpixelformat.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtGui\qtransform.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtGui\qpolygon.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtGui\qregion.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qline.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qvariant.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qdebug.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qtextstream.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qstringconverter_base.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qcontiguouscache.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qsharedpointer.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qsharedpointer_impl.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qmap.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qshareddata_impl.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qset.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qhash.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qvarlengtharray.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtGui\qpalette.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtGui\qbrush.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtGui\qfont.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtGui\qfontmetrics.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtGui\qfontinfo.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtWidgets\qsizepolicy.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtGui\qcursor.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtGui\qbitmap.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtGui\qevent.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qiodevice.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qpointer.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qurl.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtGui\qeventpoint.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtGui\qvector2d.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtGui\qvectornd.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtGui\qpointingdevice.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtGui\qinputdevice.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtGui\qscreen.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\QList \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\QObject \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\QRect \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\QSize \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\QSizeF \
-		C:\Qt\6.6.0\msvc2019_64\include\QtGui\QTransform \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qnativeinterface.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtWidgets\qtabwidget.h \
-		..\JLU_Image_TransAnd_Label\curpicforlabeling_mainwindow.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtGui\QPaintEvent \
-		C:\Qt\6.6.0\msvc2019_64\include\QtGui\QMouseEvent \
-		C:\Qt\6.6.0\msvc2019_64\include\QtGui\QWheelEvent \
-		C:\Qt\6.6.0\msvc2019_64\include\QtGui\QPainter \
-		C:\Qt\6.6.0\msvc2019_64\include\QtGui\qpainter.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtGui\qtextoption.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtGui\qpen.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\QPoint \
-		C:\Qt\6.6.0\msvc2019_64\include\QtGui\QColor \
-		C:\Qt\6.6.0\msvc2019_64\include\QtWidgets\QFileDialog \
-		C:\Qt\6.6.0\msvc2019_64\include\QtWidgets\qfiledialog.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qdir.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qfile.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qfiledevice.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qfileinfo.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qdatetime.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qcalendar.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qlocale.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qtimezone.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtWidgets\qdialog.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtWidgets\QColorDialog \
-		C:\Qt\6.6.0\msvc2019_64\include\QtWidgets\qcolordialog.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\QTextStream \
-		..\JLU_Image_TransAnd_Label\labelquerydialog.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtWidgets\QWidget \
-		C:\Qt\6.6.0\msvc2019_64\include\QtWidgets\QMessageBox \
-		C:\Qt\6.6.0\msvc2019_64\include\QtWidgets\qmessagebox.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtWidgets\QCheckBox \
-		C:\Qt\6.6.0\msvc2019_64\include\QtWidgets\qcheckbox.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtWidgets\qabstractbutton.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtWidgets\QButtonGroup \
-		C:\Qt\6.6.0\msvc2019_64\include\QtWidgets\qbuttongroup.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\QEvent \
-		..\JLU_Image_TransAnd_Label\setpenwidthwindows.h \
-		..\JLU_Image_TransAnd_Label\setorshiftcurmaxpointcountswindows.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtGui\QCloseEvent \
-		debug\moc_predefs.h \
-		C:\Qt\6.6.0\msvc2019_64\bin\moc.exe
-	C:\Qt\6.6.0\msvc2019_64\bin\moc.exe $(DEFINES) --compiler-flavor=msvc --include "C:/Users/Lenovo/Desktop/QTlabel/Jilin_University_ImageLabel_SoftWare/JLU_Label_Software/Source Code/Formal v1.0.0/build-JLU_Image_TransAnd_Label-Desktop_Qt_6_6_0_MSVC2019_64bit-Debug/debug/moc_predefs.h" -IC:/Qt/6.6.0/msvc2019_64/mkspecs/win32-msvc -I"C:/Users/Lenovo/Desktop/QTlabel/Jilin_University_ImageLabel_SoftWare/JLU_Label_Software/Source Code/Formal v1.0.0/JLU_Image_TransAnd_Label" -ID:/opencv/mybuild/install/include -ID:/opencv/mybuild/install/include/opencv2 -ID:/opencv/mybuild/install/x64/vc16 -IC:/Qt/6.6.0/msvc2019_64/include -IC:/Qt/6.6.0/msvc2019_64/include/QtWidgets -IC:/Qt/6.6.0/msvc2019_64/include/QtGui -IC:/Qt/6.6.0/msvc2019_64/include/QtCore -I. -I"E:\Visual Studio IDE\VC\Tools\MSVC\14.29.30133\ATLMFC\include" -I"E:\Visual Studio IDE\VC\Tools\MSVC\14.29.30133\include" -I"E:\Windows Kits\10\include\10.0.19041.0\ucrt" -I"E:\Windows Kits\10\include\10.0.19041.0\shared" -I"E:\Windows Kits\10\include\10.0.19041.0\um" -I"E:\Windows Kits\10\include\10.0.19041.0\winrt" -I"E:\Windows Kits\10\include\10.0.19041.0\cppwinrt" ..\JLU_Image_TransAnd_Label\autolabel.h -o debug\moc_autolabel.cpp
-
+	-$(DEL_FILE) debug\moc_curpicforlabeling_mainwindow.cpp debug\moc_editpiclabelclass.cpp debug\moc_helpandcheck.cpp debug\moc_labelquerydialog.cpp debug\moc_labelsquerytextclass.cpp debug\moc_mainwindow.cpp debug\moc_manuallylabel.cpp debug\moc_setorshiftcurmaxpointcountswindows.cpp debug\moc_setpenwidthwindows.cpp debug\moc_setseperatormainwindow.cpp debug\moc_smartlineeditclass.cpp
 debug\moc_curpicforlabeling_mainwindow.cpp: ..\JLU_Image_TransAnd_Label\curpicforlabeling_mainwindow.h \
 		C:\Qt\6.6.0\msvc2019_64\include\QtWidgets\QMainWindow \
 		C:\Qt\6.6.0\msvc2019_64\include\QtWidgets\qmainwindow.h \
@@ -1624,7 +1412,6 @@ debug\moc_mainwindow.cpp: ..\JLU_Image_TransAnd_Label\mainwindow.h \
 		C:\Qt\6.6.0\msvc2019_64\include\QtCore\QTextStream \
 		..\JLU_Image_TransAnd_Label\setorshiftcurmaxpointcountswindows.h \
 		C:\Qt\6.6.0\msvc2019_64\include\QtGui\QCloseEvent \
-		..\JLU_Image_TransAnd_Label\autolabel.h \
 		..\JLU_Image_TransAnd_Label\helpandcheck.h \
 		..\JLU_Image_TransAnd_Label\setseperatormainwindow.h \
 		debug\moc_predefs.h \
@@ -2544,13 +2331,9 @@ compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
-compiler_uic_make_all: ui_autolabel.h ui_curpicforlabeling_mainwindow.h ui_helpandcheck.h ui_labelquerydialog.h ui_mainwindow.h ui_manuallylabel.h ui_setorshiftcurmaxpointcountswindows.h ui_setpenwidthwindows.h ui_setseperatormainwindow.h
+compiler_uic_make_all: ui_curpicforlabeling_mainwindow.h ui_helpandcheck.h ui_labelquerydialog.h ui_mainwindow.h ui_manuallylabel.h ui_setorshiftcurmaxpointcountswindows.h ui_setpenwidthwindows.h ui_setseperatormainwindow.h
 compiler_uic_clean:
-	-$(DEL_FILE) ui_autolabel.h ui_curpicforlabeling_mainwindow.h ui_helpandcheck.h ui_labelquerydialog.h ui_mainwindow.h ui_manuallylabel.h ui_setorshiftcurmaxpointcountswindows.h ui_setpenwidthwindows.h ui_setseperatormainwindow.h
-ui_autolabel.h: ..\JLU_Image_TransAnd_Label\autolabel.ui \
-		C:\Qt\6.6.0\msvc2019_64\bin\uic.exe
-	C:\Qt\6.6.0\msvc2019_64\bin\uic.exe ..\JLU_Image_TransAnd_Label\autolabel.ui -o ui_autolabel.h
-
+	-$(DEL_FILE) ui_curpicforlabeling_mainwindow.h ui_helpandcheck.h ui_labelquerydialog.h ui_mainwindow.h ui_manuallylabel.h ui_setorshiftcurmaxpointcountswindows.h ui_setpenwidthwindows.h ui_setseperatormainwindow.h
 ui_curpicforlabeling_mainwindow.h: ..\JLU_Image_TransAnd_Label\curpicforlabeling_mainwindow.ui \
 		C:\Qt\6.6.0\msvc2019_64\bin\uic.exe
 	C:\Qt\6.6.0\msvc2019_64\bin\uic.exe ..\JLU_Image_TransAnd_Label\curpicforlabeling_mainwindow.ui -o ui_curpicforlabeling_mainwindow.h
@@ -3157,210 +2940,6 @@ compiler_clean: compiler_rcc_clean compiler_moc_predefs_clean compiler_moc_heade
 
 
 ####### Compile
-
-debug\autolabel.obj: ..\JLU_Image_TransAnd_Label\autolabel.cpp ..\JLU_Image_TransAnd_Label\autolabel.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtWidgets\QMainWindow \
-		C:\Qt\6.6.0\msvc2019_64\include\QtWidgets\qmainwindow.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtWidgets\qtwidgetsglobal.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtGui\qtguiglobal.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qglobal.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qtversionchecks.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qtconfiginclude.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qconfig.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qtcore-config.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qtconfigmacros.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qtcoreexports.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qcompilerdetection.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qsystemdetection.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qprocessordetection.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qtdeprecationmarkers.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qtpreprocessorsupport.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qassert.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qtnoop.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qtypes.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qtversion.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qtclasshelpermacros.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qtypeinfo.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qcontainerfwd.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qsysinfo.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qlogging.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qflags.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qcompare_impl.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qatomic.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qbasicatomic.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qatomic_cxx11.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qgenericatomic.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qconstructormacros.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qdarwinhelpers.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qexceptionhandling.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qforeach.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qttypetraits.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qfunctionpointer.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qglobalstatic.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qmalloc.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qminmax.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qnumeric.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qoverload.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qswap.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qtenvironmentvariables.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qtresource.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qttranslation.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qversiontagging.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtGui\qtgui-config.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtGui\qtguiexports.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtWidgets\qtwidgets-config.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtWidgets\qtwidgetsexports.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtWidgets\qwidget.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtGui\qwindowdefs.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qobjectdefs.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qnamespace.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qtmetamacros.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qobjectdefs_impl.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qfunctionaltools_impl.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtGui\qwindowdefs_win.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qobject.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qstring.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qchar.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qstringview.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qbytearray.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qrefcount.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qarraydata.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qpair.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qarraydatapointer.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qarraydataops.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qcontainertools_impl.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qxptype_traits.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\q20functional.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\q20memory.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qbytearrayalgorithms.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qbytearrayview.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qstringfwd.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\q20type_traits.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qstringliteral.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qstringalgorithms.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qlatin1stringview.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qanystringview.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qutf8stringview.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qstringtokenizer.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qstringbuilder.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qlist.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qhashfunctions.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qiterator.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qbytearraylist.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qstringlist.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qalgorithms.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qstringmatcher.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qcoreevent.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qscopedpointer.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qmetatype.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qcompare.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qdatastream.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qiodevicebase.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qfloat16.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qmath.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qiterable.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qmetacontainer.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qcontainerinfo.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qtaggedpointer.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qscopeguard.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qobject_impl.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qbindingstorage.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qmargins.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\q23utility.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtGui\qaction.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtGui\qkeysequence.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtGui\qicon.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qsize.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtGui\qpixmap.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtGui\qpaintdevice.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qrect.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qpoint.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtGui\qcolor.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtGui\qrgb.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtGui\qrgba64.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qshareddata.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtGui\qimage.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtGui\qpixelformat.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtGui\qtransform.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtGui\qpolygon.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtGui\qregion.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qline.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qvariant.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qdebug.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qtextstream.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qstringconverter_base.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qcontiguouscache.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qsharedpointer.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qsharedpointer_impl.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qmap.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qshareddata_impl.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qset.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qhash.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qvarlengtharray.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtGui\qpalette.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtGui\qbrush.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtGui\qfont.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtGui\qfontmetrics.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtGui\qfontinfo.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtWidgets\qsizepolicy.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtGui\qcursor.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtGui\qbitmap.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtGui\qevent.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qiodevice.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qpointer.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qurl.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtGui\qeventpoint.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtGui\qvector2d.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtGui\qvectornd.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtGui\qpointingdevice.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtGui\qinputdevice.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtGui\qscreen.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\QList \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\QObject \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\QRect \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\QSize \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\QSizeF \
-		C:\Qt\6.6.0\msvc2019_64\include\QtGui\QTransform \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qnativeinterface.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtWidgets\qtabwidget.h \
-		..\JLU_Image_TransAnd_Label\curpicforlabeling_mainwindow.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtGui\QPaintEvent \
-		C:\Qt\6.6.0\msvc2019_64\include\QtGui\QMouseEvent \
-		C:\Qt\6.6.0\msvc2019_64\include\QtGui\QWheelEvent \
-		C:\Qt\6.6.0\msvc2019_64\include\QtGui\QPainter \
-		C:\Qt\6.6.0\msvc2019_64\include\QtGui\qpainter.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtGui\qtextoption.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtGui\qpen.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\QPoint \
-		C:\Qt\6.6.0\msvc2019_64\include\QtGui\QColor \
-		C:\Qt\6.6.0\msvc2019_64\include\QtWidgets\QFileDialog \
-		C:\Qt\6.6.0\msvc2019_64\include\QtWidgets\qfiledialog.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qdir.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qfile.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qfiledevice.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qfileinfo.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qdatetime.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qcalendar.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qlocale.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qtimezone.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtWidgets\qdialog.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtWidgets\QColorDialog \
-		C:\Qt\6.6.0\msvc2019_64\include\QtWidgets\qcolordialog.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\QTextStream \
-		..\JLU_Image_TransAnd_Label\labelquerydialog.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtWidgets\QWidget \
-		C:\Qt\6.6.0\msvc2019_64\include\QtWidgets\QMessageBox \
-		C:\Qt\6.6.0\msvc2019_64\include\QtWidgets\qmessagebox.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtWidgets\QCheckBox \
-		C:\Qt\6.6.0\msvc2019_64\include\QtWidgets\qcheckbox.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtWidgets\qabstractbutton.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtWidgets\QButtonGroup \
-		C:\Qt\6.6.0\msvc2019_64\include\QtWidgets\qbuttongroup.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtCore\QEvent \
-		..\JLU_Image_TransAnd_Label\setpenwidthwindows.h \
-		..\JLU_Image_TransAnd_Label\setorshiftcurmaxpointcountswindows.h \
-		C:\Qt\6.6.0\msvc2019_64\include\QtGui\QCloseEvent \
-		ui_autolabel.h
 
 debug\curpicforlabeling_mainwindow.obj: ..\JLU_Image_TransAnd_Label\curpicforlabeling_mainwindow.cpp ..\JLU_Image_TransAnd_Label\curpicforlabeling_mainwindow.h \
 		C:\Qt\6.6.0\msvc2019_64\include\QtWidgets\QMainWindow \
@@ -4745,7 +4324,6 @@ debug\main.obj: ..\JLU_Image_TransAnd_Label\main.cpp ..\JLU_Image_TransAnd_Label
 		C:\Qt\6.6.0\msvc2019_64\include\QtCore\QTextStream \
 		..\JLU_Image_TransAnd_Label\setorshiftcurmaxpointcountswindows.h \
 		C:\Qt\6.6.0\msvc2019_64\include\QtGui\QCloseEvent \
-		..\JLU_Image_TransAnd_Label\autolabel.h \
 		..\JLU_Image_TransAnd_Label\helpandcheck.h \
 		..\JLU_Image_TransAnd_Label\setseperatormainwindow.h \
 		C:\Qt\6.6.0\msvc2019_64\include\QtWidgets\QApplication \
@@ -4983,7 +4561,6 @@ debug\mainwindow.obj: ..\JLU_Image_TransAnd_Label\mainwindow.cpp ..\JLU_Image_Tr
 		C:\Qt\6.6.0\msvc2019_64\include\QtCore\QTextStream \
 		..\JLU_Image_TransAnd_Label\setorshiftcurmaxpointcountswindows.h \
 		C:\Qt\6.6.0\msvc2019_64\include\QtGui\QCloseEvent \
-		..\JLU_Image_TransAnd_Label\autolabel.h \
 		..\JLU_Image_TransAnd_Label\helpandcheck.h \
 		..\JLU_Image_TransAnd_Label\setseperatormainwindow.h \
 		..\JLU_Image_TransAnd_Label\ui_mainwindow.h \
@@ -6126,8 +5703,6 @@ debug\smartlineeditclass.obj: ..\JLU_Image_TransAnd_Label\smartlineeditclass.cpp
 		C:\Qt\6.6.0\msvc2019_64\include\QtCore\qlocale.h
 
 debug\qrc_def_source.obj: debug\qrc_def_source.cpp 
-
-debug\moc_autolabel.obj: debug\moc_autolabel.cpp 
 
 debug\moc_curpicforlabeling_mainwindow.obj: debug\moc_curpicforlabeling_mainwindow.cpp 
 

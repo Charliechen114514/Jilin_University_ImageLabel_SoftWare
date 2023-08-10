@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1043</width>
-    <height>767</height>
+    <height>773</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -63,7 +63,7 @@
          <x>0</x>
          <y>0</y>
          <width>198</width>
-         <height>526</height>
+         <height>508</height>
         </rect>
        </property>
        <attribute name="label">
@@ -89,7 +89,7 @@
          <x>0</x>
          <y>0</y>
          <width>198</width>
-         <height>526</height>
+         <height>508</height>
         </rect>
        </property>
        <attribute name="label">
@@ -141,7 +141,7 @@
          <x>0</x>
          <y>0</y>
          <width>198</width>
-         <height>526</height>
+         <height>508</height>
         </rect>
        </property>
        <attribute name="label">
@@ -304,6 +304,15 @@ li.checked::marker { content: &quot;\2612&quot;; }
      </widget>
     </item>
    </layout>
+   <zorder>manageLabelButton</zorder>
+   <zorder>toolPage</zorder>
+   <zorder>viewLabel</zorder>
+   <zorder>processTextLine</zorder>
+   <zorder>changeCurPicBtn</zorder>
+   <zorder>removeCurPictureBtn</zorder>
+   <zorder>gotoAfterOne</zorder>
+   <zorder>curPlaceProcessBar</zorder>
+   <zorder>gotoPrevious</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -311,7 +320,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
      <x>0</x>
      <y>0</y>
      <width>1043</width>
-     <height>17</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu">
