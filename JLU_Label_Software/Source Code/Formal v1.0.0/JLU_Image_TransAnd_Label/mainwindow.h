@@ -11,6 +11,8 @@
 #include <opencv2/tracking.hpp>
 #include <opencv2/videoio.hpp>
 #include <opencv2/highgui.hpp>
+#include <opencv2/highgui/highgui_c.h>
+#include <Windows.h>
 #include <labelclass.h>
 #include <manuallylabel.h>
 #include <labelquerydialog.h>
@@ -49,6 +51,9 @@ public:
     void initBasicQuickShot();
     /*显示图片*/
     void imgShow(unsigned int visitIndex);
+    void cvShow(unsigned int visitIndex);
+    /*opencv鼠标响应事件*/
+    static void my_mouse_callback(int event, int x, int y, int flags, void* param);
 
     /*MenuBar Sections*/
     /*Import the picture*/
@@ -140,6 +145,8 @@ private:
     SetSeperatorMainWindow*                         setSeperatorWindows;
     /* 要不要忽视另一些添加失败的图片 */
     bool                                            isIgnoreFailed;
+    /* box索引 */
+    int                                             box_array_max_index = -1;
     /* 默认的导入分割符 */
     QString                                         defLabelsSeperator;
     /* 当前的导入分割符 */
@@ -148,7 +155,8 @@ private:
     QStringList                                     writingMethod;
     bool                                            isauto;
     cv::Ptr<cv::Tracker>                            tracker;
-    cv::Rect                                        roi;
+    std::string                                     winName;
+    std::vector<cv::Rect>                           box_array;
 };
 #endif // MAINWINDOW_H
 

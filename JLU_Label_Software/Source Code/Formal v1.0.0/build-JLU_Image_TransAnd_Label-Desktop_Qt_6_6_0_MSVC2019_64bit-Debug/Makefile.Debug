@@ -19,7 +19,7 @@ CXXFLAGS      = -nologo -Zc:wchar_t -FS -Zc:rvalueCast -Zc:inline -Zc:strictStri
 INCPATH       = -I..\JLU_Image_TransAnd_Label -I. -ID:\opencv\mybuild\install\include -ID:\opencv\mybuild\install\include\opencv2 -ID:\opencv\mybuild\install\x64\vc16 -IC:\Qt\6.6.0\msvc2019_64\include -IC:\Qt\6.6.0\msvc2019_64\include\QtWidgets -IC:\Qt\6.6.0\msvc2019_64\include\QtGui -IC:\Qt\6.6.0\msvc2019_64\include\QtCore -Idebug -I. -I/include -IC:\Qt\6.6.0\msvc2019_64\mkspecs\win32-msvc 
 LINKER        = link
 LFLAGS        = /NOLOGO /DYNAMICBASE /NXCOMPAT /DEBUG /SUBSYSTEM:WINDOWS "/MANIFESTDEPENDENCY:type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' publicKeyToken='6595b64144ccf1df' language='*' processorArchitecture='*'"
-LIBS          = D:\opencv\mybuild\install\x64\vc16\lib\opencv_world460d.lib D:\opencv\mybuild\install\x64\vc16\lib\opencv_img_hash460d.lib C:\Qt\6.6.0\msvc2019_64\lib\Qt6Widgetsd.lib C:\Qt\6.6.0\msvc2019_64\lib\Qt6Guid.lib C:\Qt\6.6.0\msvc2019_64\lib\Qt6Cored.lib C:\Qt\6.6.0\msvc2019_64\lib\Qt6EntryPointd.lib shell32.lib  
+LIBS          = D:\opencv\mybuild\install\x64\vc16\lib\opencv_world460d.lib D:\opencv\mybuild\install\x64\vc16\lib\opencv_img_hash460d.lib user32.lib C:\Qt\6.6.0\msvc2019_64\lib\Qt6Widgetsd.lib C:\Qt\6.6.0\msvc2019_64\lib\Qt6Guid.lib C:\Qt\6.6.0\msvc2019_64\lib\Qt6Cored.lib C:\Qt\6.6.0\msvc2019_64\lib\Qt6EntryPointd.lib shell32.lib  
 QMAKE         = C:\Qt\6.6.0\msvc2019_64\bin\qmake.exe
 DEL_FILE      = del
 CHK_DIR_EXISTS= if not exist
@@ -1380,6 +1380,49 @@ debug\moc_mainwindow.cpp: ..\JLU_Image_TransAnd_Label\mainwindow.h \
 		C:\Qt\6.6.0\msvc2019_64\include\QtWidgets\QMessageBox \
 		C:\Qt\6.6.0\msvc2019_64\include\QtWidgets\qmessagebox.h \
 		C:\Qt\6.6.0\msvc2019_64\include\QtCore\QDebug \
+		D:\opencv\mybuild\install\include\opencv2\core\utility.hpp \
+		D:\opencv\mybuild\install\include\opencv2\core.hpp \
+		D:\opencv\mybuild\install\include\opencv2\core\cvdef.h \
+		D:\opencv\mybuild\install\include\opencv2\core\version.hpp \
+		D:\opencv\mybuild\install\include\opencv2\cvconfig.h \
+		D:\opencv\mybuild\install\include\opencv2\core\hal\interface.h \
+		D:\opencv\mybuild\install\include\opencv2\core\cv_cpu_dispatch.h \
+		D:\opencv\mybuild\install\include\opencv2\core\cv_cpu_helper.h \
+		D:\opencv\mybuild\install\include\opencv2\core\hal\msa_macros.h \
+		D:\opencv\mybuild\install\include\opencv2\core\fast_math.hpp \
+		D:\opencv\mybuild\install\include\opencv2\core\base.hpp \
+		D:\opencv\mybuild\install\include\opencv2\opencv_modules.hpp \
+		D:\opencv\mybuild\install\include\opencv2\core\cvstd.hpp \
+		D:\opencv\mybuild\install\include\opencv2\core\cvstd_wrapper.hpp \
+		D:\opencv\mybuild\install\include\opencv2\core\neon_utils.hpp \
+		D:\opencv\mybuild\install\include\opencv2\core\vsx_utils.hpp \
+		D:\opencv\mybuild\install\include\opencv2\core\check.hpp \
+		D:\opencv\mybuild\install\include\opencv2\core\traits.hpp \
+		D:\opencv\mybuild\install\include\opencv2\core\matx.hpp \
+		D:\opencv\mybuild\install\include\opencv2\core\saturate.hpp \
+		D:\opencv\mybuild\install\include\opencv2\core\types.hpp \
+		D:\opencv\mybuild\install\include\opencv2\core\mat.hpp \
+		D:\opencv\mybuild\install\include\opencv2\core\bufferpool.hpp \
+		D:\opencv\mybuild\install\include\opencv2\core\mat.inl.hpp \
+		D:\opencv\mybuild\install\include\opencv2\core\persistence.hpp \
+		D:\opencv\mybuild\install\include\opencv2\core\operations.hpp \
+		D:\opencv\mybuild\install\include\opencv2\core\cvstd.inl.hpp \
+		D:\opencv\mybuild\install\include\opencv2\core\optim.hpp \
+		D:\opencv\mybuild\install\include\opencv2\core\ovx.hpp \
+		D:\opencv\mybuild\install\include\opencv2\core\utils\instrumentation.hpp \
+		D:\opencv\mybuild\install\include\opencv2\core\utils\tls.hpp \
+		D:\opencv\mybuild\install\include\opencv2\tracking.hpp \
+		D:\opencv\mybuild\install\include\opencv2\video\tracking.hpp \
+		D:\opencv\mybuild\install\include\opencv2\imgproc.hpp \
+		D:\opencv\mybuild\install\include\opencv2\imgproc\segmentation.hpp \
+		D:\opencv\mybuild\install\include\opencv2\videoio.hpp \
+		D:\opencv\mybuild\install\include\opencv2\highgui.hpp \
+		D:\opencv\mybuild\install\include\opencv2\imgcodecs.hpp \
+		D:\opencv\mybuild\install\include\opencv2\highgui\highgui_c.h \
+		D:\opencv\mybuild\install\include\opencv2\core\core_c.h \
+		D:\opencv\mybuild\install\include\opencv2\core\types_c.h \
+		D:\opencv\mybuild\install\include\opencv2\imgproc\imgproc_c.h \
+		D:\opencv\mybuild\install\include\opencv2\imgproc\types_c.h \
 		..\JLU_Image_TransAnd_Label\labelclass.h \
 		C:\Qt\6.6.0\msvc2019_64\include\QtCore\QString \
 		C:\Qt\6.6.0\msvc2019_64\include\QtCore\Qlist \
@@ -4292,6 +4335,49 @@ debug\main.obj: ..\JLU_Image_TransAnd_Label\main.cpp ..\JLU_Image_TransAnd_Label
 		C:\Qt\6.6.0\msvc2019_64\include\QtWidgets\QMessageBox \
 		C:\Qt\6.6.0\msvc2019_64\include\QtWidgets\qmessagebox.h \
 		C:\Qt\6.6.0\msvc2019_64\include\QtCore\QDebug \
+		D:\opencv\mybuild\install\include\opencv2\core\utility.hpp \
+		D:\opencv\mybuild\install\include\opencv2\core.hpp \
+		D:\opencv\mybuild\install\include\opencv2\core\cvdef.h \
+		D:\opencv\mybuild\install\include\opencv2\core\version.hpp \
+		D:\opencv\mybuild\install\include\opencv2\cvconfig.h \
+		D:\opencv\mybuild\install\include\opencv2\core\hal\interface.h \
+		D:\opencv\mybuild\install\include\opencv2\core\cv_cpu_dispatch.h \
+		D:\opencv\mybuild\install\include\opencv2\core\cv_cpu_helper.h \
+		D:\opencv\mybuild\install\include\opencv2\core\hal\msa_macros.h \
+		D:\opencv\mybuild\install\include\opencv2\core\fast_math.hpp \
+		D:\opencv\mybuild\install\include\opencv2\core\base.hpp \
+		D:\opencv\mybuild\install\include\opencv2\opencv_modules.hpp \
+		D:\opencv\mybuild\install\include\opencv2\core\cvstd.hpp \
+		D:\opencv\mybuild\install\include\opencv2\core\cvstd_wrapper.hpp \
+		D:\opencv\mybuild\install\include\opencv2\core\neon_utils.hpp \
+		D:\opencv\mybuild\install\include\opencv2\core\vsx_utils.hpp \
+		D:\opencv\mybuild\install\include\opencv2\core\check.hpp \
+		D:\opencv\mybuild\install\include\opencv2\core\traits.hpp \
+		D:\opencv\mybuild\install\include\opencv2\core\matx.hpp \
+		D:\opencv\mybuild\install\include\opencv2\core\saturate.hpp \
+		D:\opencv\mybuild\install\include\opencv2\core\types.hpp \
+		D:\opencv\mybuild\install\include\opencv2\core\mat.hpp \
+		D:\opencv\mybuild\install\include\opencv2\core\bufferpool.hpp \
+		D:\opencv\mybuild\install\include\opencv2\core\mat.inl.hpp \
+		D:\opencv\mybuild\install\include\opencv2\core\persistence.hpp \
+		D:\opencv\mybuild\install\include\opencv2\core\operations.hpp \
+		D:\opencv\mybuild\install\include\opencv2\core\cvstd.inl.hpp \
+		D:\opencv\mybuild\install\include\opencv2\core\optim.hpp \
+		D:\opencv\mybuild\install\include\opencv2\core\ovx.hpp \
+		D:\opencv\mybuild\install\include\opencv2\core\utils\instrumentation.hpp \
+		D:\opencv\mybuild\install\include\opencv2\core\utils\tls.hpp \
+		D:\opencv\mybuild\install\include\opencv2\tracking.hpp \
+		D:\opencv\mybuild\install\include\opencv2\video\tracking.hpp \
+		D:\opencv\mybuild\install\include\opencv2\imgproc.hpp \
+		D:\opencv\mybuild\install\include\opencv2\imgproc\segmentation.hpp \
+		D:\opencv\mybuild\install\include\opencv2\videoio.hpp \
+		D:\opencv\mybuild\install\include\opencv2\highgui.hpp \
+		D:\opencv\mybuild\install\include\opencv2\imgcodecs.hpp \
+		D:\opencv\mybuild\install\include\opencv2\highgui\highgui_c.h \
+		D:\opencv\mybuild\install\include\opencv2\core\core_c.h \
+		D:\opencv\mybuild\install\include\opencv2\core\types_c.h \
+		D:\opencv\mybuild\install\include\opencv2\imgproc\imgproc_c.h \
+		D:\opencv\mybuild\install\include\opencv2\imgproc\types_c.h \
 		..\JLU_Image_TransAnd_Label\labelclass.h \
 		C:\Qt\6.6.0\msvc2019_64\include\QtCore\QString \
 		C:\Qt\6.6.0\msvc2019_64\include\QtCore\Qlist \
@@ -4529,6 +4615,49 @@ debug\mainwindow.obj: ..\JLU_Image_TransAnd_Label\mainwindow.cpp ..\JLU_Image_Tr
 		C:\Qt\6.6.0\msvc2019_64\include\QtWidgets\QMessageBox \
 		C:\Qt\6.6.0\msvc2019_64\include\QtWidgets\qmessagebox.h \
 		C:\Qt\6.6.0\msvc2019_64\include\QtCore\QDebug \
+		D:\opencv\mybuild\install\include\opencv2\core\utility.hpp \
+		D:\opencv\mybuild\install\include\opencv2\core.hpp \
+		D:\opencv\mybuild\install\include\opencv2\core\cvdef.h \
+		D:\opencv\mybuild\install\include\opencv2\core\version.hpp \
+		D:\opencv\mybuild\install\include\opencv2\cvconfig.h \
+		D:\opencv\mybuild\install\include\opencv2\core\hal\interface.h \
+		D:\opencv\mybuild\install\include\opencv2\core\cv_cpu_dispatch.h \
+		D:\opencv\mybuild\install\include\opencv2\core\cv_cpu_helper.h \
+		D:\opencv\mybuild\install\include\opencv2\core\hal\msa_macros.h \
+		D:\opencv\mybuild\install\include\opencv2\core\fast_math.hpp \
+		D:\opencv\mybuild\install\include\opencv2\core\base.hpp \
+		D:\opencv\mybuild\install\include\opencv2\opencv_modules.hpp \
+		D:\opencv\mybuild\install\include\opencv2\core\cvstd.hpp \
+		D:\opencv\mybuild\install\include\opencv2\core\cvstd_wrapper.hpp \
+		D:\opencv\mybuild\install\include\opencv2\core\neon_utils.hpp \
+		D:\opencv\mybuild\install\include\opencv2\core\vsx_utils.hpp \
+		D:\opencv\mybuild\install\include\opencv2\core\check.hpp \
+		D:\opencv\mybuild\install\include\opencv2\core\traits.hpp \
+		D:\opencv\mybuild\install\include\opencv2\core\matx.hpp \
+		D:\opencv\mybuild\install\include\opencv2\core\saturate.hpp \
+		D:\opencv\mybuild\install\include\opencv2\core\types.hpp \
+		D:\opencv\mybuild\install\include\opencv2\core\mat.hpp \
+		D:\opencv\mybuild\install\include\opencv2\core\bufferpool.hpp \
+		D:\opencv\mybuild\install\include\opencv2\core\mat.inl.hpp \
+		D:\opencv\mybuild\install\include\opencv2\core\persistence.hpp \
+		D:\opencv\mybuild\install\include\opencv2\core\operations.hpp \
+		D:\opencv\mybuild\install\include\opencv2\core\cvstd.inl.hpp \
+		D:\opencv\mybuild\install\include\opencv2\core\optim.hpp \
+		D:\opencv\mybuild\install\include\opencv2\core\ovx.hpp \
+		D:\opencv\mybuild\install\include\opencv2\core\utils\instrumentation.hpp \
+		D:\opencv\mybuild\install\include\opencv2\core\utils\tls.hpp \
+		D:\opencv\mybuild\install\include\opencv2\tracking.hpp \
+		D:\opencv\mybuild\install\include\opencv2\video\tracking.hpp \
+		D:\opencv\mybuild\install\include\opencv2\imgproc.hpp \
+		D:\opencv\mybuild\install\include\opencv2\imgproc\segmentation.hpp \
+		D:\opencv\mybuild\install\include\opencv2\videoio.hpp \
+		D:\opencv\mybuild\install\include\opencv2\highgui.hpp \
+		D:\opencv\mybuild\install\include\opencv2\imgcodecs.hpp \
+		D:\opencv\mybuild\install\include\opencv2\highgui\highgui_c.h \
+		D:\opencv\mybuild\install\include\opencv2\core\core_c.h \
+		D:\opencv\mybuild\install\include\opencv2\core\types_c.h \
+		D:\opencv\mybuild\install\include\opencv2\imgproc\imgproc_c.h \
+		D:\opencv\mybuild\install\include\opencv2\imgproc\types_c.h \
 		..\JLU_Image_TransAnd_Label\labelclass.h \
 		C:\Qt\6.6.0\msvc2019_64\include\QtCore\QString \
 		C:\Qt\6.6.0\msvc2019_64\include\QtCore\Qlist \

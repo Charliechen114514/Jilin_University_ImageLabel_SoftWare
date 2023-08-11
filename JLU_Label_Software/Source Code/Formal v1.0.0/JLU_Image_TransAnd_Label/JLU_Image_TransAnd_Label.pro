@@ -66,3 +66,4 @@ DEPENDPATH += D:/opencv/mybuild/install/x64/vc16/
 LIBS += \
     D:/opencv/mybuild/install/x64/vc16/lib/opencv_world460d.lib \
     D:/opencv/mybuild/install/x64/vc16/lib/opencv_img_hash460d.lib
+win32:LIBS += -luser32

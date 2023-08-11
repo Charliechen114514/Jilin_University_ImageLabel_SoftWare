@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-using namespace cv;
+cv::Rect             roi;
+bool                 isstore = false;
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -197,6 +198,72 @@ void MainWindow::imgShow(unsigned int visitIndex)
     }
     ui->viewLabel->setPixmap(QPixmap::fromImage(curViewPic.scaled(ui->viewLabel->size(),Qt::IgnoreAspectRatio)));
     refreshProcessBar(visitIndex + 1);
+}
+void MainWindow::my_mouse_callback(int event, int x, int y, int flags, void* param)
+{
+    //event：事件 x，y：鼠标在窗口坐标  param：其他东西
+    cv::Mat* image = (cv::Mat*)param;
+    bool drawing_box = false;
+    switch (event)
+    {
+    case cv::EVENT_LBUTTONDOWN:
+    {
+        isstore = false;
+        drawing_box = true;
+        roi = cv::Rect(x, y, 0, 0);
+    }
+    break;
+    case cv::EVENT_MOUSEMOVE:
+        if (drawing_box)
+        {
+            roi.width = x - roi.x;
+            roi.height = y - roi.y;
+        }
+        break;
+    case cv::EVENT_LBUTTONUP:
+    {
+        if (roi.width < 0)
+        {
+            roi.x += roi.width;
+            roi.width *= -1;
+        }
+        if (roi.height < 0)
+        {
+            roi.y += roi.height;
+            roi.height *= -1;
+        }
+        drawing_box = false;
+    }
+    break;
+
+    default:
+        isstore = true;
+        break;
+    }
+}
+void MainWindow::cvShow(unsigned int visitIndex)
+{
+    cv::Mat tem = cv::imread(pathPics[visitIndex].toStdString());
+    if(tem.empty())
+    {
+        if(QMessageBox::Yes == QMessageBox::question(this,"注意！","无法显示图片！将会更换图片或者删除之，点击确定表示更换"))
+        {
+            on_changeCurPicBtn_clicked();
+        }
+        else
+        {
+            pathPics.removeAt(visitIndex);
+
+        }
+    }
+
+    cv::resizeWindow(winName, cv::Size(ui->viewLabel->width()*2, ui->viewLabel->height()*2));
+    cv::resize(tem, tem, cv::Size(ui->viewLabel->width()*2, ui->viewLabel->height()*2), 0, 0, cv::INTER_AREA);
+    cv::setMouseCallback(
+        winName,		//窗口名字
+        my_mouse_callback,  //回调函数
+        (void*)(&tem) //传给回调函数的参数，背景图，这里面把第一张图片当做背景图
+        );
 }
 
 void MainWindow::resizeEvent(QResizeEvent*)
@@ -847,38 +914,57 @@ void MainWindow::getSetSeperatorFromSSMW()
 
 void MainWindow::on_pushButton_3_clicked()
 {
+    for(int i = 0;i < pathPics.size();i++)
+    {
+        box_array.push_back(cv::Rect(0,0,0,0));
+    }
     if(pathPics.size()==0)
     {
         QMessageBox::critical(this,"发生错误！","请先加载图片文件夹!");
         return;
     }
-    isauto = true;
-    Mat initMat = imread(pathPics[curViewPicIndex].toStdString());
-    tracker = TrackerCSRT::create();
-    QMessageBox::information(this,"提示","按enter或空格键确认并退出!");
-    roi = selectROI("tracker", initMat);
-    if (roi.width == 0 || roi.height == 0)
+    winName = "tracker";
+    cv::namedWindow(winName, cv::WINDOW_AUTOSIZE);
+    cv::Mat initMat = cv::imread(pathPics[curViewPicIndex].toStdString());
+    tracker = cv::TrackerCSRT::create();
+    QMessageBox::information(this,"提示","点击鼠标左键拖拉形成一个四边形检测区域，最后点击右键形成检测区域");
+    //QT上显示opencv窗口
+    HWND hwnd = (HWND)cvGetWindowHandle(winName.c_str());
+    HWND paraent = GetParent(hwnd);//得到nameWindow窗口的父句柄
+    SetParent(hwnd, (HWND)ui->viewLabel->winId());//设置ui控件的句柄是父句柄
+    ShowWindow(paraent, SW_HIDE);//隐藏掉nameWindow窗口
+    cv::resizeWindow(winName, cv::Size(ui->viewLabel->width()*2, ui->viewLabel->height()*2));
+    cv::resize(initMat, initMat, cv::Size(ui->viewLabel->width()*2, ui->viewLabel->height()*2), 0, 0, cv::INTER_AREA);
+//  roi = cv::selectROI(winName, initMat);
+    cv::setMouseCallback(
+        winName,		//窗口名字
+        my_mouse_callback,  //回调函数
+        (void*)(&initMat) //传给回调函数的参数，背景图，这里面把第一张图片当做背景图
+        );
+    if (isstore && (roi.width == 0 || roi.height == 0))
        QMessageBox::critical(this,"发生错误！","你设置检测区域了吗?");
-    else
-       destroyAllWindows();
-    tracker->init(initMat, roi);
+    else if (isstore)
+    {
+       isauto = true;
+       tracker->init(initMat, roi);
+    }
 }
 
-Mat MainWindow::ImageToMat(QImage &image) //QImage转Mat
+cv::Mat MainWindow::ImageToMat(QImage &image) //QImage转Mat
 {
-    Mat mat = Mat::zeros(image.height(), image.width(),image.format()); //初始化Mat
+    cv::Mat mat = cv::Mat::zeros(image.height(), image.width(),image.format()); //初始化Mat
     switch(image.format()) //判断image的类型
     {
     case QImage::QImage::Format_Grayscale8:  //灰度图
-        mat = Mat(image.height(), image.width(),
+       mat = cv::Mat(image.height(), image.width(),
                   CV_8UC1,(void*)image.constBits(),image.bytesPerLine());
         break;
     case QImage::Format_RGB888: //3通道彩色
-        mat = Mat(image.height(), image.width(),
+        mat = cv::Mat(image.height(), image.width(),
                   CV_8UC3,(void*)image.constBits(),image.bytesPerLine());
         break;
     case QImage::Format_ARGB32: //4通道彩色
-        mat = Mat(image.height(), image.width(),
+        mat = cv::Mat(image.height(), image.width(),
                   CV_8UC4,(void*)image.constBits(),image.bytesPerLine());
         break;
     default:
@@ -888,7 +974,7 @@ Mat MainWindow::ImageToMat(QImage &image) //QImage转Mat
 }
 
 
-QImage MainWindow::MatToImage(Mat &m) //Mat转QImage
+QImage MainWindow::MatToImage(cv::Mat &m) //Mat转QImage
 {
     //判断m的类型，可能是CV_8UC1  CV_8UC2  CV_8UC3  CV_8UC4
     switch(m.type())
