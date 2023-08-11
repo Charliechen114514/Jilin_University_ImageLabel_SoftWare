@@ -2,6 +2,17 @@
 #include "ui_mainwindow.h"
 cv::Rect             roi;
 bool                 isstore = false;
+bool                 drawing_box = false;
+bool                 over = false;
+void draw_box(cv::Mat& img){
+    rectangle(
+        img,
+        cv::Point(roi.x, roi.y),
+        cv::Point(roi.x + roi.width,
+              roi.y + roi.height),
+        cv::Scalar(0xff,0x00,0x00)
+        );
+}
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -203,12 +214,13 @@ void MainWindow::my_mouse_callback(int event, int x, int y, int flags, void* par
 {
     //event：事件 x，y：鼠标在窗口坐标  param：其他东西
     cv::Mat* image = (cv::Mat*)param;
-    bool drawing_box = false;
+
     switch (event)
     {
     case cv::EVENT_LBUTTONDOWN:
     {
         isstore = false;
+        over = false;
         drawing_box = true;
         roi = cv::Rect(x, y, 0, 0);
     }
@@ -235,9 +247,11 @@ void MainWindow::my_mouse_callback(int event, int x, int y, int flags, void* par
         drawing_box = false;
     }
     break;
-
+    case cv::EVENT_RBUTTONDOWN:
+    {
+        over = true;
+    }
     default:
-        isstore = true;
         break;
     }
 }
@@ -941,10 +955,24 @@ void MainWindow::on_pushButton_3_clicked()
         my_mouse_callback,  //回调函数
         (void*)(&initMat) //传给回调函数的参数，背景图，这里面把第一张图片当做背景图
         );
+    for (;;)
+    {
+        cv::Mat temp;
+        temp = initMat.clone();  //对图片进行处理
+        draw_box(temp);
+        imshow(winName,temp);
+        int r = cv::waitKey(30);
+        if(over)
+        {
+           isstore = true;
+           break;
+        }
+    }
     if (isstore && (roi.width == 0 || roi.height == 0))
        QMessageBox::critical(this,"发生错误！","你设置检测区域了吗?");
     else if (isstore)
     {
+       QMessageBox::information(this,"提示","设置检测区域成功");
        isauto = true;
        tracker->init(initMat, roi);
     }
