@@ -284,10 +284,11 @@ void MainWindow::cvShow(unsigned int visitIndex)
     {
         if(drawing_box){
             //对图片进行处理
-            draw_box(tem);
-            imshow(winName,tem);
+            cv::Mat temp;
+            temp = tem.clone();
+            draw_box(temp);
+            imshow(winName,temp);
             cv::waitKey(30);
-            break;
         }
         else
         {
@@ -514,14 +515,13 @@ void MainWindow::on_gotoAfterOne_clicked()
         curViewPicIndex = 1;
     }
     if(isauto){
-
         if(curViewPicIndex!=1)
         {
-        cv::Mat back = cv::imread(pathPics[curViewPicIndex-2].toStdString());
+        cv::Mat back = cv::imread(pathPics[curViewPicIndex-1].toStdString());
         cv::resize(back, back, cv::Size(ui->viewLabel->width()*2, ui->viewLabel->height()*2), 0, 0, cv::INTER_AREA);
         tracker->init(back, roi);
         }
-        cvShow(curViewPicIndex - 1);
+        cvShow(curViewPicIndex);
 
     }
     else
