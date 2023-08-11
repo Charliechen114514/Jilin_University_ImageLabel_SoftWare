@@ -4,6 +4,7 @@ cv::Rect             roi;
 bool                 isstore = false;
 bool                 drawing_box = false;
 bool                 over = false;
+bool                 next = false;
 void draw_box(cv::Mat& img){
     rectangle(
         img,
@@ -273,11 +274,27 @@ void MainWindow::cvShow(unsigned int visitIndex)
 
     cv::resizeWindow(winName, cv::Size(ui->viewLabel->width()*2, ui->viewLabel->height()*2));
     cv::resize(tem, tem, cv::Size(ui->viewLabel->width()*2, ui->viewLabel->height()*2), 0, 0, cv::INTER_AREA);
-    cv::setMouseCallback(
-        winName,		//窗口名字
-        my_mouse_callback,  //回调函数
-        (void*)(&tem) //传给回调函数的参数，背景图，这里面把第一张图片当做背景图
-        );
+    // update the tracking result
+    tracker->update(tem, roi);
+    // draw the tracked object
+    rectangle(tem, roi, cv::Scalar(255, 0, 0), 2, 1);
+    imshow(winName,tem);
+    refreshProcessBar(visitIndex + 1);
+    for (;;)
+    {
+        if(drawing_box){
+            //对图片进行处理
+            draw_box(tem);
+            imshow(winName,tem);
+            cv::waitKey(30);
+            break;
+        }
+        else
+        {
+            cv::waitKey(30);
+        }
+    }
+
 }
 
 void MainWindow::resizeEvent(QResizeEvent*)
@@ -496,7 +513,19 @@ void MainWindow::on_gotoAfterOne_clicked()
         QMessageBox::information(this,"Caution!","你已经浏览完最后一张图片了，将自动跳转到第一张图片...");
         curViewPicIndex = 1;
     }
-    imgShow(curViewPicIndex - 1);
+    if(isauto){
+
+        if(curViewPicIndex!=1)
+        {
+        cv::Mat back = cv::imread(pathPics[curViewPicIndex-2].toStdString());
+        cv::resize(back, back, cv::Size(ui->viewLabel->width()*2, ui->viewLabel->height()*2), 0, 0, cv::INTER_AREA);
+        tracker->init(back, roi);
+        }
+        cvShow(curViewPicIndex - 1);
+
+    }
+    else
+        imgShow(curViewPicIndex - 1);
     return;
 }
 
@@ -961,7 +990,7 @@ void MainWindow::on_pushButton_3_clicked()
         temp = initMat.clone();  //对图片进行处理
         draw_box(temp);
         imshow(winName,temp);
-        int r = cv::waitKey(30);
+        cv::waitKey(30);
         if(over)
         {
            isstore = true;
