@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/def_png">
+        <file>default_png/def_png.png</file>
+    </qresource>
+</RCC>
