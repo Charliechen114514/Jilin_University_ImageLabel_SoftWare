@@ -1,0 +1,3 @@
+/QT projects/JLU_Image_TransAnd_Label/default_png
+../JLU_Image_TransAnd_Label/default_labels/labels.txt
+/Users/陈冠豪/Desktop/2.txt
