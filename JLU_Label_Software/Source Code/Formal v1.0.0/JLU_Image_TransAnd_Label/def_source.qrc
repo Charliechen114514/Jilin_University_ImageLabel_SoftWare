@@ -1,5 +1,13 @@
+<<<<<<< HEAD
 <RCC>
     <qresource prefix="/def_png">
         <file>default_png/def_png.png</file>
     </qresource>
 </RCC>
+=======
+<RCC>
+    <qresource prefix="/def_png">
+        <file>default_png/def_png.png</file>
+    </qresource>
+</RCC>
+>>>>>>> 5b85c2e78731c3e34a4c5d175edd7a5553af08ad
