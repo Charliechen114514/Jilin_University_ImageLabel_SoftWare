@@ -69,17 +69,18 @@ void manuallyLabel::initBasicQuickKey()
 void manuallyLabel::initTabTextBox()
 {
     QString colorTextSet = "当前的颜色是: RGB(";
+    qDebug() << ui->editPicLable->getUsrPenInfo().color();
     colorTextSet += QString::number(
-        *helper_getColorRGBs((ui->editPicLable->getUsrPenInfo().color()))
+        (ui->editPicLable->getUsrPenInfo().color().red())
         );
 
     colorTextSet += ",";
     colorTextSet += QString::number(
-        *(helper_getColorRGBs((ui->editPicLable->getUsrPenInfo().color())) + 1)
+        (ui->editPicLable->getUsrPenInfo().color().green())
         );
     colorTextSet += ",";
     colorTextSet += QString::number(
-        *(helper_getColorRGBs((ui->editPicLable->getUsrPenInfo().color())) + 2)
+        (ui->editPicLable->getUsrPenInfo().color().blue())
         );
 
     colorTextSet += ")\n";
@@ -198,17 +199,18 @@ void manuallyLabel::updateCursingelPictureLabelsRecord()
 void manuallyLabel::updateTextBrowsers()
 {
     QString colorTextSet = "当前的颜色是: RGB(";
+    qDebug() << ui->editPicLable->getUsrPenInfo().color();
     colorTextSet += QString::number(
-        *helper_getColorRGBs((ui->editPicLable->getUsrPenInfo().color()))
+        (ui->editPicLable->getUsrPenInfo().color().red())
         );
 
     colorTextSet += ",";
     colorTextSet += QString::number(
-        *(helper_getColorRGBs((ui->editPicLable->getUsrPenInfo().color())) + 1)
+        (ui->editPicLable->getUsrPenInfo().color().green())
         );
     colorTextSet += ",";
     colorTextSet += QString::number(
-        *(helper_getColorRGBs((ui->editPicLable->getUsrPenInfo().color())) + 2)
+        (ui->editPicLable->getUsrPenInfo().color().blue())
         );
 
     colorTextSet += ")";

@@ -32,9 +32,4 @@ QPen& editpiclabelClass::getInterFaceQPen()
     return usrPen;
 }
 
-const int* helper_getColorRGBs(QColor color){
-
-    return QVector<int>{color.red(),color.green(),color.blue()}.constData();
-
-}
 

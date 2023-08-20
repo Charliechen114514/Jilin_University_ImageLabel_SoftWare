@@ -37,7 +37,5 @@ private:
     int             CurAllowMaxPointsCount;
 };
 
-// globally
-const int*          helper_getColorRGBs(QColor color);
 
 #endif // EDITPICLABELCLASS_H

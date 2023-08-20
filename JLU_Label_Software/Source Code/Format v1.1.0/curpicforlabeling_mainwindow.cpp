@@ -861,7 +861,7 @@ void curPicForLabeling_MainWindow::saveForResultCurPicButLabelOnly()
             curViewIndex++;
         }
         qDebug() << WholeGroupPicsPathList.size();
-        QString SavePath = AlwaysLabelSavePath +"/" + WholeGroupPicsPathList[curViewIndex - 1].split("/").last().split(".").first() + QString("_After_Labeled") +
+        QString SavePath = AlwaysLabelSavePath +"/" + WholeGroupPicsPathList[curViewIndex - 1].split("/").last().split(".").first() /*+ QString("_After_Labeled")*/ +
                            + ".txt";
         qDebug() << SavePath;
         QFile fixedPathSaveFile(SavePath);
