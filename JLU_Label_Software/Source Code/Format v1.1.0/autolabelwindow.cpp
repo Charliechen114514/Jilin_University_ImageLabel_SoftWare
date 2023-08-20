@@ -36,6 +36,7 @@ void AutoLabelWindow::keyPressEvent(QKeyEvent* env)
         curViewIndex++;
         pushBackToDataLists();
         updateRectByTracker();
+        saveToPlace();
         showPicOnWnd();
     }
 
@@ -187,14 +188,19 @@ SinglePicData::SinglePicData(QRect rect,LabelIndex labelIndex, unsigned int picS
 
 void AutoLabelWindow::saveToPlace()
 {
+    static int curTime = 1;
+    QString tmpSavePath = savePath + "/" + QString::number(curTime) + "_After_AutoLabeled.txt";
+    curTime++;
+    qDebug() << tmpSavePath;
     QString reslist = writingMethod();
-    QFile saveFile(savePath);
+    QFile saveFile(tmpSavePath);
     if(saveFile.open(QIODevice::ReadWrite|QIODevice::Text))
     {
         QTextStream out(&saveFile);
         out << reslist;
         saveFile.close();
     }
+    dataList.clear();
     qDebug() << "写完！";
     return;
 }
@@ -217,7 +223,9 @@ QString AutoLabelWindow::writingMethod()
 
 void AutoLabelWindow::closeEvent(QCloseEvent* env[[maybe_unused]])
 {
-    saveToPlace();
+    // to comment this to prevent the final empty txt
+    // waiting for the further update;
+    // saveToPlace();
 }
 
 

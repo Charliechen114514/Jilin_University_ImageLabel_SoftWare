@@ -23,7 +23,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::preLoad()
 {
-    QFile loader("../JLU_Image_TransAnd_Label/conf/conf.txt");
+    QFile loader("./conf/conf.txt");
     QStringList def_conf;
     if(loader.open(QIODevice::ReadOnly))
     {
@@ -35,7 +35,7 @@ void MainWindow::preLoad()
     }
     else
     {
-        QMessageBox::critical(this,"Error occured!", "妈的找不到文件！");
+        QMessageBox::critical(this,"Error occured!", "找不到conf文件,无法保存配置！");
         return;
     }
     // debug node
@@ -427,6 +427,9 @@ void MainWindow::getDirectoryFromUsr()
         isRefreshedDefImagePath = false;
         defLoadImagePath = getDirPath;
     }
+
+    defLoadImagePath = getDirPath;
+
     getDir.setFilter(QDir::Files|QDir::Hidden|QDir::NoSymLinks);
     getDir.setSorting(QDir::Size|QDir::Reversed);
     /*文件地址链表*/
@@ -624,7 +627,25 @@ void MainWindow::on_gotoPrevious_clicked()
 **************************************************************************************************/
 void MainWindow::on_removeCurPictureBtn_clicked()
 {
-    curViewPicIndex--;
+    if(curViewPicIndex == pathPics.size()){
+        curViewPicIndex--;
+        pathPics.removeAt(curViewPicIndex);
+        ui->curPlaceProcessBar->setRange(0,pathPics.size());
+        refreshProcessBar(curViewPicIndex);
+        if(pathPics.size() == 0){
+            QMessageBox::information(NULL,"注意","图片列表已经清空了");
+            return;
+        }
+        if(curViewPicIndex >= 1 && curViewPicIndex < pathPics.size())
+        {
+            imgShow(curViewPicIndex);
+        }
+        else{
+            imgShow(curViewPicIndex - 1);
+        }
+        return;
+    }
+    // curViewPicIndex--;
     if(pathPics.size() == 0){
         QMessageBox::critical(NULL,"出错了！","我们一般认为移除空的东西是一种有毛病的行为！");
         USR_INVALID_DFT_REACT;
@@ -638,7 +659,13 @@ void MainWindow::on_removeCurPictureBtn_clicked()
         QMessageBox::information(NULL,"注意","图片列表已经清空了");
         return;
     }
-    imgShow(curViewPicIndex - 1);
+    if(curViewPicIndex >= 1 && curViewPicIndex < pathPics.size() - 1)
+    {
+        imgShow(curViewPicIndex + 1);
+    }
+    else{
+        imgShow(curViewPicIndex - 1);
+    }
     return;
 }
 
@@ -1031,7 +1058,7 @@ void MainWindow::on_btn_autoLabel_clicked()
 
 void MainWindow::setAutoLabelSavePath()
 {
-    QString savePath = QFileDialog::getSaveFileName(this,"设置保存路径",".");
+    QString savePath = QFileDialog::getExistingDirectory(this,"设置保存路径",".");
 
     if(savePath.isEmpty()){
         return;
@@ -1047,7 +1074,7 @@ void MainWindow::setAutoLabelSavePath()
 
 void MainWindow::closeEvent(QCloseEvent* env[[maybe_unused]])
 {
-    QFile loader("../JLU_Image_TransAnd_Label/conf/conf.txt");
+    QFile loader("./conf/conf.txt");
     QStringList def_conf;
     def_conf.push_back(defLoadImagePath);
     def_conf.push_back(defLoadLabelPath);
@@ -1060,16 +1087,21 @@ void MainWindow::closeEvent(QCloseEvent* env[[maybe_unused]])
             out << def_conf[i] << "\n";
         }
     }
+    else{
+        QMessageBox::critical(this,"Load Failed","没有找到conf文件,下次默认配置加载可能会产生失败！");
+    }
 }
 
 void MainWindow::on_btn_autoLabelVideo_clicked()
 {
-    if(autoLabelVideoWnd != nullptr){
-        delete autoLabelVideoWnd;
-    }
+    // experimental section, re-compile this if you wanna try!
 
-    autoLabelVideoWnd = new AutoLabelVideoWindow(this);
-    autoLabelVideoWnd->initVideo("../JLU_Image_TransAnd_Label/videoSample/test3.mp4");
-    autoLabelVideoWnd->show();
+//    if(autoLabelVideoWnd != nullptr){
+//        delete autoLabelVideoWnd;
+//    }
+
+//    autoLabelVideoWnd = new AutoLabelVideoWindow(this);
+//    autoLabelVideoWnd->initVideo("../JLU_Image_TransAnd_Label/videoSample/test3.mp4");
+//    autoLabelVideoWnd->show();
 }
 
