@@ -15,3 +15,5 @@ v1.1.0/libs/opencv_world460d.dll filter=lfs diff=lfs merge=lfs -text
 JLU_Label_Software/Source[[:space:]]Code/Format[[:space:]]v1.1.1/libs/opencv_world460d.dll filter=lfs diff=lfs merge=lfs -text
 =======
 >>>>>>> 053f866e5a6298fe6c7eee856580c83c689bc6ab
+C:/Users/陈冠豪/Desktop/pro/Jilin_University_ImageLabel_SoftWare/JLU_Label_Software/Source[[:space:]]Code/Format[[:space:]]v1.1.1/libs filter=lfs diff=lfs merge=lfs -text
+C:/Users/陈冠豪/Desktop/pro/Jilin_University_ImageLabel_SoftWare/JLU_Label_Software/Source[[:space:]]Code/Format[[:space:]]v1.1.1/libs/opencv_world460d.dll filter=lfs diff=lfs merge=lfs -text
