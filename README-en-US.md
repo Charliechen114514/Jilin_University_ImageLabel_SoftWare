@@ -161,7 +161,11 @@ watermalon;apple;people;book
 ```
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 ## `Manually label`
+=======
+## Manually label
+>>>>>>> 053f866e5a6298fe6c7eee856580c83c689bc6ab
 =======
 ## Manually label
 >>>>>>> 053f866e5a6298fe6c7eee856580c83c689bc6ab
@@ -203,11 +207,15 @@ the styles of pen is GLOBAL
 ​		`You can change the label method when you are labeling, but all data in this picture will be erased!`
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 ### `[[In version v1.1.1]] Manupulate historical data accessible`
 
 ​		`In version v1.1.0, Rolling pictures up and down in Formally Label Windows to change the data has been accessible. In this case, if you are really unsatisfied of your labeling, just simply press <- or A and then press Ctrl + Z altogather to roll back  the data.(It is worth noticing that: I fixed the strange refection between the Quick Key A and move on, instead, I change it back to the normal reflection <- and -> with roll back and forth )`
 
 ### `Save(unrefered to savePath)`
+=======
+### Save(unrefered to savePath)
+>>>>>>> 053f866e5a6298fe6c7eee856580c83c689bc6ab
 =======
 ### Save(unrefered to savePath)
 >>>>>>> 053f866e5a6298fe6c7eee856580c83c689bc6ab
