@@ -12,6 +12,8 @@
 
 2. 将会优化标签添加逻辑,实现标签添加无需再去选择: 添加这个标签摁扭而是摁Enter键自动添加
 
+3. 更好的自定义保存文件名称
+
 ## Auto Label (Sequenced Consistent Pixmaps Labels)
 
 1. 将尽可能将此功能实现的跟Mannual Label一样较为智能的界面与功能
