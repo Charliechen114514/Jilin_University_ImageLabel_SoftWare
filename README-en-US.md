@@ -160,16 +160,7 @@ label[SEPERATOR]label[SEPERATOR]label[SEPERATOR]...
 watermalon;apple;people;book
 ```
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 ## `Manually label`
-=======
-## Manually label
->>>>>>> 053f866e5a6298fe6c7eee856580c83c689bc6ab
-=======
-## Manually label
->>>>>>> 053f866e5a6298fe6c7eee856580c83c689bc6ab
-
 ​		`CLICK MANUALLY LABLE, and you can manage the detailed labels. To Enter the manually window, ensure pictures have been loaded previously, or, Some Error will be ejected!`
 
 ​		`Here, you can adjust labels, make a settings of pen's style(colors and widths)`
@@ -194,6 +185,8 @@ watermalon;apple;people;book
 
 ​		`If you want to remove a whole ploy, you can click "Remove Poly" or press quick key "Ctrl + Z"`
 
+### `[[Since Version 1.1.3]]` `Available to check current status of labeling including how many points have been clicked and how many are supposed to be clicked!`
+
 ### `styles selecting`
 
 ​		`you can select pen style, just have fun!`
@@ -206,20 +199,11 @@ the styles of pen is GLOBAL
 
 ​		`You can change the label method when you are labeling, but all data in this picture will be erased!`
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-### `[[In version v1.1.1]] Manupulate historical data accessible`
+### `[[Since version v1.1.1]] Manupulate historical data accessible`
 
 ​		`In version v1.1.0, Rolling pictures up and down in Formally Label Windows to change the data has been accessible. In this case, if you are really unsatisfied of your labeling, just simply press <- or A and then press Ctrl + Z altogather to roll back  the data.(It is worth noticing that: I fixed the strange refection between the Quick Key A and move on, instead, I change it back to the normal reflection <- and -> with roll back and forth )`
 
 ### `Save(unrefered to savePath)`
-=======
-### Save(unrefered to savePath)
->>>>>>> 053f866e5a6298fe6c7eee856580c83c689bc6ab
-=======
-### Save(unrefered to savePath)
->>>>>>> 053f866e5a6298fe6c7eee856580c83c689bc6ab
-
 ​		If you don't specify the path when you start annotating, then by default you don't autosave. Then, after each image is marked, it will ask you for the path and location of the save, as well as the file name (this is done for compatibility with the format, you can make the format specification yourself when naming)
 
 ​		As you can see, this software will prompt you for your saved address!
@@ -227,6 +211,10 @@ the styles of pen is GLOBAL
 ### `Save (refered to savePath)`
 
 ​		`Simply click the next one`
+
+### ` Since [[Version 1.1.3]]` `Available to view txts and saved path saved in files in GUI` 
+
+​		只需要单击一下`高级->`就可以调整开关，默认开启，可以手动关闭。
 
 ### `Save for data`
 

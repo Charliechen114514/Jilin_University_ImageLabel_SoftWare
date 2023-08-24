@@ -4,7 +4,7 @@
 
 ## User Friendly label
 
-1. 启用状态栏,更好的显示标注信息
+1. 启用状态栏,更好的显示标注信息`[[Already done]]`
 
 ## General Core Function
 
